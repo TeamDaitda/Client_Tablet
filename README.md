@@ -1,7 +1,7 @@
 ### Graduation-project
 Graduation project
 
-# 아이디어 명
+# 아이디어 명 😄
 ‘한 붓’, ‘선’, ‘The Line’, ‘실’, ‘끈’, ‘매듭’
 
 # 주요 기술
