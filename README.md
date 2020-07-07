@@ -1,5 +1,6 @@
 ### Graduation-project
 Graduation project
+[프로젝트 문서 링크](https://docs.google.com/document/d/19R2tQt43CT780cEI7F8d9PKHRPtoyHPPrIXmi80Ef2Y/edit)
 
 # 아이디어 명 😄
 ‘한 붓’, ‘선’, ‘The Line’, ‘실’, ‘끈’, ‘매듭’
