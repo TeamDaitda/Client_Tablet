@@ -26,8 +26,8 @@ Graduation project
 
 
 # 참조 ⌨
-기계 학습(Machine Learning, 머신 러닝)은 즐겁다!
+[기계 학습(Machine Learning, 머신 러닝)은 즐겁다!](https://medium.com/@jongdae.lim/%EA%B8%B0%EA%B3%84-%ED%95%99%EC%8A%B5-machine-learning-%EC%9D%80-%EC%A6%90%EA%B2%81%EB%8B%A4-part-4-63ed781eee3c)
 
-Real-time facial landmark detection with OpenCV, Python, and dli
+[Real-time facial landmark detection with OpenCV, Python, and dli](https://www.pyimagesearch.com/2017/04/17/real-time-facial-landmark-detection-opencv-python-dlib/)
 
-dlib와 OpenCV를 이용한 얼굴 랜드마크 추출(Facial Landmarks)
+[dlib와 OpenCV를 이용한 얼굴 랜드마크 추출(Facial Landmarks)](https://ultrakid.tistory.com/2?category=842453)
