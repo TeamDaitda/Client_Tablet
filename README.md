@@ -31,3 +31,5 @@ Graduation project
 [Real-time facial landmark detection with OpenCV, Python, and dli](https://www.pyimagesearch.com/2017/04/17/real-time-facial-landmark-detection-opencv-python-dlib/)
 
 [dlib와 OpenCV를 이용한 얼굴 랜드마크 추출(Facial Landmarks)](https://ultrakid.tistory.com/2?category=842453)
+
+[Progress Trackers in UX Design](https://uxplanet.org/progress-trackers-in-ux-design-4319cef1c600)
