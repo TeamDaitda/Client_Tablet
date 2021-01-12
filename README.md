@@ -6,7 +6,8 @@ Graduation project
 ‘한 붓’, ‘선’, ‘The Line’, ‘실’, ‘끈’, ‘매듭’
 
 # 주요 기술 🤟
-머신러닝(Machine Learning), 영상처리(Real-time facial landmark detection with OpenCV, Python, and dlib), 임베디드시스템(Raspberry Pi), 클라우드시스템(Google FireBase) . . . etc
+Flutter/Dart  
+Node.js
 
 # 소개 📖
 하나의 선으로 모든 객채들이 이어질 수 있도록 그려주는 캐리커쳐입니다. 공학과 미디어 아트의 만남. 사진을 찍고 결과물을 출력받을 수 있는 기기 하나, 그동안 지나온 사람의 사진들이 하나의 선으로 이어져 있는 것처럼 보이는 큰 디스플레이 하나로 구성되어 있다. 
