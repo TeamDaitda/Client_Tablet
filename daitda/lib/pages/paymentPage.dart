@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -16,7 +17,8 @@ class _PaymentPageState extends State<PaymentPage> {
           children: [
             _buildHeightSizedBox(50),
             _buildProcessWidget(),
-            _buildBody("어떤 곳에 기부하고 싶으세요?", context),
+            _buildHeightSizedBox(50),
+            _buildBody("이제, 기부해볼까요?", context),
           ],
         ),
       ),
@@ -114,7 +116,9 @@ class _PaymentPageState extends State<PaymentPage> {
           height: 50,
           child: FlatButton(
             color: Color(0xfff0f0f3),
-            onPressed: () {},
+            onPressed: () {
+              Get.back();
+            },
             child: Icon(Icons.keyboard_arrow_left),
           ),
         ),
@@ -145,9 +149,7 @@ class _PaymentPageState extends State<PaymentPage> {
           height: 50,
           child: FlatButton(
             color: Color(0xfff0f0f3),
-            onPressed: () {
-              Navigator.pushNamed(context, '/paymentPage');
-            },
+            onPressed: () {},
             child: Icon(Icons.keyboard_arrow_right),
           ),
         ),

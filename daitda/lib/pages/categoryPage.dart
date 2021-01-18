@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CategoryPage extends StatefulWidget {
   static const routeName = '/categoryPage';
@@ -118,7 +119,9 @@ class _CategoryPageState extends State<CategoryPage> {
           height: 50,
           child: FlatButton(
             color: Color(0xfff0f0f3),
-            onPressed: () {},
+            onPressed: () {
+              Get.back();
+            },
             child: Icon(Icons.keyboard_arrow_left),
           ),
         ),
@@ -175,7 +178,7 @@ class _CategoryPageState extends State<CategoryPage> {
           child: FlatButton(
             color: Color(0xfff0f0f3),
             onPressed: () {
-              Navigator.pushNamed(context, '/paymentPage');
+              Get.toNamed('/paymentPage');
             },
             child: Icon(Icons.keyboard_arrow_right),
           ),
