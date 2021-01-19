@@ -30,14 +30,23 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/categoryPage',
             page: () => CategoryPage(),
-            transition: Transition.topLevel),
-        GetPage(name: '/detailPage', page: () => DetailPage()),
-        GetPage(name: '/inputPage', page: () => InputPage()),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/detailPage',
+            page: () => DetailPage(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/inputPage',
+            page: () => InputPage(),
+            transition: Transition.fadeIn),
         GetPage(
             name: '/paymentPage',
             page: () => PaymentPage(),
-            transition: Transition.topLevel),
-        GetPage(name: '/resultPage', page: () => ResultPage()),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/resultPage',
+            page: () => ResultPage(),
+            transition: Transition.fadeIn),
       ],
     );
   }

@@ -21,7 +21,7 @@ class _CategoryPageState extends State<CategoryPage> {
             _buildHeightSizedBox(50),
             _buildProcessWidget(),
             _buildHeightSizedBox(50),
-            _buildBody("어떤 곳에 기부하고 싶으세요?", context),
+            _buildCenter("어떤 곳에 기부하고 싶으세요?", context),
           ],
         ),
       ),
@@ -110,7 +110,7 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  Widget _buildBody(String inputTitle, BuildContext context) {
+  Widget _buildCenter(String inputTitle, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -138,7 +138,7 @@ class _CategoryPageState extends State<CategoryPage> {
               Container(
                 color: Color(0xfff6f5f5),
                 width: 1000,
-                height: 450,
+                height: MediaQuery.of(context).size.height - 229,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[

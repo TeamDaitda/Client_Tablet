@@ -18,7 +18,7 @@ class _PaymentPageState extends State<PaymentPage> {
             _buildHeightSizedBox(50),
             _buildProcessWidget(),
             _buildHeightSizedBox(50),
-            _buildBody("이제, 기부해볼까요?", context),
+            _buildCenter("이제, 기부해볼까요?", context),
           ],
         ),
       ),
@@ -107,7 +107,7 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  Widget _buildBody(String inputTitle, BuildContext context) {
+  Widget _buildCenter(String inputTitle, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -135,7 +135,7 @@ class _PaymentPageState extends State<PaymentPage> {
               Container(
                 color: Color(0xfff6f5f5),
                 width: 1000,
-                height: 450,
+                height: MediaQuery.of(context).size.height - 229,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[],

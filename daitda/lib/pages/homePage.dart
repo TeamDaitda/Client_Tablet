@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.pink,
         label: Text("시작하기"),
         onPressed: () {
-          Get.toNamed("/categoryPage");
+          Get.toNamed("/inputPage");
         },
       ),
       body: Column(
