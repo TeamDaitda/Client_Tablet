@@ -1,3 +1,4 @@
+import 'package:daitda/UIConponent/uiComponent.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,9 @@ class _CategoryPageState extends State<CategoryPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            _buildHeightSizedBox(50),
-            _buildProcessWidget(),
-            _buildHeightSizedBox(50),
+            UIComponent().buildHeightSizedBox(50),
+            UIComponent().renderTopStateBar(2),
+            UIComponent().buildHeightSizedBox(50),
             _buildCenter("어떤 곳에 기부하고 싶으세요?", context),
           ],
         ),
@@ -29,122 +30,17 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  Widget _buildProcessWidget() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildCircle(inputColor: Color(0xff9470ac)),
-            _buildLine(inputColor: Color(0xff9470ac)),
-            _buildCircle(inputColor: Color(0xff9470ac)),
-            _buildLine(inputColor: Color(0xffc4c4c4)),
-            _buildCircle(inputColor: Color(0xffc4c4c4)),
-            _buildLine(inputColor: Color(0xffc4c4c4)),
-            _buildCircle(inputColor: Color(0xffc4c4c4)),
-            _buildLine(inputColor: Color(0xffc4c4c4)),
-            _buildCircle(inputColor: Color(0xffc4c4c4)),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildWidthSizedBox(175),
-            _buildText(inputText: "정보입력"),
-            _buildWidthSizedBox(10),
-            _buildText(inputText: "카테고리 선택"),
-            _buildWidthSizedBox(10),
-            _buildText(inputText: "결제"),
-            _buildWidthSizedBox(10),
-            _buildText(inputText: "촬영"),
-            _buildWidthSizedBox(10),
-            _buildText(inputText: "기부완료"),
-            _buildWidthSizedBox(175),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLine({Color inputColor}) {
-    return Container(
-      height: 1,
-      width: 150,
-      color: inputColor,
-    );
-  }
-
-  Widget _buildCircle({Color inputColor}) {
-    return Container(
-      width: 22,
-      height: 22,
-      decoration: BoxDecoration(
-        color: inputColor,
-        shape: BoxShape.circle,
-      ),
-    );
-  }
-
-  Widget _buildText({String inputText}) {
-    return Container(
-      width: 80,
-      child: Text(
-        inputText,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  Widget _buildWidthSizedBox(double _width) {
-    return SizedBox(
-      width: _width,
-    );
-  }
-
-  Widget _buildHeightSizedBox(double _height) {
-    return SizedBox(
-      height: _height,
-    );
-  }
-
-  Widget _buildCenter(String inputTitle, BuildContext context) {
+  Widget _buildCenter(String title, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Container(
-          width: 50,
-          height: 50,
-          child: Card(
-            elevation: 10,
-            color: ColorSet().buttonColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: InkWell(
-              onTap: () {
-                Get.back();
-              },
-              child: Icon(
-                Icons.keyboard_arrow_left,
-                size: 18,
-              ),
-            ),
-          ),
-        ),
+        UIComponent().renderNavigationButton(option: 'back'),
         Container(
           // color: Color(0xfff6f5f5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                inputTitle,
-                style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
+              UIComponent().renderTitleText(title),
               Container(
                 width: 1000,
                 height: MediaQuery.of(context).size.height - 229,
@@ -191,26 +87,8 @@ class _CategoryPageState extends State<CategoryPage> {
             ],
           ),
         ),
-        Container(
-          width: 50,
-          height: 50,
-          child: Card(
-            elevation: 10,
-            color: ColorSet().buttonColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: InkWell(
-              onTap: () {
-                Get.toNamed('/paymentPage');
-              },
-              child: Icon(
-                Icons.keyboard_arrow_right,
-                size: 18,
-              ),
-            ),
-          ),
-        ),
+        UIComponent()
+            .renderNavigationButton(option: 'go', router: '/paymentPage'),
       ],
     );
   }
