@@ -1,3 +1,4 @@
+import 'package:daitda/design/colorSet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -117,12 +118,21 @@ class _CategoryPageState extends State<CategoryPage> {
         Container(
           width: 50,
           height: 50,
-          child: FlatButton(
-            color: Color(0xfff0f0f3),
-            onPressed: () {
-              Get.back();
-            },
-            child: Icon(Icons.keyboard_arrow_left),
+          child: Card(
+            elevation: 10,
+            color: ColorSet().buttonColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: Icon(
+                Icons.keyboard_arrow_left,
+                size: 18,
+              ),
+            ),
           ),
         ),
         Container(
@@ -136,37 +146,46 @@ class _CategoryPageState extends State<CategoryPage> {
                 textAlign: TextAlign.start,
               ),
               Container(
-                color: Color(0xfff6f5f5),
                 width: 1000,
                 height: MediaQuery.of(context).size.height - 229,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    _buildCard(
-                        title: "Pasicm",
-                        img: AssetImage('images/ps.png'),
-                        context: context),
-                    _buildCard(
-                        title: "Pollution",
-                        img: AssetImage('images/pl.png'),
-                        context: context),
-                    _buildCard(
-                        title: "Global Warming",
-                        img: AssetImage('images/gw.png'),
-                        context: context),
-                    _buildCard(
-                        title: "Pasicm",
-                        img: AssetImage('images/ps.png'),
-                        context: context),
-                    _buildCard(
-                        title: "Pollution",
-                        img: AssetImage('images/pl.png'),
-                        context: context),
-                    _buildCard(
-                        title: "Global Warming",
-                        img: AssetImage('images/gw.png'),
-                        context: context),
-                  ],
+                child: Card(
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  color: ColorSet().mainBoxColor,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      _buildCard(
+                          title: "Pasicm",
+                          img: AssetImage('images/ps.png'),
+                          context: context),
+                      _buildCard(
+                          title: "Pollution",
+                          img: AssetImage('images/pl.png'),
+                          context: context),
+                      _buildCard(
+                          title: "Global Warming",
+                          img: AssetImage('images/gw.png'),
+                          context: context),
+                      _buildCard(
+                          title: "Pasicm",
+                          img: AssetImage('images/ps.png'),
+                          context: context),
+                      _buildCard(
+                          title: "Pollution",
+                          img: AssetImage('images/pl.png'),
+                          context: context),
+                      _buildCard(
+                          title: "Global Warming",
+                          img: AssetImage('images/gw.png'),
+                          context: context),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -175,12 +194,21 @@ class _CategoryPageState extends State<CategoryPage> {
         Container(
           width: 50,
           height: 50,
-          child: FlatButton(
-            color: Color(0xfff0f0f3),
-            onPressed: () {
-              Get.toNamed('/paymentPage');
-            },
-            child: Icon(Icons.keyboard_arrow_right),
+          child: Card(
+            elevation: 10,
+            color: ColorSet().buttonColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: InkWell(
+              onTap: () {
+                Get.toNamed('/paymentPage');
+              },
+              child: Icon(
+                Icons.keyboard_arrow_right,
+                size: 18,
+              ),
+            ),
           ),
         ),
       ],
@@ -194,10 +222,6 @@ class _CategoryPageState extends State<CategoryPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // IconButton(
-            //   icon: Icon(Icons.check_box_outline_blank_rounded),
-            //   onPressed: () {},
-            // ),
             Container(
               width: 200,
               height: 300,

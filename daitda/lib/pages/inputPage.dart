@@ -1,6 +1,7 @@
 import 'package:daitda/design/colorSet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -188,16 +190,24 @@ class _InputPageState extends State<InputPage> {
         Container(
           width: 50,
           height: 50,
-          child: FlatButton(
+          child: Card(
+            elevation: 10,
             color: ColorSet().buttonColor,
-            onPressed: () {
-              Get.back();
-            },
-            child: Icon(Icons.keyboard_arrow_left),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: Icon(
+                Icons.keyboard_arrow_left,
+                size: 18,
+              ),
+            ),
           ),
         ),
         Container(
-          // color: Color(0xfff6f5f5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -207,10 +217,19 @@ class _InputPageState extends State<InputPage> {
                 textAlign: TextAlign.start,
               ),
               Container(
-                color: ColorSet().mainBoxColor,
                 width: 1000,
                 height: MediaQuery.of(context).size.height - 229,
-                child: _buildBody(),
+                child: Card(
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  color: ColorSet().mainBoxColor,
+                  child: _buildBody(),
+                ),
               ),
             ],
           ),
@@ -218,12 +237,21 @@ class _InputPageState extends State<InputPage> {
         Container(
           width: 50,
           height: 50,
-          child: FlatButton(
+          child: Card(
+            elevation: 10,
             color: ColorSet().buttonColor,
-            onPressed: () {
-              Get.toNamed('/categoryPage');
-            },
-            child: Icon(Icons.keyboard_arrow_right),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: InkWell(
+              onTap: () {
+                Get.toNamed('/categoryPage');
+              },
+              child: Icon(
+                Icons.keyboard_arrow_right,
+                size: 18,
+              ),
+            ),
           ),
         ),
       ],
