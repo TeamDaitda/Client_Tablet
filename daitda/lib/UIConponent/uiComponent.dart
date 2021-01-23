@@ -7,7 +7,7 @@ class UIComponent {
   //  네비게이션 버튼을 랜더링 해줍니다. option = 'go', 'back'
   renderNavigationButton({String option, String router}) {
     Icon thisIcon;
-    if (option == 'go') {
+    if (option == 'go' || option == 'allBack') {
       thisIcon = Icon(Icons.keyboard_arrow_right);
     } else if (option == 'back') {
       thisIcon = Icon(Icons.keyboard_arrow_left);
@@ -29,8 +29,8 @@ class UIComponent {
                 Get.toNamed(router);
               } else if (option == 'back') {
                 Get.back();
-              } else {
-                return;
+              } else if (option == 'allBack') {
+                Get.offAllNamed(router);
               }
             },
             child: thisIcon),

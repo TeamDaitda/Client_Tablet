@@ -2,7 +2,21 @@ import 'package:daitda/UIConponent/uiComponent.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_page_indicator/flutter_page_indicator.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
+
+const List<String> titles = [
+  "Pasicm",
+  "Pollution",
+  "Global Warming",
+];
+const List<String> imageUrls = [
+  "images/ps.png",
+  "images/pl.png",
+  "images/gw.png",
+];
 
 class CategoryPage extends StatefulWidget {
   static const routeName = '/categoryPage';
@@ -34,61 +48,40 @@ class _CategoryPageState extends State<CategoryPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        UIComponent().renderNavigationButton(option: 'back'),
+        // UIComponent().renderNavigationButton(option: 'back'),
         Container(
           // color: Color(0xfff6f5f5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               UIComponent().renderTitleText(title),
-              Container(
-                width: 1000,
-                height: MediaQuery.of(context).size.height - 229,
-                child: Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                  color: ColorSet().mainBoxColor,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      _buildCard(
-                          title: "Pasicm",
-                          img: AssetImage('images/ps.png'),
-                          context: context),
-                      _buildCard(
-                          title: "Pollution",
-                          img: AssetImage('images/pl.png'),
-                          context: context),
-                      _buildCard(
-                          title: "Global Warming",
-                          img: AssetImage('images/gw.png'),
-                          context: context),
-                      _buildCard(
-                          title: "Pasicm",
-                          img: AssetImage('images/ps.png'),
-                          context: context),
-                      _buildCard(
-                          title: "Pollution",
-                          img: AssetImage('images/pl.png'),
-                          context: context),
-                      _buildCard(
-                          title: "Global Warming",
-                          img: AssetImage('images/gw.png'),
-                          context: context),
-                    ],
+              Center(
+                child: Container(
+                  width: 1000,
+                  height: MediaQuery.of(context).size.height - 229,
+                  child: new Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      return _buildCard(
+                          title: titles[index],
+                          img: AssetImage(imageUrls[index]),
+                          context: context);
+                    },
+                    itemCount: 3,
+                    viewportFraction: 0.6,
+                    scale: 0.9,
+                    indicatorLayout: PageIndicatorLayout.NONE,
+                    autoplay: true,
+
+                    pagination: new SwiperPagination(),
+                    // control: new SwiperControl(color: Colors.white),
                   ),
                 ),
               ),
             ],
           ),
         ),
-        UIComponent()
-            .renderNavigationButton(option: 'go', router: '/paymentPage'),
+        // UIComponent()
+        //     .renderNavigationButton(option: 'go', router: '/paymentPage'),
       ],
     );
   }
@@ -101,8 +94,8 @@ class _CategoryPageState extends State<CategoryPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 200,
-              height: 300,
+              width: 900,
+              height: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),

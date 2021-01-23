@@ -1,3 +1,4 @@
+import 'package:daitda/pages/cameraPage.dart';
 import 'package:daitda/pages/categoryPage.dart';
 import 'package:daitda/pages/detailPage.dart';
 import 'package:daitda/pages/homePage.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         splashColor: Colors.transparent,
         accentColor: Colors.white,
+        highlightColor: Colors.transparent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/',
@@ -43,6 +45,10 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/paymentPage',
             page: () => PaymentPage(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/cameraPage',
+            page: () => CameraPage(),
             transition: Transition.fadeIn),
         GetPage(
             name: '/resultPage',

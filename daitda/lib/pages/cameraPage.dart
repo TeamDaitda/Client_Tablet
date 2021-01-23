@@ -1,3 +1,5 @@
+import 'package:daitda/CurvePainter.dart';
+import 'package:daitda/UIConponent/uiComponent.dart';
 import 'package:flutter/material.dart';
 
 class CameraPage extends StatefulWidget {
@@ -8,6 +10,48 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            UIComponent().buildHeightSizedBox(50),
+            UIComponent().renderTopStateBar(4),
+            UIComponent().buildHeightSizedBox(50),
+            _buildCenter("촬영 페이지", context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCenter(String title, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        UIComponent().renderNavigationButton(option: 'back'),
+        Container(
+          // color: Color(0xfff6f5f5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              UIComponent().renderTitleText(title),
+              Container(
+                color: Color(0xfff6f5f5),
+                width: 1000,
+                height: MediaQuery.of(context).size.height - 229,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[],
+                ),
+              ),
+            ],
+          ),
+        ),
+        UIComponent()
+            .renderNavigationButton(option: 'go', router: '/resultPage'),
+      ],
+    );
   }
 }
