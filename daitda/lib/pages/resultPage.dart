@@ -1,6 +1,6 @@
 import 'package:daitda/CurvePainter.dart';
 import 'package:daitda/UIConponent/uiComponent.dart';
-import 'package:daitda/api/http.dart';
+import 'package:daitda/api/ImageApi.dart';
 import 'package:flutter/material.dart';
 
 class ResultPage extends StatefulWidget {
@@ -44,7 +44,7 @@ class _ResultPageState extends State<ResultPage> {
                     color: Colors.pink,
                     onPressed: () {
                       print('Start');
-                      Http().getHttp("http://192.168.0.2:3000/api/image/translateImage");
+                      ImageApi().transImage();
                     },
                     child: Text("요청"),
                   ),
