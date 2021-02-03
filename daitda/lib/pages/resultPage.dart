@@ -1,5 +1,6 @@
 import 'package:daitda/CurvePainter.dart';
 import 'package:daitda/UIConponent/uiComponent.dart';
+import 'package:daitda/api/http.dart';
 import 'package:flutter/material.dart';
 
 class ResultPage extends StatefulWidget {
@@ -36,7 +37,19 @@ class _ResultPageState extends State<ResultPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              UIComponent().renderTitleText(title),
+              Row(
+                children: [
+                  UIComponent().renderTitleText(title),
+                  FlatButton(
+                    color: Colors.pink,
+                    onPressed: () {
+                      print('Start');
+                      Http().getHttp("http://192.168.0.2:3000/api/image/translateImage");
+                    },
+                    child: Text("요청"),
+                  ),
+                ],
+              ),
               CustomPaint(
                 painter: CurvePainter(),
                 child: Container(

@@ -6,6 +6,7 @@ import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flip_card/flip_card.dart';
 
 const List<String> titles = [
   "Pasicm",
@@ -48,7 +49,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        // UIComponent().renderNavigationButton(option: 'back'),
+        UIComponent().renderNavigationButton(option: 'back'),
         Container(
           // color: Color(0xfff6f5f5),
           child: Column(
@@ -70,7 +71,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     viewportFraction: 0.6,
                     scale: 0.9,
                     indicatorLayout: PageIndicatorLayout.NONE,
-                    autoplay: true,
+                    autoplay: false,
 
                     pagination: new SwiperPagination(),
                     // control: new SwiperControl(color: Colors.white),
@@ -80,8 +81,8 @@ class _CategoryPageState extends State<CategoryPage> {
             ],
           ),
         ),
-        // UIComponent()
-        //     .renderNavigationButton(option: 'go', router: '/paymentPage'),
+        UIComponent()
+            .renderNavigationButton(option: 'go', router: '/paymentPage'),
       ],
     );
   }
@@ -93,18 +94,63 @@ class _CategoryPageState extends State<CategoryPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 900,
-              height: 400,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                elevation: 3,
-                child: InkWell(
-                  onTap: () {},
+            FlipCard(
+              front: Container(
+                width: 900,
+                height: 400,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 0,
                   child: Image(
                     image: img,
+                  ),
+                ),
+              ),
+              back: Container(
+                width: 900,
+                height: 400,
+                child: Card(
+                  color: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 300,
+                        child: FlatButton(
+                          onPressed: () {
+                            Get.toNamed('/paymentPage');
+                          },
+                          child: Text(
+                            "선택하기",
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          color: Color(0xffA7A7A7),
+                        ),
+                      ),
+                      UIComponent().buildHeightSizedBox(30),
+                      Container(
+                        height: 100,
+                        width: 300,
+                        child: FlatButton(
+                          onPressed: () {
+                            _settingModalBottomSheet(context, title, img);
+                          },
+                          child: Text(
+                            "더보기",
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          color: Color(0xffA7A7A7),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -114,19 +160,6 @@ class _CategoryPageState extends State<CategoryPage> {
               child: Text(
                 title,
                 style: TextStyle(fontSize: 20),
-              ),
-            ),
-            Container(
-              height: 20,
-              child: FlatButton(
-                onPressed: () {
-                  _settingModalBottomSheet(context, title, img);
-                },
-                child: Text(
-                  "Learn More",
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Color(0xffA7A7A7),
               ),
             ),
           ],
