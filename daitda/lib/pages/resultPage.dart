@@ -1,7 +1,9 @@
 import 'package:daitda/CurvePainter.dart';
 import 'package:daitda/UIConponent/uiComponent.dart';
 import 'package:daitda/api/ImageApi.dart';
+import 'package:daitda/controller/user.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ResultPage extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  final controller = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +46,14 @@ class _ResultPageState extends State<ResultPage> {
                   FlatButton(
                     color: Colors.pink,
                     onPressed: () {
-                      print('Start');
-                      ImageApi().transImage();
+                      // print('Start');
                     },
                     child: Text("요청"),
                   ),
                 ],
               ),
               CustomPaint(
-                painter: CurvePainter(),
+                painter: CurvePainter(input: ImageApi().transImage()),
                 child: Container(
                   width: 1000,
                   height: MediaQuery.of(context).size.height - 229,

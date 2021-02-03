@@ -1,18 +1,14 @@
-class Positions {
+class OutPut {
   double dX;
   double dY;
 
-  Positions({this.dX, this.dY});
+  OutPut(this.dX, this.dY);
 
-  Positions.fromJson(Map<String, dynamic> json) {
-    dX = json['_x'];
-    dY = json['_y'];
+  factory OutPut.fromJson(dynamic json) {
+    return OutPut(json['_x'] as double, json['_y'] as double);
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_x'] = this.dX;
-    data['_y'] = this.dY;
-    return data;
+  String toString() {
+    return '{${this.dX}, ${this.dY}}';
   }
 }

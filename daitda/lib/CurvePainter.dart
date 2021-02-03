@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import './Util/image.dart';
 
 class CurvePainter extends CustomPainter {
+  dynamic input;
+  CurvePainter({this.input});
+
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
@@ -10,6 +14,7 @@ class CurvePainter extends CustomPainter {
     canvas.drawLine(Offset(43, 116), Offset(45, 132), paint);
     canvas.drawLine(Offset(45, 132), Offset(48, 147), paint);
     canvas.drawLine(Offset(45, 132), Offset(48, 147), paint);
+    print(input.length);
   }
 
   @override
