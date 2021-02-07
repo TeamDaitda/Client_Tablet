@@ -1,3 +1,4 @@
+import 'package:daitda/design/designSet.dart';
 import 'package:daitda/pages/cameraPage.dart';
 import 'package:daitda/pages/categoryPage.dart';
 import 'package:daitda/pages/detailPage.dart';
@@ -5,6 +6,7 @@ import 'package:daitda/pages/homePage.dart';
 import 'package:daitda/pages/inputPage.dart';
 import 'package:daitda/pages/paymentPage.dart';
 import 'package:daitda/pages/resultPage.dart';
+import 'package:daitda/pages/testPage.dart';
 
 import 'package:flutter/material.dart';
 
@@ -53,6 +55,10 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/resultPage',
             page: () => ResultPage(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/testPage',
+            page: () => TestPage(),
             transition: Transition.fadeIn),
       ],
     );

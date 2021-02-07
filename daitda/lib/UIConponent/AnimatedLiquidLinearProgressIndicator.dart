@@ -1,4 +1,7 @@
+import 'package:daitda/controller/progress.dart';
+import 'package:daitda/design/designSet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class AnimatedLiquidLinearProgressIndicator extends StatefulWidget {
@@ -11,6 +14,9 @@ class AnimatedLiquidLinearProgressIndicatorState
     extends State<AnimatedLiquidLinearProgressIndicator>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
+
+  final designSet = Get.put(DesignSet());
+  final progressData = Get.put(ProgressData());
 
   @override
   void initState() {
@@ -32,17 +38,19 @@ class AnimatedLiquidLinearProgressIndicatorState
 
   @override
   Widget build(BuildContext context) {
-    final percentage = _animationController.value * 100;
     return Center(
-      child: Container(
-        width: 1000,
-        height: 30.0,
-        padding: EdgeInsets.symmetric(horizontal: 1.0),
-        child: LiquidLinearProgressIndicator(
-          value: 0.5,
-          backgroundColor: Colors.white,
-          valueColor: AlwaysStoppedAnimation(Colors.black87),
-          borderRadius: 12.0,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          width: designSet.getProgressBarWidth(),
+          height: designSet.getProgressBarHeight(),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+          child: LiquidLinearProgressIndicator(
+            value: progressData.getData(),
+            backgroundColor: Colors.white,
+            valueColor: AlwaysStoppedAnimation(Colors.black87),
+            borderRadius: 20.0,
+          ),
         ),
       ),
     );
