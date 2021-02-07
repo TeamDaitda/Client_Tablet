@@ -8,33 +8,34 @@ class UIComponent {
   renderNavigationButton({String option, String router}) {
     Icon thisIcon;
     if (option == 'go' || option == 'allBack') {
-      thisIcon = Icon(Icons.keyboard_arrow_right);
+      thisIcon = Icon(
+        Icons.keyboard_arrow_right,
+        size: 50,
+        color: ColorSet().lrIconColor,
+      );
     } else if (option == 'back') {
-      thisIcon = Icon(Icons.keyboard_arrow_left);
+      thisIcon = Icon(
+        Icons.keyboard_arrow_left,
+        size: 50,
+        color: ColorSet().lrIconColor,
+      );
     } else {
       return;
     }
     return Container(
       width: 50,
       height: 50,
-      child: Card(
-        elevation: 10,
-        color: ColorSet().buttonColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: InkWell(
-            onTap: () {
-              if (option == 'go') {
-                Get.toNamed(router);
-              } else if (option == 'back') {
-                Get.back();
-              } else if (option == 'allBack') {
-                Get.offAllNamed(router);
-              }
-            },
-            child: thisIcon),
-      ),
+      child: InkWell(
+          onTap: () {
+            if (option == 'go') {
+              Get.toNamed(router);
+            } else if (option == 'back') {
+              Get.back();
+            } else if (option == 'allBack') {
+              Get.offAllNamed(router);
+            }
+          },
+          child: thisIcon),
     );
   }
 

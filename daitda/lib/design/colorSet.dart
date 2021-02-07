@@ -12,4 +12,7 @@ class ColorSet {
   final Color backgroundColor = Colors.white;
   final Color mainBoxColor = Color(0xfff6f5f5);
   final Color buttonColor = Color(0xfff0f0f3);
+
+  //  Left Right Icon Color
+  final Color lrIconColor = Colors.grey;
 }

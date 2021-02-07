@@ -1,6 +1,8 @@
+import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -26,6 +28,9 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
+          SizedBox(height: 50,),
+          AnimatedLiquidLinearProgressIndicator(),
+
           Expanded(
             child: GridView.builder(
               itemCount: _urls.length,
