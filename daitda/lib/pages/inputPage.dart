@@ -1,3 +1,4 @@
+import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:daitda/UIConponent/uiComponent.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,11 @@ class _InputPageState extends State<InputPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             UIComponent().buildHeightSizedBox(50),
-            UIComponent().renderTopStateBar(1),
+            // UIComponent().renderTopStateBar(1),
+            AnimatedLiquidLinearProgressIndicator(),
+
             UIComponent().buildHeightSizedBox(50),
+
             _buildCenter("기부자님에 대해 알려주세요", context),
           ],
         ),
@@ -113,16 +117,13 @@ class _InputPageState extends State<InputPage> {
             children: [
               UIComponent().renderTitleText(title),
               Container(
-                width: 1000,
+                width: 800,
                 height: MediaQuery.of(context).size.height - 229,
                 child: Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
+                  elevation: 0,
+                  // shape: RoundedRectangleBorder(
+                  //   borderRadius: BorderRadius.circular(20),
+                  // ),
                   color: ColorSet().mainBoxColor,
                   child: _buildBody(),
                 ),
