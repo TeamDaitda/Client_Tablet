@@ -1,18 +1,17 @@
 import 'package:daitda/design/designSet.dart';
 import 'package:daitda/pages/cameraPage.dart';
 import 'package:daitda/pages/categoryPage.dart';
-import 'package:daitda/pages/detailPage.dart';
 import 'package:daitda/pages/homePage.dart';
 import 'package:daitda/pages/inputPage.dart';
 import 'package:daitda/pages/paymentPage.dart';
 import 'package:daitda/pages/resultPage.dart';
 import 'package:daitda/pages/testPage.dart';
+import 'package:daitda/pages/onboardingPage.dart';
+import 'package:daitda/pages/galleryPage.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
-//test
 
 void main() {
   runApp(MyApp());
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'DAITDA',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         splashColor: Colors.transparent,
@@ -33,14 +32,18 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => HomePage()),
+        GetPage(name: '/', page: () => OnboardingPage()),
+        GetPage(
+            name: '/homePage',
+            page: () => CategoryPage(),
+            transition: Transition.fadeIn),
         GetPage(
             name: '/categoryPage',
             page: () => CategoryPage(),
             transition: Transition.fadeIn),
-        GetPage(
-            name: '/detailPage',
-            page: () => DetailPage(),
+         GetPage(
+            name: '/galleryPage',
+            page: () => CategoryPage(),
             transition: Transition.fadeIn),
         GetPage(
             name: '/inputPage',
