@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class ColorSet {
-  final Color tfColor = Colors.transparent;
-
-
   //  Top Process Bar Color
   final Color activeColor = Color(0xff9470ac);
   final Color disableColor = Color(0xffc4c4c4);

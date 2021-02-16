@@ -19,7 +19,7 @@ class _TestPageState extends State<TestPage> {
 
   @override
   void initState() {
-    progressData.setData(0.6);
+    progressData.setData(0.2);
     super.initState();
   }
 
@@ -78,7 +78,7 @@ class _TestPageState extends State<TestPage> {
         children: [
           AnimatedLiquidLinearProgressIndicator(),
           ProcessBar(
-            index: 0,
+            index: 3,
           ),
         ],
       ),
