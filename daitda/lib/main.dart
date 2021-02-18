@@ -8,9 +8,7 @@ import 'package:daitda/pages/resultPage.dart';
 import 'package:daitda/pages/testPage.dart';
 import 'package:daitda/pages/onboardingPage.dart';
 import 'package:daitda/pages/galleryPage.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 void main() {
@@ -35,7 +33,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => OnboardingPage()),
         GetPage(
             name: '/homePage',
-            page: () => CategoryPage(),
+            page: () => HomePage(),
             transition: Transition.fadeIn),
         GetPage(
             name: '/categoryPage',
@@ -43,7 +41,7 @@ class MyApp extends StatelessWidget {
             transition: Transition.fadeIn),
          GetPage(
             name: '/galleryPage',
-            page: () => CategoryPage(),
+            page: () => GalleryPage(),
             transition: Transition.fadeIn),
         GetPage(
             name: '/inputPage',
@@ -61,10 +59,10 @@ class MyApp extends StatelessWidget {
             name: '/resultPage',
             page: () => ResultPage(),
             transition: Transition.fadeIn),
-        GetPage(
+        /*GetPage(
             name: '/testPage',
             page: () => TestPage(),
-            transition: Transition.fadeIn),
+            transition: Transition.fadeIn),*/
       ],
     );
   }
