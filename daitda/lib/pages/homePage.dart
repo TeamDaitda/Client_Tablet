@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-            
             TextLiquidFill(
               text: 'DAITDA',
               waveColor: Colors.white,
@@ -31,19 +30,35 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 80.0,
                 fontWeight: FontWeight.bold,
               ),
+              boxHeight: 130.0,
             ),
 
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('draw your line',
+              style: TextStyle(
+                fontSize: 24,
+              color: Colors.white,
+              ),
+              ),
 
-
-          SizedBox(
-            height: 25.0,
+            ],
           ),
+          
+          SizedBox(
+            height: 30.0,
+          ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               FlatButton(
-                child: Text('gallery', style: TextStyle(fontSize: 16)),
-                color: const Color(0xffb74093),
+                child: Text('gallery', style: TextStyle(
+                fontSize: 16,
+                color: Colors.white)),
+
+                color: Colors.black,
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
@@ -52,9 +67,15 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
 
+          SizedBox(
+          width: 30.0,
+          ),
+
               FlatButton(
-                child: Text('start', style: TextStyle(fontSize: 16)),
-                color: const Color(0xffb74093),
+                child: Text('start', style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,)),
+                color: Colors.black,
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
