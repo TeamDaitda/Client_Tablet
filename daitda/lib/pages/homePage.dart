@@ -3,7 +3,7 @@ import 'package:daitda/pages/galleryPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -60,10 +60,8 @@ class _HomePageState extends State<HomePage> {
 
                 color: Colors.black,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return GalleryPage();
-                  }));
+                  // getX Route 
+                  Get.toNamed('/galleryPage');
                 },
               ),
 
@@ -77,10 +75,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,)),
                 color: Colors.black,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return CategoryPage();
-                  }));
+                  Get.toNamed('/categoryPage');
                 },
               ),
 
@@ -91,7 +86,7 @@ class _HomePageState extends State<HomePage> {
       );
   }
 }
-class SecondRoute extends StatelessWidget {
+/*class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +105,7 @@ class SecondRoute extends StatelessWidget {
         )
         );
   }
-}
+}*/
 
 
 
