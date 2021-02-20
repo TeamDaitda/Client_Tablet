@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DesignSet extends GetxController {
+  static DesignSet get to => Get.find();
+
   double _screenWidth;
   double _screenHeight;
 
@@ -10,7 +12,7 @@ class DesignSet extends GetxController {
     _screenHeight = null;
   }
 
-  void setScreenWidthAndHeight(double w, double h) {
+  void setScreenWidthAndHeight({@required double w, @required double h}) {
     _screenWidth = w;
     _screenHeight = h;
     update();

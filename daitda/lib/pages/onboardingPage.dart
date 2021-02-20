@@ -7,7 +7,6 @@ import 'package:onboarding/onboarding.dart';
 
 import 'homePage.dart';
 
-
 class OnboardingPage extends StatefulWidget {
   OnboardingPage({Key key, this.title}) : super(key: key);
 
@@ -20,7 +19,7 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   List<String> _urls = [];
 
-    final onboardingPagesList = [
+  final onboardingPagesList = [
     PageModel(
       assetPath: 'images/main.png',
       title: '선을 모아 마음을 잇다',
@@ -56,13 +55,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       home: Onboarding(
         proceedButtonStyle: ProceedButtonStyle(
             proceedButtonRoute: (context) {
-              return Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomePage(),
-                ),
-                (route) => false,
-              );
+              Get.toNamed('/homePage');
             },
             proceedButtonText: 'main',
             proceedButtonColor: Colors.black),
@@ -75,14 +68,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
         ),
         titleStyle: TextStyle(
-          fontSize: 45,
-          fontWeight: FontWeight.bold,
-          color: Colors.white),
-          infoStyle: TextStyle(
-            fontSize: 25,
-            color: Colors.white
-          ),
-          titleAndInfoPadding: EdgeInsets.symmetric(vertical:30, horizontal:5),
+            fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white),
+        infoStyle: TextStyle(fontSize: 25, color: Colors.white),
+        titleAndInfoPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 5),
       ),
     );
   }

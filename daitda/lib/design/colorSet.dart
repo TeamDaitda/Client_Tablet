@@ -4,7 +4,6 @@ import 'dart:math' as math;
 class ColorSet {
   final Color tfColor = Colors.transparent;
 
-
   //  Top Process Bar Color
   final Color activeColor = Color(0xff9470ac);
   final Color disableColor = Color(0xffc4c4c4);
@@ -40,6 +39,9 @@ class ColorSet {
   //  Process Bar Color
   final Color processBarActivecolor = Colors.white;
   final Color processBarDisableColor = Color(0xff99aab5);
+
+  //  Main Background Color
+  final Color mainCardMackgroundcolor = Colors.white;
 
   Color randomColor() {
     return Color((math.Random().nextDouble() * 0xFFFFFF).toInt())

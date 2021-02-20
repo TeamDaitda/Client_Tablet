@@ -19,7 +19,8 @@ class _TestPageState extends State<TestPage> {
 
   @override
   void initState() {
-    progressData.setData(0.6);
+    designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
+    progressData.setData(0.2);
     super.initState();
   }
 
