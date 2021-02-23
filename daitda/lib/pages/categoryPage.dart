@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
+import 'package:daitda/pages/inputPage.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -106,6 +107,17 @@ class _CategoryPageState extends State<CategoryPage> {
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
+
+          child: FlatButton(
+                child: Text('next', style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,)
+                ),
+                color: Colors.white,
+                onPressed: () {
+                  Get.toNamed('/inputpage');
+                },
+              ),
         ),
 
       ),
@@ -132,7 +144,7 @@ class _CategoryPageState extends State<CategoryPage> {
             return Padding(
               padding: const EdgeInsets.only(left: 20),
               child: InkWell (
-                 onTap: () => print("Search"), 
+                 //onTap: () => print("Search"), 
               child: Container(
                 width: 200,
                 decoration: BoxDecoration(
