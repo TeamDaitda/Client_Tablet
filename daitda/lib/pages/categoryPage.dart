@@ -100,12 +100,14 @@ class _CategoryPageState extends State<CategoryPage> {
       height: designSet.getMainAreaHeight(),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
+        
         child: Container(
           decoration: BoxDecoration(
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
         ),
+
       ),
     );
   }
@@ -121,18 +123,23 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
       width: designSet.getBottomAreaWidth(),
       height: designSet.getBottomAreaHeight(),
+      
       child: Padding(
         padding: const EdgeInsets.all(20.0),
+        
         child: Swiper(
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.only(left: 20),
+              child: InkWell (
+                 onTap: () => print("Search"), 
               child: Container(
                 width: 200,
                 decoration: BoxDecoration(
                   color: colorSet.mainCardMackgroundcolor,
                   borderRadius: BorderRadius.circular(20),
                 ),
+              ),
               ),
             );
           },
