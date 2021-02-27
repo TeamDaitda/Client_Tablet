@@ -16,6 +16,7 @@ class ColorSet {
   final Color backgroundColor = Color(0xff2c2f33);
   final Color mainBoxColor = Color(0xfff6f5f5);
   final Color buttonColor = Color(0xfff0f0f3);
+   final Color boxDecorationColor = Color(0xfff0f0f3);
 
   //  Left Right Icon Color
   final Color lrIconColor = Colors.grey;
@@ -29,7 +30,7 @@ class ColorSet {
   final Color dividorColor = Color(0xff23272a);
   final Color inputAreaColor = Color(0xff23272a);
   final Color inputcardAreaColor = Color(0xff23272a);
-
+  final Color paymentAreaColor = Color(0xff23272a);
   //  UI Component Background Color
   final Color logoBackgroundColor = Colors.transparent;
   final Color progressBackgroundColor = Colors.transparent;

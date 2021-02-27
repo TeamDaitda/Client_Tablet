@@ -1,6 +1,10 @@
-import 'package:daitda/UIConponent/uiComponent.dart';
+import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
+import 'package:daitda/controller/progress.dart';
+import 'package:daitda/UIConponent/processBar.dart';
 import 'package:daitda/design/colorSet.dart';
+import 'package:daitda/design/designSet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -9,50 +13,110 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
+  final designSet = Get.put(DesignSet());
+  final progressData = Get.put(ProgressData());
+  final colorSet = ColorSet();
+
+  @override
+  void initState() {
+    designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
+    progressData.setData(0.2);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+    SystemChrome.setEnabledSystemUIOverlays([]);
+      return Scaffold(
+      body: Container(
+        child: Row(
           children: [
-            UIComponent().buildHeightSizedBox(50),
-            UIComponent().renderTopStateBar(3),
-            UIComponent().buildHeightSizedBox(50),
-            _buildCenter("이제, 기부해볼까요?", context),
+            Column(
+              children: [
+                renderLogoArea(),
+                renderProgressArea(),
+              ],
+            ),
+            Row(
+              children: [
+                renderPaymentArea(),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCenter(String title, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        UIComponent().renderNavigationButton(option: 'back'),
-        Container(
-          // color: Color(0xfff6f5f5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              UIComponent().renderTitleText(title),
-              Container(
-                color: Color(0xfff6f5f5),
-                width: 1000,
-                height: MediaQuery.of(context).size.height - 229,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[],
-                ),
-              ),
-            ],
-          ),
+ Widget renderLogoArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.logoAreaColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.dividorColor,
         ),
-        UIComponent()
-            .renderNavigationButton(option: 'go', router: '/cameraPage'),
-      ],
+      ),
+      width: designSet.getLogoAreaWidth(),
+      height: designSet.getLogoAreaHeight(),
+    );
+  }
+
+Widget renderProgressArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.progressAreaColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.dividorColor,
+        ),
+      ),
+      width: designSet.getProgressAreaWidth(),
+      height: designSet.getProgressAreaHeight(),
+      child: Column(
+        children: [
+          AnimatedLiquidLinearProgressIndicator(),
+          ProcessBar(
+            index: 3,
+          ),
+        ],
+      ),
+    );
+  }
+
+    Widget renderPaymentArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.mainAreaColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.dividorColor,
+        ),
+      ),
+      width: designSet.getPaymentAreaWidth(),
+      height: designSet.getPaymentAreaHeight(),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        
+        child: Container(
+          decoration: BoxDecoration(
+            color: colorSet.mainCardMackgroundcolor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+
+          child: FlatButton(
+                child: Text('camera', style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,)
+                ),
+                color: Colors.white,
+                onPressed: () {
+                  Get.toNamed('/cameraPage');
+                },
+              ),
+        ),
+
+      ),
     );
   }
 }

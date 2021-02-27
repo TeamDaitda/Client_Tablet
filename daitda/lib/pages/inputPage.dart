@@ -1,23 +1,22 @@
 import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
-import 'package:daitda/UIConponent/uiComponent.dart';
-import 'package:daitda/controller/progress.dart';
 import 'package:daitda/UIConponent/processBar.dart';
+import 'package:daitda/controller/progress.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 
 class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
-
 class _InputPageState extends State<InputPage> {
   final designSet = Get.put(DesignSet());
   final progressData = Get.put(ProgressData());
   final colorSet = ColorSet();
-
+  
   @override
   void initState() {
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
@@ -28,7 +27,8 @@ class _InputPageState extends State<InputPage> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
-      return Scaffold(
+
+    return Scaffold(
       body: Container(
         child: Row(
           children: [
@@ -48,28 +48,9 @@ class _InputPageState extends State<InputPage> {
         ),
       ),
     );
-
-    // return Scaffold(
-    //   resizeToAvoidBottomInset: false,
-    //   backgroundColor: Colors.white,
-    //   body: Center(
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       children: [
-    //         UIComponent().buildHeightSizedBox(50),
-    //         // UIComponent().renderTopStateBar(1),
-    //         AnimatedLiquidLinearProgressIndicator(),
-
-    //         UIComponent().buildHeightSizedBox(50),
-
-    //         _buildCenter("기부자님에 대해 알려주세요", context),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 
- Widget renderLogoArea() {
+  Widget renderLogoArea() {
     return Container(
       decoration: BoxDecoration(
         color: colorSet.logoAreaColor,
@@ -83,7 +64,7 @@ class _InputPageState extends State<InputPage> {
     );
   }
 
-Widget renderProgressArea() {
+  Widget renderProgressArea() {
     return Container(
       decoration: BoxDecoration(
         color: colorSet.progressAreaColor,
@@ -105,7 +86,7 @@ Widget renderProgressArea() {
     );
   }
 
-    Widget renderInputcardArea() {
+  Widget renderInputcardArea() {
     return Container(
       decoration: BoxDecoration(
         color: colorSet.mainAreaColor,
@@ -126,11 +107,11 @@ Widget renderProgressArea() {
           ),
 
           child: FlatButton(
-                child: Text('cardddd', style: TextStyle(
+                child: Text('next', style: TextStyle(
                 fontSize: 16,
-                color: Colors.white,)
+                color: Colors.black,)
                 ),
-                color: Colors.black,
+                color: Colors.white,
                 onPressed: () {
                   Get.toNamed('/inputPage');
                 },
@@ -141,11 +122,10 @@ Widget renderProgressArea() {
     );
   }
 
-
-      Widget renderInputArea() {
-    return Container(
+  Widget renderInputArea() {
+return Container(
       decoration: BoxDecoration(
-        color: colorSet.mainAreaColor,
+        color: colorSet.inputAreaColor,
         border: Border.all(
           width: 0.5,
           color: colorSet.dividorColor,
@@ -163,123 +143,17 @@ Widget renderProgressArea() {
           ),
 
           child: FlatButton(
-                child: Text('input', style: TextStyle(
+                child: Text('camera', style: TextStyle(
                 fontSize: 16,
-                color: Colors.white,)
+                color: Colors.black,)
                 ),
-                color: Colors.black,
+                color: Colors.white,
                 onPressed: () {
-                  Get.toNamed('/inputPage');
+                  Get.toNamed('/cameraPage');
                 },
               ),
         ),
-
       ),
     );
   }
-
-
-
-//   Widget _buildBody() {
-//     return Padding(
-//       padding: const EdgeInsets.all(30.0),
-//       child: Container(
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               "성함을 입력해주세요.",
-//               style: TextStyle(
-//                 fontSize: 20,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//             ),
-//             Text(
-//               "결과물에 기부자님의 성함이 기재됩니다.",
-//               style: TextStyle(
-//                 fontSize: 12,
-//                 color: Colors.grey,
-//               ),
-//             ),
-//             Container(
-//               width: 200,
-//               height: 40,
-//               child: TextField(),
-//             ),
-//             UIComponent().buildHeightSizedBox(50),
-//             Text(
-//               "연락처를 입력해주세요.",
-//               style: TextStyle(
-//                 fontSize: 20,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//             ),
-//             Text(
-//               "결과물에 기부자님의 연락처가 기재됩니다.",
-//               style: TextStyle(
-//                 fontSize: 12,
-//                 color: Colors.grey,
-//               ),
-//             ),
-//             Container(
-//               width: 200,
-//               height: 40,
-//               child: TextField(),
-//             ),
-//             UIComponent().buildHeightSizedBox(50),
-//             Text(
-//               "소속을 입력해주세요.",
-//               style: TextStyle(
-//                 fontSize: 20,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//             ),
-//             Text(
-//               "결과물에 기부자님의 직업이 기재됩니다.",
-//               style: TextStyle(
-//                 fontSize: 12,
-//                 color: Colors.grey,
-//               ),
-//             ),
-//             Container(
-//               width: 200,
-//               height: 40,
-//               child: TextField(),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildCenter(String title, BuildContext context) {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//       children: [
-//         UIComponent().renderNavigationButton(option: 'back'),
-//         Container(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               UIComponent().renderTitleText(title),
-//               Container(
-//                 width: 800,
-//                 height: MediaQuery.of(context).size.height - 229,
-//                 child: Card(
-//                   elevation: 0,
-//                   // shape: RoundedRectangleBorder(
-//                   //   borderRadius: BorderRadius.circular(20),
-//                   // ),
-//                   color: ColorSet().mainBoxColor,
-//                   child: _buildBody(),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         UIComponent()
-//             .renderNavigationButton(option: 'go', router: '/categoryPage'),
-//       ],
-//     );
-//   }
 }

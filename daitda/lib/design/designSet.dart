@@ -66,6 +66,14 @@ class DesignSet extends GetxController {
     return _screenHeight != null ? _screenWidth * 0.425 : 0;
   }
 
+  double getPaymentAreaWidth() {
+    return _screenHeight != null ? _screenWidth * 0.85 : 0;
+  }
+
+  double getPaymentAreaHeight() {
+    return _screenHeight != null ? _screenHeight : 0;
+  }
+
   double getBottomAreaWidth() {
     return _screenWidth != null ? _screenWidth * 0.85 : 0;
   }
