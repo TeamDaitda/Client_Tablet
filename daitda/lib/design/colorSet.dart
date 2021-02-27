@@ -27,6 +27,8 @@ class ColorSet {
   final Color mainAreaColor = Color(0xff2c2f33);
   final Color bottomAreaColor = Color(0xff2c2f33);
   final Color dividorColor = Color(0xff23272a);
+  final Color inputAreaColor = Color(0xff23272a);
+  final Color inputcardAreaColor = Color(0xff23272a);
 
   //  UI Component Background Color
   final Color logoBackgroundColor = Colors.transparent;

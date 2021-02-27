@@ -50,6 +50,22 @@ class DesignSet extends GetxController {
     return _screenHeight != null ? _screenHeight * 0.7 : 0;
   }
 
+  double getInputAreaWidth() {
+    return _screenWidth != null ? _screenWidth * 0.425 : 0;
+  }
+
+  double getInputAreaHeight() {
+    return _screenHeight != null ? _screenHeight : 0;
+  }
+
+  double getInputcardAreaHeight() {
+    return _screenHeight != null ? _screenHeight : 0;
+  }
+
+  double getInputcardAreaWidth() {
+    return _screenHeight != null ? _screenWidth * 0.425 : 0;
+  }
+
   double getBottomAreaWidth() {
     return _screenWidth != null ? _screenWidth * 0.85 : 0;
   }
@@ -65,4 +81,5 @@ class DesignSet extends GetxController {
   double getProgressBarHeight() {
     return getProgressAreaHeight() != null ? getProgressAreaHeight() * 0.05 : 0;
   }
+
 }

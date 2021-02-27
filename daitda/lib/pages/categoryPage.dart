@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
-import 'package:daitda/pages/inputPage.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -115,7 +114,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
                 color: Colors.white,
                 onPressed: () {
-                  Get.toNamed('/inputpage');
+                  Get.toNamed('/inputPage');
                 },
               ),
         ),
