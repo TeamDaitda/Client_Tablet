@@ -1,5 +1,5 @@
-import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
-import 'package:daitda/UIConponent/processBar.dart';
+import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
+import 'package:daitda/UIComponent/processBar.dart';
 import 'package:daitda/controller/progress.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';

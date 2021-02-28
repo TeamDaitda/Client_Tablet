@@ -1,6 +1,6 @@
-import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
+import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:daitda/controller/progress.dart';
-import 'package:daitda/UIConponent/processBar.dart';
+import 'package:daitda/UIComponent/processBar.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
-      return Scaffold(
+    return Scaffold(
       body: Container(
         child: Row(
           children: [
@@ -48,7 +48,7 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
- Widget renderLogoArea() {
+  Widget renderLogoArea() {
     return Container(
       decoration: BoxDecoration(
         color: colorSet.logoAreaColor,
@@ -62,7 +62,7 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-Widget renderProgressArea() {
+  Widget renderProgressArea() {
     return Container(
       decoration: BoxDecoration(
         color: colorSet.progressAreaColor,
@@ -84,7 +84,7 @@ Widget renderProgressArea() {
     );
   }
 
-    Widget renderPaymentArea() {
+  Widget renderPaymentArea() {
     return Container(
       decoration: BoxDecoration(
         color: colorSet.mainAreaColor,
@@ -97,25 +97,23 @@ Widget renderProgressArea() {
       height: designSet.getPaymentAreaHeight(),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        
         child: Container(
           decoration: BoxDecoration(
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
-
           child: FlatButton(
-                child: Text('AD', style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,)
-                ),
-                color: Colors.white,
-                onPressed: () {
-                  Get.toNamed('/cameraPage');
-                },
-              ),
+            child: Text('AD',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                )),
+            color: Colors.white,
+            onPressed: () {
+              Get.toNamed('/cameraPage');
+            },
+          ),
         ),
-
       ),
     );
   }

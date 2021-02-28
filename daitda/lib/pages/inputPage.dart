@@ -1,10 +1,8 @@
-import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
-import 'package:daitda/UIConponent/processBar.dart';
-import 'package:daitda/UIConponent/uiComponent.dart';
-import 'package:daitda/controller/progress.dart';
-import 'package:daitda/data/category.dart';
-import 'package:daitda/design/colorSet.dart';
-import 'package:daitda/design/designSet.dart';
+import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
+import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
+import 'package:daitda/design/designs.dart' as DESIGNS;
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,15 +13,28 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  final designSet = Get.put(DesignSet());
-  final progressData = Get.put(ProgressData());
-  final colorSet = ColorSet();
-  CategoryMember thisCategoryMember;
+  final designSet = Get.put(DESIGNS.DesignSet());
+  final progressData = Get.put(CONTROLLERS.ProgressData());
+  final colorSet = DESIGNS.ColorSet();
+
+  TextEditingController nameTextFieldController = TextEditingController();
+  String nameText;
+  String phoneText;
+  String affiliationText;
+  TextEditingController affiliationTextFieldController =
+      TextEditingController();
+
+  CONTROLLERS.CategoryMember thisCategoryMember;
 
   @override
   void initState() {
     thisCategoryMember = Get.arguments;
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
+
+    nameText = "홍길동";
+    phoneText = "010-1234-5678";
+    affiliationText = "OO대학교";
+
     progressData.setData(0.2);
     super.initState();
   }
@@ -33,6 +44,7 @@ class _InputPageState extends State<InputPage> {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         child: Row(
           children: [
@@ -81,8 +93,8 @@ class _InputPageState extends State<InputPage> {
       height: designSet.getProgressAreaHeight(),
       child: Column(
         children: [
-          AnimatedLiquidLinearProgressIndicator(),
-          ProcessBar(
+          UICOMPONENTS.AnimatedLiquidLinearProgressIndicator(),
+          UICOMPONENTS.ProcessBar(
             index: 1,
           ),
         ],
@@ -142,18 +154,6 @@ class _InputPageState extends State<InputPage> {
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
-
-          // child: FlatButton(
-          //       child: Text('camera', style: TextStyle(
-          //       fontSize: 16,
-          //       color: Colors.black,)
-          //       ),
-          //       color: Colors.white,
-          //       onPressed: () {
-          //         Get.toNamed('/cameraPage');
-          //       },
-          //     ),
-
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 160, horizontal: 80),
             child: Column(
@@ -173,12 +173,34 @@ class _InputPageState extends State<InputPage> {
                     color: Colors.grey,
                   ),
                 ),
-                Container(
-                  width: 200,
-                  height: 40,
-                  child: TextField(),
+                InkWell(
+                  onTap: () {
+                    _showDialog(title: "이름을 알려주세요.", index: 0);
+                  },
+                  child: Container(
+                    width: 200,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 2,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "$nameText",
+                          style: designSet.getStyleInputPageText(),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                UIComponent().buildHeightSizedBox(50),
+                UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
                 Text(
                   "연락처를 입력해주세요.",
                   style: TextStyle(
@@ -193,12 +215,34 @@ class _InputPageState extends State<InputPage> {
                     color: Colors.grey,
                   ),
                 ),
-                Container(
-                  width: 200,
-                  height: 40,
-                  child: TextField(),
+                InkWell(
+                  onTap: () {
+                    _showDialog(title: "연락처를 입력해주세요", index: 1);
+                  },
+                  child: Container(
+                    width: 300,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 2,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "$phoneText",
+                          style: designSet.getStyleInputPageText(),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                UIComponent().buildHeightSizedBox(50),
+                UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
                 Text(
                   "소속을 입력해주세요.",
                   style: TextStyle(
@@ -213,16 +257,95 @@ class _InputPageState extends State<InputPage> {
                     color: Colors.grey,
                   ),
                 ),
-                Container(
-                  width: 200,
-                  height: 40,
-                  child: TextField(),
+                InkWell(
+                  onTap: () {
+                    _showDialog(title: "소속을 입력해주세요.", index: 2);
+                  },
+                  child: Container(
+                    width: 200,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 2,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "$affiliationText",
+                          style: designSet.getStyleInputPageText(),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  void _showDialog({@required String title, @required int index}) {
+    String value = "";
+    if (index != 0 && index != 1 && index != 2) return null;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: Text(title, style: designSet.getStyleDialogTitleText()),
+          content: TextField(
+            onChanged: (changedText) {
+              value = changedText;
+            },
+            keyboardType: index == 0
+                ? TextInputType.name
+                : index == 1
+                    ? TextInputType.phone
+                    : index == 2
+                        ? TextInputType.text
+                        : null,
+          ),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text("확인",
+                  style: designSet.getStyleDialogButtonText(isPositive: true)),
+              onPressed: () {
+                FocusScope.of(context).unfocus(); //  활성화 상태인 키보드 끄기.
+                Navigator.pop(context);
+                setState(() {
+                  switch (index) {
+                    case 0:
+                      nameText = value;
+                      break;
+                    case 1:
+                      phoneText = value;
+                      break;
+                    case 2:
+                      affiliationText = value;
+                      break;
+                  }
+                });
+              },
+            ),
+            CupertinoButton(
+              child: Text("취소",
+                  style: designSet.getStyleDialogButtonText(isPositive: false)),
+              onPressed: () {
+                FocusScope.of(context).unfocus(); //  활성화 상태인 키보드 끄기.
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

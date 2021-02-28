@@ -1,5 +1,5 @@
 import 'package:daitda/CurvePainter.dart';
-import 'package:daitda/UIConponent/uiComponent.dart';
+import 'package:daitda/UIComponent/uiComponent.dart';
 import 'package:daitda/api/ImageApi.dart';
 import 'package:daitda/controller/user.dart';
 import 'package:flutter/material.dart';

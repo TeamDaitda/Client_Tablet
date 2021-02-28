@@ -1,10 +1,7 @@
-import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
-import 'package:daitda/UIConponent/processBar.dart';
-import 'package:daitda/controller/progress.dart';
-import 'package:daitda/controller/user.dart';
-import 'package:daitda/data/category.dart';
-import 'package:daitda/design/colorSet.dart';
-import 'package:daitda/design/designSet.dart';
+import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
+import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
+import 'package:daitda/design/designs.dart' as DESIGNS;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -16,15 +13,15 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  final designSet = Get.put(DesignSet());
-  final colorSet = ColorSet();
+  final designSet = Get.put(DESIGNS.DesignSet());
+  final colorSet = DESIGNS.ColorSet();
 
-  final progressData = Get.put(ProgressData());
+  final progressData = Get.put(CONTROLLERS.ProgressData());
 
-  final userController = Get.put(UserController());
-  final categoryController = Get.put(Category());
+  final userController = Get.put(CONTROLLERS.UserController());
+  final categoryController = Get.put(CONTROLLERS.Category());
 
-  CategoryMember thisCategoryMember;
+  CONTROLLERS.CategoryMember thisCategoryMember;
 
   @override
   void initState() {
@@ -88,8 +85,8 @@ class _CategoryPageState extends State<CategoryPage> {
       height: designSet.getProgressAreaHeight(),
       child: Column(
         children: [
-          AnimatedLiquidLinearProgressIndicator(),
-          ProcessBar(
+          UICOMPONENTS.AnimatedLiquidLinearProgressIndicator(),
+          UICOMPONENTS.ProcessBar(
             index: 3,
           ),
         ],
@@ -151,7 +148,7 @@ class _CategoryPageState extends State<CategoryPage> {
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    thisCategoryMember = CategoryMember(
+                    thisCategoryMember = CONTROLLERS.CategoryMember(
                       id: categoryController.categoryMember[index].id,
                       title: categoryController.categoryMember[index].title,
                       body: categoryController.categoryMember[index].body,
