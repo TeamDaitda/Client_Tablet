@@ -1,6 +1,8 @@
 import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:daitda/UIConponent/processBar.dart';
 import 'package:daitda/controller/progress.dart';
+import 'package:daitda/controller/user.dart';
+import 'package:daitda/data/category.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +17,19 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   final designSet = Get.put(DesignSet());
-  final progressData = Get.put(ProgressData());
   final colorSet = ColorSet();
+
+  final progressData = Get.put(ProgressData());
+
+  final userController = Get.put(UserController());
+  final categoryController = Get.put(Category());
+
+  CategoryMember thisCategoryMember;
 
   @override
   void initState() {
+    thisCategoryMember = categoryController.categoryMember[0];
+
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
     progressData.setData(0.2);
     super.initState();
@@ -100,25 +110,23 @@ class _CategoryPageState extends State<CategoryPage> {
       height: designSet.getMainAreaHeight(),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        
         child: Container(
           decoration: BoxDecoration(
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
-
           child: FlatButton(
-                child: Text('next', style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,)
-                ),
-                color: Colors.white,
-                onPressed: () {
-                  Get.toNamed('/inputPage');
-                },
-              ),
+            child: Text(thisCategoryMember.toString(),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                )),
+            color: Colors.white,
+            onPressed: () {
+              Get.toNamed('/inputPage', arguments: thisCategoryMember);
+            },
+          ),
         ),
-
       ),
     );
   }
@@ -134,27 +142,41 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
       width: designSet.getBottomAreaWidth(),
       height: designSet.getBottomAreaHeight(),
-      
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        
         child: Swiper(
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: InkWell (
-                 //onTap: () => print("Search"), 
-              child: Container(
-                width: 200,
-                decoration: BoxDecoration(
-                  color: colorSet.mainCardMackgroundcolor,
-                  borderRadius: BorderRadius.circular(20),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    thisCategoryMember = CategoryMember(
+                      id: categoryController.categoryMember[index].id,
+                      title: categoryController.categoryMember[index].title,
+                      body: categoryController.categoryMember[index].body,
+                      imgUrl: categoryController.categoryMember[index].imgUrl,
+                    );
+                    print(categoryController.categoryMember[index].toString());
+                  });
+                },
+                child: Container(
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: colorSet.mainCardMackgroundcolor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "${categoryController.categoryMember[index].id.toString()}\n${categoryController.categoryMember[index].toString()}",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ),
-              ),
               ),
             );
           },
-          itemCount: 5,
+          itemCount: categoryController.categoryMember.length,
           pagination: null,
           control: null,
           viewportFraction: 0.30,
