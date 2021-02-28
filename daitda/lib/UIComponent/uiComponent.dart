@@ -1,4 +1,4 @@
-import 'package:daitda/UIConponent/uiComponentCalc.dart';
+import 'package:daitda/UIComponent/uiComponentCalc.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
