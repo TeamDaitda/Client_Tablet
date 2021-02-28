@@ -1,8 +1,11 @@
+import 'package:daitda/design/colorSet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DesignSet extends GetxController {
   static DesignSet get to => Get.find();
+
+  final colorSet = ColorSet();
 
   double _screenWidth;
   double _screenHeight;
@@ -90,4 +93,28 @@ class DesignSet extends GetxController {
     return getProgressAreaHeight() != null ? getProgressAreaHeight() * 0.05 : 0;
   }
 
+  TextStyle getStyleDialogButtonText({@required bool isPositive}) {
+    return TextStyle(
+      color: isPositive
+          ? colorSet.positivetextColor
+          : colorSet.notPositiveTextColor,
+      fontWeight: FontWeight.bold,
+    );
+  }
+
+  TextStyle getStyleDialogTitleText() {
+    return TextStyle(
+      color: colorSet.fontColorBlack,
+      fontWeight: FontWeight.bold,
+      fontSize: 18,
+    );
+  }
+
+  TextStyle getStyleInputPageText() {
+    return TextStyle(
+      color: Colors.grey,
+      fontWeight: FontWeight.bold,
+      fontSize: 17,
+    );
+  }
 }

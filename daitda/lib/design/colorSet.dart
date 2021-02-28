@@ -10,7 +10,7 @@ class ColorSet {
 
   //  Font Color
   final Color fontColor = Colors.white;
-  final Color fontColorBlack = Color(0xff23272a);
+  final Color fontColorBlack = Color(0xff2c2f33);
 
   //  Container Color
   final Color backgroundColor = Color(0xff2c2f33);
@@ -45,6 +45,10 @@ class ColorSet {
 
   //  Main Background Color
   final Color mainCardMackgroundcolor = Colors.white;
+
+  //  Text Color
+  final Color positivetextColor = Color(0xff2c2f33);
+  final Color notPositiveTextColor = Color(0xffE53A40);
 
   Color randomColor() {
     return Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
