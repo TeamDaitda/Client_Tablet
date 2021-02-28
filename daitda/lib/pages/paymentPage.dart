@@ -105,7 +105,7 @@ Widget renderProgressArea() {
           ),
 
           child: FlatButton(
-                child: Text('camera', style: TextStyle(
+                child: Text('AD', style: TextStyle(
                 fontSize: 16,
                 color: Colors.black,)
                 ),

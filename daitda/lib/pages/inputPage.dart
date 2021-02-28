@@ -1,11 +1,11 @@
 import 'package:daitda/UIConponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:daitda/UIConponent/processBar.dart';
+import 'package:daitda/UIConponent/uiComponent.dart';
 import 'package:daitda/controller/progress.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 
 class InputPage extends StatefulWidget {
@@ -79,7 +79,7 @@ class _InputPageState extends State<InputPage> {
         children: [
           AnimatedLiquidLinearProgressIndicator(),
           ProcessBar(
-            index: 3,
+            index: 1,
           ),
         ],
       ),
@@ -113,7 +113,7 @@ class _InputPageState extends State<InputPage> {
                 ),
                 color: Colors.white,
                 onPressed: () {
-                  Get.toNamed('/inputPage');
+                  Get.toNamed('/paymentPage');
                 },
               ),
         ),
@@ -122,8 +122,8 @@ class _InputPageState extends State<InputPage> {
     );
   }
 
-  Widget renderInputArea() {
-return Container(
+  Widget renderInputArea() { 
+  return Container(
       decoration: BoxDecoration(
         color: colorSet.inputAreaColor,
         border: Border.all(
@@ -135,25 +135,94 @@ return Container(
       height: designSet.getInputAreaHeight(),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        
+         
         child: Container(
           decoration: BoxDecoration(
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
 
-          child: FlatButton(
-                child: Text('camera', style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,)
-                ),
-                color: Colors.white,
-                onPressed: () {
-                  Get.toNamed('/cameraPage');
-                },
+          // child: FlatButton(
+          //       child: Text('camera', style: TextStyle(
+          //       fontSize: 16,
+          //       color: Colors.black,)
+          //       ),
+          //       color: Colors.white,
+          //       onPressed: () {
+          //         Get.toNamed('/cameraPage');
+          //       },
+          //     ),
+        
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical:160, horizontal: 80),
+          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "이름을 알려주세요.",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            Text(
+              "결과물에 기부자님의 성함이 기재됩니다.",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+            Container(
+              width: 200,
+              height: 40,
+              child: TextField(),
+            ),
+            UIComponent().buildHeightSizedBox(50),
+            Text(
+              "연락처를 입력해주세요.",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "결과물에 기부자님의 연락처가 기재됩니다.",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+            Container(
+              width: 200,
+              height: 40,
+              child: TextField(),
+            ),
+            UIComponent().buildHeightSizedBox(50),
+            Text(
+              "소속을 입력해주세요.",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "결과물에 기부자님의 직업이 기재됩니다.",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+            Container(
+              width: 200,
+              height: 40,
+              child: TextField(),
+            ),
+          ],
         ),
       ),
-    );
+    ),
+    
+      ),
+      );
   }
 }

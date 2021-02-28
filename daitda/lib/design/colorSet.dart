@@ -16,7 +16,7 @@ class ColorSet {
   final Color backgroundColor = Color(0xff2c2f33);
   final Color mainBoxColor = Color(0xfff6f5f5);
   final Color buttonColor = Color(0xfff0f0f3);
-   final Color boxDecorationColor = Color(0xfff0f0f3);
+  final Color boxDecorationColor = Color(0xfff0f0f3);
 
   //  Left Right Icon Color
   final Color lrIconColor = Colors.grey;
