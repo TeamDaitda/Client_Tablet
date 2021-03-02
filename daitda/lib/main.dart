@@ -10,6 +10,7 @@ import 'package:daitda/pages/onboardingPage.dart';
 import 'package:daitda/pages/galleryPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 
 void main() {
   runApp(MyApp());
