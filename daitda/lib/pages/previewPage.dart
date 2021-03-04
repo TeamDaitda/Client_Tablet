@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as pt;
 import 'package:get/get.dart';
 
 class PreviewPage extends StatefulWidget {

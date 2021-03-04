@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
+
 class CameraPage extends StatefulWidget {
   @override
   _CameraPageState createState() => _CameraPageState();
 }
 
 class _CameraPageState extends State<CameraPage> {
-  
   CameraController cameraController;
   List cameras;
   int selectedCameraIndex;
@@ -37,32 +37,32 @@ class _CameraPageState extends State<CameraPage> {
     });
   }
 
-  
-  Future _initCameraController(CameraDescription cameraDescription) async{
-    if(cameraController != null) {
+  Future _initCameraController(CameraDescription cameraDescription) async {
+    if (cameraController != null) {
       await cameraController.dispose();
-     }
-     cameraController = CameraController (cameraDescription,ResolutionPreset.high);
-     
-     cameraController.addListener(() { 
-       if(mounted){
-         setState(() {});
-       }
-     });
-     if(cameraController.value.hasError){
-       print('Camera eroor ${cameraController.value.errorDescription}');
-     }
-     try{
-       await cameraController.initialize();
-     }on CameraException catch (e){
-       _showCameraException(e);
-     }
-     if(mounted){
-       setState(() {});
-     }
+    }
+    cameraController =
+        CameraController(cameraDescription, ResolutionPreset.high);
+
+    cameraController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    if (cameraController.value.hasError) {
+      print('Camera eroor ${cameraController.value.errorDescription}');
+    }
+    try {
+      await cameraController.initialize();
+    } on CameraException catch (e) {
+      _showCameraException(e);
+    }
+    if (mounted) {
+      setState(() {});
+    }
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -98,10 +98,9 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
-
   //camerapreview
-  Widget _cameraPreviewWidget(){
-    if(cameraController == null || !cameraController.value.isInitialized){
+  Widget _cameraPreviewWidget() {
+    if (cameraController == null || !cameraController.value.isInitialized) {
       return const Text(
         'Loading',
         style: TextStyle(
@@ -114,105 +113,106 @@ class _CameraPageState extends State<CameraPage> {
     return AspectRatio(
       aspectRatio: cameraController.value.aspectRatio,
       child: CameraPreview(cameraController),
-      );
+    );
   }
 
   //display control bar to take pictures
-  Widget _cameraControlWidget(context){
+  Widget _cameraControlWidget(context) {
     return Expanded(
       child: Align(
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          FloatingActionButton(
-            child: Icon(
-              Icons.camera,
-              color: Colors.black,
-            ),
-            backgroundColor: Colors.white,
-            onPressed: (){
-              _onCapturePressed(context);
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                );
-                }
-
-  //display a row of taggle to select the camera
-  Widget _cameraToggleRowWidget() {
-    if(cameras == null || cameras.isEmpty){
-      return Spacer();
-    }
-    CameraDescription selectedCamera = cameras[selectedCameraIndex];
-    CameraLensDirection lensDirection = selectedCamera.lensDirection;
-    
-    return Expanded(
-      child: Align(
-      alignment: Alignment.centerLeft,
-      child: FlatButton.icon(
-        onPressed: _onSwitchCamera,
-        icon: Icon(
-          _getCameraLensIcon(lensDirection),
-          color: Colors.white,
-          size: 24,
-        ), 
-        label: Text(
-          '${lensDirection.toString().substring(lensDirection.toString().indexOf('.') + 1).toUpperCase()}',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-          ),
-        )
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            FloatingActionButton(
+              child: Icon(
+                Icons.camera,
+                color: Colors.black,
+              ),
+              backgroundColor: Colors.white,
+              onPressed: () {
+                _onCapturePressed(context);
+              },
+            )
+          ],
         ),
       ),
     );
   }
 
-    void _showCameraException(CameraException e) {
-      String errorText = 'Error : ${e.code}\n Error message : ${e.description}';
-      print(errorText);
+  //display a row of taggle to select the camera
+  Widget _cameraToggleRowWidget() {
+    if (cameras == null || cameras.isEmpty) {
+      return Spacer();
     }
-              
-    void _onCapturePressed(context) async {
-      try {
+    CameraDescription selectedCamera = cameras[selectedCameraIndex];
+    CameraLensDirection lensDirection = selectedCamera.lensDirection;
+
+    return Expanded(
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: FlatButton.icon(
+            onPressed: _onSwitchCamera,
+            icon: Icon(
+              _getCameraLensIcon(lensDirection),
+              color: Colors.white,
+              size: 24,
+            ),
+            label: Text(
+              '${lensDirection.toString().substring(lensDirection.toString().indexOf('.') + 1).toUpperCase()}',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            )),
+      ),
+    );
+  }
+
+  void _showCameraException(CameraException e) {
+    String errorText = 'Error : ${e.code}\n Error message : ${e.description}';
+    print(errorText);
+  }
+
+  void _onCapturePressed(context) async {
+    try {
       final path =
-          join((await getTemporaryDirectory()).path, 
-          '${DateTime.now()}.png');
-      await cameraController.takePicture(path);
-       Navigator.push(
+          join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
+      await cameraController.takePicture().then((value){
+        print(value.path);
+        Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => PreviewPage(
-                  imgPath: path,
-                )),
+          builder: (context) => PreviewPage(
+            imgPath: value.path,
+          ),
+        ),
       );
-
-    } catch (e){
+      });
+      
+    } catch (e) {
       _showCameraException(e);
     }
-    }
+  }
 
-    void _onSwitchCamera(){
-      selectedCameraIndex =
+  void _onSwitchCamera() {
+    selectedCameraIndex =
         selectedCameraIndex < cameras.length - 1 ? selectedCameraIndex + 1 : 0;
     CameraDescription selectedCamera = cameras[selectedCameraIndex];
     _initCameraController(selectedCamera);
-    }
-    
-    IconData _getCameraLensIcon(CameraLensDirection lensDirection) {
-      switch(lensDirection){
-        case CameraLensDirection.back:
-          return CupertinoIcons.switch_camera;
-        case CameraLensDirection.front:
-          return CupertinoIcons.switch_camera_solid;
-        case CameraLensDirection.external:
-          return CupertinoIcons.photo_camera;
+  }
+
+  IconData _getCameraLensIcon(CameraLensDirection lensDirection) {
+    switch (lensDirection) {
+      case CameraLensDirection.back:
+        return CupertinoIcons.switch_camera;
+      case CameraLensDirection.front:
+        return CupertinoIcons.switch_camera_solid;
+      case CameraLensDirection.external:
+        return CupertinoIcons.photo_camera;
         defalut:
-          return Icons.device_unknown;
-      }
-   }
+        return Icons.device_unknown;
+    }
+  }
 }
