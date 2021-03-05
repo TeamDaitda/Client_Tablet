@@ -1,230 +1,250 @@
-import 'package:daitda/UIConponent/uiComponent.dart';
-import 'package:daitda/design/colorSet.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
+import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
+import 'package:daitda/design/designs.dart' as DESIGNS;
+
 import 'package:flutter/material.dart';
-import 'package:flutter_page_indicator/flutter_page_indicator.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flip_card/flip_card.dart';
-
-const List<String> titles = [
-  "Pasicm",
-  "Pollution",
-  "Global Warming",
-];
-const List<String> imageUrls = [
-  "images/ps.png",
-  "images/pl.png",
-  "images/gw.png",
-];
 
 class CategoryPage extends StatefulWidget {
-  static const routeName = '/categoryPage';
-
   @override
   _CategoryPageState createState() => _CategoryPageState();
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  //  Design Setting.
+  final designSet = Get.put(DESIGNS.DesignSet());
+  final colorSet = DESIGNS.ColorSet();
+
+  //  Controller Setting.
+  final progressData = Get.put(CONTROLLERS.ProgressData());
+  final userController = Get.put(CONTROLLERS.UserController());
+  final categoryController = Get.put(CONTROLLERS.Category());
+
+  /*
+   * 사용자가 선택한 카테고리.
+   * 
+   * Categories selected by user.
+   */
+  CONTROLLERS.CategoryMember thisCategoryMember;
+
+  /*
+   * 현재 페이지의 인덱스와 이를 바탕으로 계산될 프로그래스의 인덱스입니다.
+   * 
+   * The index of the current page and the progress that will be calculated based on it.
+   */
+  static double thisPageIndex;
+  static double thisPageProgressIndex;
+
+  @override
+  void initState() {
+    /*
+     * 현재 페이지의 인덱스.
+     * 
+     * The index of the current page.
+     */
+    thisPageIndex = 0;
+    thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
+
+    /*
+     * 사용자가 선택한 카테고리를 '0' 인덱스로 초기화합니다.
+     * 
+     * Initialize user selected category to '0' index.
+     */
+    thisCategoryMember = categoryController.categoryMember[0];
+
+    /*
+     * 사용된 클라이언트의 표시를 기준으로 높이와 너비를 초기화합니다.
+     * 
+     * Initialize the height and width based on the display of the client used.
+     */
+    designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
+
+    /*
+     * 현재 페이지의 인덱스를 사용하여 구성합니다.
+     * 
+     * Configure using the index on the current page.
+     */
+    progressData.setData(thisPageProgressIndex);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    /*
+     * 풀 스크린모드로 전환합니다.
+     * 
+     * Switch to full screen mode.
+     */
+    SystemChrome.setEnabledSystemUIOverlays([]);
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+      body: Container(
+        child: Row(
           children: [
-            UIComponent().buildHeightSizedBox(50),
-            UIComponent().renderTopStateBar(2),
-            UIComponent().buildHeightSizedBox(50),
-            _buildCenter("어떤 곳에 기부하고 싶으세요?", context),
+            Column(
+              children: [
+                renderLogoArea(),
+                renderProgressArea(),
+              ],
+            ),
+            Column(
+              children: [
+                renderMainArea(),
+                renderBottomArea(),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCenter(String title, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        UIComponent().renderNavigationButton(option: 'back'),
-        Container(
-          // color: Color(0xfff6f5f5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              UIComponent().renderTitleText(title),
-              Center(
-                child: Container(
-                  width: 1000,
-                  height: MediaQuery.of(context).size.height - 229,
-                  child: new Swiper(
-                    itemBuilder: (BuildContext context, int index) {
-                      return _buildCard(
-                          title: titles[index],
-                          img: AssetImage(imageUrls[index]),
-                          context: context);
-                    },
-                    itemCount: 3,
-                    viewportFraction: 0.6,
-                    scale: 0.9,
-                    indicatorLayout: PageIndicatorLayout.NONE,
-                    autoplay: false,
+  Widget renderLogoArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.logoAreaColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.dividorColor,
+        ),
+      ),
+      width: designSet.getLogoAreaWidth(),
+      height: designSet.getLogoAreaHeight(),
+    );
+  }
 
-                    pagination: new SwiperPagination(),
-                    // control: new SwiperControl(color: Colors.white),
-                  ),
-                ),
+  Widget renderProgressArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.progressAreaColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.dividorColor,
+        ),
+      ),
+      width: designSet.getProgressAreaWidth(),
+      height: designSet.getProgressAreaHeight(),
+      child: Column(
+        children: [
+          UICOMPONENTS.AnimatedLiquidLinearProgressIndicator(),
+          UICOMPONENTS.ProcessBar(
+            index: thisPageIndex.toInt(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget renderMainArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.mainAreaColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.dividorColor,
+        ),
+      ),
+      width: designSet.getMainAreaWidth(),
+      height: designSet.getMainAreaHeight(),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: colorSet.mainCardMackgroundcolor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: FlatButton(
+            child: Text(
+              thisCategoryMember.toString(),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
               ),
-            ],
+            ),
+            color: Colors.white,
+            onPressed: () {
+              /*
+               * inputPage로 이동하며 선택한 카테고리의 대한 정보를 arguments로 전달합니다.
+               * 
+               * Go to InputPage and pass information about the selected category.
+               */
+              Get.toNamed('/inputPage', arguments: thisCategoryMember);
+            },
           ),
         ),
-        UIComponent()
-            .renderNavigationButton(option: 'go', router: '/paymentPage'),
-      ],
-    );
-  }
-
-  Widget _buildCard({String title, AssetImage img, BuildContext context}) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FlipCard(
-              front: Container(
-                width: 900,
-                height: 400,
-                child: Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  elevation: 0,
-                  child: Image(
-                    image: img,
-                  ),
-                ),
-              ),
-              back: Container(
-                width: 900,
-                height: 400,
-                child: Card(
-                  color: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  elevation: 0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 100,
-                        width: 300,
-                        child: FlatButton(
-                          onPressed: () {
-                            Get.toNamed('/paymentPage');
-                          },
-                          child: Text(
-                            "선택하기",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                          color: Color(0xffA7A7A7),
-                        ),
-                      ),
-                      UIComponent().buildHeightSizedBox(30),
-                      Container(
-                        height: 100,
-                        width: 300,
-                        child: FlatButton(
-                          onPressed: () {
-                            _settingModalBottomSheet(context, title, img);
-                          },
-                          child: Text(
-                            "더보기",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                          color: Color(0xffA7A7A7),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                title,
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
 
-  void _settingModalBottomSheet(context, title, img) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (context) {
-          return DraggableScrollableSheet(
-            initialChildSize: 0.6,
-            builder: (BuildContext context, ScrollController scrollController) {
-              return SingleChildScrollView(
-                controller: scrollController,
+  Widget renderBottomArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.bottomAreaColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.dividorColor,
+        ),
+      ),
+      width: designSet.getBottomAreaWidth(),
+      height: designSet.getBottomAreaHeight(),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Swiper(
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: InkWell(
+                onTap: () {
+                  setState(
+                    () {
+                      /*
+                     * 사용자가 카테고리를 탭하면 카테고리의 정보가 현재 선택된 카테고리에 배치됩니다.
+                     * 
+                     * When a user tabs a category,
+                     * the information in the category
+                     * is placed in the currently selected category.
+                     */
+                      thisCategoryMember = CONTROLLERS.CategoryMember(
+                        id: categoryController.categoryMember[index].id,
+                        title: categoryController.categoryMember[index].title,
+                        body: categoryController.categoryMember[index].body,
+                        imgUrl: categoryController.categoryMember[index].imgUrl,
+                      );
+                      print(
+                          categoryController.categoryMember[index].toString());
+                    },
+                  );
+                },
                 child: Container(
+                  width: 200,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(10),
-                      topRight: const Radius.circular(10),
+                    color: colorSet.mainCardMackgroundcolor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      /*
+                       * 카테고리의 정보를 텍스트로 출력합니다.
+                       * 
+                       * Prints information of categories in Text.
+                       */
+                      "${categoryController.categoryMember[index].id.toString()}\n${categoryController.categoryMember[index].toString()}",
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: Text("X"),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            title + "이란?",
-                            style: TextStyle(fontSize: 50),
-                          ),
-                          Container(
-                            width: 400,
-                            height: 300,
-                            child: Image(
-                              image: img,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        // width: MediaQuery.of(context).size.width,
-                        // height: MediaQuery.of(context).size.height,
-                        width: 1000,
-                        height: 1000,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
                 ),
-              );
-            },
-          );
-        });
+              ),
+            );
+          },
+          itemCount: categoryController.categoryMember.length,
+          pagination: null,
+          control: null,
+          viewportFraction: 0.30,
+        ),
+      ),
+    );
   }
 }
