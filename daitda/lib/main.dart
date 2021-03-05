@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             name: '/categoryPage',
             page: () => CategoryPage(),
             transition: Transition.fadeIn),
-         GetPage(
+        GetPage(
             name: '/galleryPage',
             page: () => GalleryPage(),
             transition: Transition.fadeIn),

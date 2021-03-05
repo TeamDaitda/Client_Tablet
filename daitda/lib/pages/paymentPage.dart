@@ -1,10 +1,12 @@
-import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
-import 'package:daitda/controller/progress.dart';
-import 'package:daitda/UIComponent/processBar.dart';
-import 'package:daitda/design/colorSet.dart';
-import 'package:daitda/design/designSet.dart';
+import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
+import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
+import 'package:daitda/design/designs.dart' as DESIGNS;
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
+
 import 'package:get/get.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -13,14 +15,37 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  final designSet = Get.put(DesignSet());
-  final progressData = Get.put(ProgressData());
-  final colorSet = ColorSet();
+//  Design Setting.
+  final designSet = Get.put(DESIGNS.DesignSet());
+  final colorSet = DESIGNS.ColorSet();
+
+  //  Controller Setting.
+  final progressData = Get.put(CONTROLLERS.ProgressData());
+
+  /*
+   * 현재 페이지의 인덱스와 이를 바탕으로 계산될 프로그래스의 인덱스입니다.
+   * 
+   * The index of the current page and the progress that will be calculated based on it.
+   */
+  static double thisPageIndex;
+  static double thisPageProgressIndex;
 
   @override
   void initState() {
-    designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
-    progressData.setData(0.2);
+    /*
+     * 현재 페이지의 인덱스.
+     * 
+     * The index of the current page.
+     */
+    thisPageIndex = 2;
+    thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
+
+    /*
+     * 현재 페이지의 인덱스를 사용하여 구성합니다.
+     * 
+     * Configure using the index on the current page.
+     */
+    progressData.setData(thisPageProgressIndex);
     super.initState();
   }
 
@@ -75,9 +100,9 @@ class _PaymentPageState extends State<PaymentPage> {
       height: designSet.getProgressAreaHeight(),
       child: Column(
         children: [
-          AnimatedLiquidLinearProgressIndicator(),
-          ProcessBar(
-            index: 3,
+          UICOMPONENTS.AnimatedLiquidLinearProgressIndicator(),
+          UICOMPONENTS.ProcessBar(
+            index: thisPageIndex.toInt(),
           ),
         ],
       ),

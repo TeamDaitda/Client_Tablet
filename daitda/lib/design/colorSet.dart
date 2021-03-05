@@ -37,11 +37,11 @@ class ColorSet {
 
   //  Progress Bar Color
   final Color progressBarBackgroundColor = Colors.white;
-  final Color progressBarValueColor = Color(0x2c2f33);
+  final Color progressBarValueColor = Color(0xff2c2f33);
 
   //  Process Bar Color
   final Color processBarActivecolor = Colors.white;
-  final Color processBarDisableColor = Color(0xff99aab5);
+  final Color processBarDisableColor = Color(0xff444444);
 
   //  Main Background Color
   final Color mainCardMackgroundcolor = Colors.white;

@@ -21,7 +21,6 @@ class _ResultPageState extends State<ResultPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             UIComponent().buildHeightSizedBox(50),
-            UIComponent().renderTopStateBar(5),
             UIComponent().buildHeightSizedBox(50),
             _buildCenter("결과페이지", context),
           ],
@@ -34,7 +33,6 @@ class _ResultPageState extends State<ResultPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        UIComponent().renderNavigationButton(option: 'back'),
         Container(
           // color: Color(0xfff6f5f5),
           child: Column(
@@ -42,7 +40,6 @@ class _ResultPageState extends State<ResultPage> {
             children: [
               Row(
                 children: [
-                  UIComponent().renderTitleText(title),
                   FlatButton(
                     color: Colors.pink,
                     onPressed: () {
@@ -62,7 +59,6 @@ class _ResultPageState extends State<ResultPage> {
             ],
           ),
         ),
-        UIComponent().renderNavigationButton(option: 'allBack', router: '/'),
       ],
     );
   }

@@ -19,7 +19,6 @@ class _CameraPageState extends State<CameraPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             uiComponents.UIComponent().buildHeightSizedBox(50),
-            uiComponents.UIComponent().renderTopStateBar(4),
             uiComponents.UIComponent().buildHeightSizedBox(50),
             _buildCenter("촬영 페이지", context),
           ],
@@ -32,13 +31,11 @@ class _CameraPageState extends State<CameraPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        uiComponents.UIComponent().renderNavigationButton(option: 'back'),
         Container(
           // color: Color(0xfff6f5f5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              uiComponents.UIComponent().renderTitleText(title),
               Container(
                 color: Color(0xfff6f5f5),
                 width: 1000,
@@ -51,8 +48,6 @@ class _CameraPageState extends State<CameraPage> {
             ],
           ),
         ),
-        uiComponents.UIComponent()
-            .renderNavigationButton(option: 'go', router: '/resultPage'),
       ],
     );
   }

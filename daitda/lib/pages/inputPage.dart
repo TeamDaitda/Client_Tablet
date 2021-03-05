@@ -1,11 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
-import 'package:flutter/cupertino.dart';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
+
 import 'package:get/get.dart';
+import 'package:signature/signature.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -13,36 +18,96 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  //  Design Setting.
   final designSet = Get.put(DESIGNS.DesignSet());
-  final progressData = Get.put(CONTROLLERS.ProgressData());
   final colorSet = DESIGNS.ColorSet();
 
-  TextEditingController nameTextFieldController = TextEditingController();
-  String nameText;
-  String phoneText;
-  String affiliationText;
-  TextEditingController affiliationTextFieldController =
-      TextEditingController();
+  //  Controller Setting.
+  final progressData = Get.put(CONTROLLERS.ProgressData());
 
+  /*
+   * 입력받을 사용자의 정보.
+   * 
+   * Information for the user to be entered.
+   */
+  static String nameText;
+  static String phoneText;
+  static String affiliationText;
+
+  /*
+   * 사용자가 선택한 카테고리.
+   * 
+   * Categories selected by user.
+   */
   CONTROLLERS.CategoryMember thisCategoryMember;
+
+  /*
+   * 현재 페이지의 인덱스와 이를 바탕으로 계산될 프로그래스의 인덱스입니다.
+   * 
+   * The index of the current page and the progress that will be calculated based on it.
+   */
+  static double thisPageIndex;
+  static double thisPageProgressIndex;
+
+  /*
+   * 사용자 사인을 위한 사인 컨트롤러.
+   * 
+   * Sign controller for user signatures.
+   */
+  final SignatureController signatureController = SignatureController(
+    penStrokeWidth: 3,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
 
   @override
   void initState() {
-    thisCategoryMember = Get.arguments;
-    designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
+    /*
+     * 현재 페이지의 인덱스.
+     * 
+     * The index of the current page.
+     */
+    thisPageIndex = 1;
+    thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
 
+    /*
+     * 이전페이지(categoryPage)에서 선택한 카테고리에 대한 정보를
+     * Get.arguments로 받아와 thisCategoryMember 변수에 저장.
+     * 
+     * Information about the category selected
+     * on the previous page(categoryPage) is received
+     * as 'Get.arguments' and stored in the variable 'thisCategoryMembers'.
+     */
+    thisCategoryMember = Get.arguments;
+
+    /*
+     * 사용자가 입력할 정보를 초기화 합니다.
+     * 
+     * Initialize the information to be entered by the user.
+     */
     nameText = "홍길동";
     phoneText = "010-1234-5678";
     affiliationText = "OO대학교";
 
-    progressData.setData(0.2);
+    /*
+     * 현재 페이지의 인덱스를 사용하여 구성합니다.
+     * 
+     * Configure using the index on the current page.
+     */
+    progressData.setData(thisPageProgressIndex);
+
+    /*
+     * signatureController를 계속 확인하며 값이 바뀔 때 확인 메시지를 출력.
+     * 
+     * Continue checking the signatureController and output a confirmation message when the value changes.
+     */
+    signatureController.addListener(() => print('Value changed'));
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -95,7 +160,7 @@ class _InputPageState extends State<InputPage> {
         children: [
           UICOMPONENTS.AnimatedLiquidLinearProgressIndicator(),
           UICOMPONENTS.ProcessBar(
-            index: 1,
+            index: thisPageIndex.toInt(),
           ),
         ],
       ),
@@ -121,11 +186,13 @@ class _InputPageState extends State<InputPage> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: FlatButton(
-            child: Text(thisCategoryMember.toString(),
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                )),
+            child: Text(
+              thisCategoryMember.toString(),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+              ),
+            ),
             color: Colors.white,
             onPressed: () {
               Get.toNamed('/paymentPage');
@@ -155,7 +222,7 @@ class _InputPageState extends State<InputPage> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 160, horizontal: 80),
+            margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -220,7 +287,7 @@ class _InputPageState extends State<InputPage> {
                     _showDialog(title: "연락처를 입력해주세요", index: 1);
                   },
                   child: Container(
-                    width: 300,
+                    width: 200,
                     height: 40,
                     decoration: BoxDecoration(
                       border: Border(
@@ -284,6 +351,78 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                 ),
+                UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
+                Text(
+                  "사인을 해주세요.",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      // width: 300.5,
+                      // height: 150.5,
+                      color: Colors.black,
+                      child: Signature(
+                        width: 300,
+                        height: 150,
+                        controller: signatureController,
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        CupertinoButton(
+                          child: Text(
+                            "확인",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () async {
+                            if (signatureController.isNotEmpty) {
+                              final Uint8List data =
+                                  await signatureController.toPngBytes();
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) {
+                                    return Scaffold(
+                                      appBar: AppBar(),
+                                      body: Center(
+                                        child: Container(
+                                          color: Colors.grey[300],
+                                          child: Image.memory(data),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        //CLEAR CANVAS
+                        CupertinoButton(
+                          child: Text(
+                            "지우기",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() => signatureController.clear());
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -318,6 +457,7 @@ class _InputPageState extends State<InputPage> {
               child: Text("확인",
                   style: designSet.getStyleDialogButtonText(isPositive: true)),
               onPressed: () {
+                SystemChrome.setEnabledSystemUIOverlays([]);
                 FocusScope.of(context).unfocus(); //  활성화 상태인 키보드 끄기.
                 Navigator.pop(context);
                 setState(() {
@@ -339,6 +479,7 @@ class _InputPageState extends State<InputPage> {
               child: Text("취소",
                   style: designSet.getStyleDialogButtonText(isPositive: false)),
               onPressed: () {
+                SystemChrome.setEnabledSystemUIOverlays([]);
                 FocusScope.of(context).unfocus(); //  활성화 상태인 키보드 끄기.
                 Navigator.pop(context);
               },
