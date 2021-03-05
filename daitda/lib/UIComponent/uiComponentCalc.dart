@@ -1,5 +1,4 @@
 import 'package:daitda/design/colorSet.dart';
-import 'package:flutter/material.dart';
 
 class UIComponentCalc {
   calcIndexToColor({int topStateBarIndex, int index}) {
