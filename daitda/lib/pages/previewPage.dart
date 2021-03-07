@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as pt;
 import 'package:get/get.dart';
+import 'dart:math' as math;
 
 class PreviewPage extends StatefulWidget {
   final String imgPath;
-
   PreviewPage({this.imgPath});
 
   @override
@@ -19,37 +19,50 @@ class _PreviewPageState extends State<PreviewPage> {
   @override
    Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-      ),
       body: Container(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
               flex: 2,
               child: Image.file(File(widget.imgPath),fit: BoxFit.cover,),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: double.infinity,
-                height: 60.0,
+          
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+          
+          children: <Widget>[
+          FlatButton(
+            child: Text('camera',style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,)),
+
+              color: Colors.black,
+              onPressed: (){
+                Get.toNamed('/cameraPage');
+              },
+          ), 
+          
+          SizedBox(
+          width: 30.0,
+          ),
+
+           FlatButton(
+                child: Text('start', style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,)),
                 color: Colors.black,
-                child: Center(
-                  child: IconButton(
-                    icon: Icon(Icons.share,color: Colors.white,),
-                    onPressed: (){
-                      Get.toNamed('/galleryPage');
-                    },
-                  ),
-                ),
+                onPressed: () {
+                  Get.toNamed('/categoryPage');
+                },
               ),
-            )
+
+          ],
+          )
+            
           ],
         ),
       ),
     );
   }
-
   }

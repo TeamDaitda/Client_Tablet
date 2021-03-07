@@ -1,11 +1,17 @@
+import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'dart:math';
 import 'package:camera/camera.dart';
 import 'package:daitda/pages/previewPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:daitda/design/colorSet.dart';
+import 'package:daitda/design/designSet.dart';
+import 'package:daitda/controller/progress.dart';
+import 'package:daitda/UIComponent/processBar.dart';
 import 'package:path/path.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:get/get.dart';
 
 class CameraPage extends StatefulWidget {
   @override
@@ -13,6 +19,9 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
+  final designSet = Get.put(DesignSet());
+  final progressData = Get.put(ProgressData());
+  final colorSet = ColorSet();
   CameraController cameraController;
   List cameras;
   int selectedCameraIndex;
@@ -20,13 +29,15 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   void initState() {
+    designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
+    progressData.setData(0.2);
     super.initState();
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
 
       if (cameras.length > 0) {
         setState(() {
-          selectedCameraIndex = 0;
+          selectedCameraIndex = 1;
         });
         _initCameraController(cameras[selectedCameraIndex]).then((void v) {});
       } else {
@@ -64,33 +75,40 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       body: Container(
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: _cameraPreviewWidget(),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 120,
-                  width: double.infinity,
-                  padding: EdgeInsets.all(15),
-                  color: Colors.black,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      _cameraToggleRowWidget(),
-                      _cameraControlWidget(context),
-                      Spacer()
-                    ],
-                  ),
+          child: Stack(
+            children: [
+              Container(
+                width: Get.size.width,
+                height: Get.size.height,
+                child: Expanded(
+                  flex: 1,
+                  child: _cameraPreviewWidget(context),
                 ),
-              )
+              ),
+              Column(
+                children: [
+                  renderLogoArea(),
+                  renderProgressArea(),
+                ],
+              ),
+
+              Row(
+                children: [
+                  _cameraControlWidget(context),
+                  
+                ],
+              ),
+              
+              Row(
+                children: [
+                  _cameraToggleRowWidget(),
+                ],)
+        
+                    
             ],
           ),
         ),
@@ -98,8 +116,44 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
+  Widget renderLogoArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.tfColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.tfColor,
+        ),
+      ),
+      width: designSet.getLogoAreaWidth(),
+      height: designSet.getLogoAreaHeight(),
+    );
+  }
+
+  Widget renderProgressArea() {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorSet.tfColor,
+        border: Border.all(
+          width: 0.5,
+          color: colorSet.tfColor,
+        ),
+      ),
+      width: designSet.getProgressAreaWidth(),
+      height: designSet.getProgressAreaHeight(),
+      child: Column(
+        children: [
+          AnimatedLiquidLinearProgressIndicator(),
+          ProcessBar(
+            index: 3,
+          ),
+        ],
+      ),
+    );
+  }
+
   //camerapreview
-  Widget _cameraPreviewWidget() {
+  Widget _cameraPreviewWidget(BuildContext context) {
     if (cameraController == null || !cameraController.value.isInitialized) {
       return const Text(
         'Loading',
@@ -120,7 +174,7 @@ class _CameraPageState extends State<CameraPage> {
   Widget _cameraControlWidget(context) {
     return Expanded(
       child: Align(
-        alignment: Alignment.center,
+        alignment: Alignment.bottomCenter,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.max,
@@ -151,7 +205,7 @@ class _CameraPageState extends State<CameraPage> {
 
     return Expanded(
       child: Align(
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.bottomLeft,
         child: FlatButton.icon(
             onPressed: _onSwitchCamera,
             icon: Icon(
@@ -179,18 +233,17 @@ class _CameraPageState extends State<CameraPage> {
     try {
       final path =
           join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
-      await cameraController.takePicture().then((value){
+      await cameraController.takePicture().then((value) {
         print(value.path);
         Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PreviewPage(
-            imgPath: value.path,
+          context,
+          MaterialPageRoute(
+            builder: (context) => PreviewPage(
+              imgPath: value.path,
+            ),
           ),
-        ),
-      );
+        );
       });
-      
     } catch (e) {
       _showCameraException(e);
     }
@@ -211,7 +264,6 @@ class _CameraPageState extends State<CameraPage> {
         return CupertinoIcons.switch_camera_solid;
       case CameraLensDirection.external:
         return CupertinoIcons.photo_camera;
-        defalut:
         return Icons.device_unknown;
     }
   }
