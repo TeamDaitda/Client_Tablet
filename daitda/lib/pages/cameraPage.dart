@@ -1,5 +1,5 @@
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
-import 'dart:math';
+import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:daitda/pages/previewPage.dart';
 import 'package:flutter/cupertino.dart';
