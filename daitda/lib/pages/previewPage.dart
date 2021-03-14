@@ -18,7 +18,8 @@ class PreviewPage extends StatefulWidget {
 
 class _PreviewPageState extends State<PreviewPage> {
   int selectedCameraIndex;
-   List cameras;
+  List cameras;
+
   @override
   void initState() {
     super.initState();
