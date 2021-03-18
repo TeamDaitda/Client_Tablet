@@ -57,6 +57,7 @@ class _PreviewPageState extends State<PreviewPage> {
             mainAxisAlignment: MainAxisAlignment.center,
           
           children: <Widget>[
+          // ignore: deprecated_member_use
           FlatButton(
             child: Text('camera',style: TextStyle(
               fontSize: 16,
@@ -72,6 +73,7 @@ class _PreviewPageState extends State<PreviewPage> {
           width: 30.0,
           ),
 
+           // ignore: deprecated_member_use
            FlatButton(
                 child: Text('start', style: TextStyle(
                 fontSize: 16,
@@ -81,7 +83,6 @@ class _PreviewPageState extends State<PreviewPage> {
                   Get.toNamed('/categoryPage');
                 },
               ),
-
           ],
           )
           ],

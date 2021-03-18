@@ -1,5 +1,4 @@
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
-import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:daitda/pages/previewPage.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +11,7 @@ import 'package:path/path.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
+import 'package:fdottedline/fdottedline.dart';
 
 class CameraPage extends StatefulWidget {
   @override
@@ -89,6 +89,7 @@ class _CameraPageState extends State<CameraPage> {
                   child: _cameraPreviewWidget(context),
                 ),
               ),
+            
               Column(
                 children: [
                   renderLogoArea(),
@@ -98,17 +99,17 @@ class _CameraPageState extends State<CameraPage> {
 
               Row(
                 children: [
-                  _cameraControlWidget(context),
-                  
+                  _cameraControlWidget(context), 
                 ],
               ),
+
+              _cameraoverlayWidget(),
               
               Row(
                 children: [
                   _cameraToggleRowWidget(),
-                ],)
-        
-                    
+                ],
+              ),      
             ],
           ),
         ),
@@ -194,7 +195,20 @@ class _CameraPageState extends State<CameraPage> {
       ),
     );
   }
+    Widget _cameraoverlayWidget(){
+    return Container(
+      padding: EdgeInsets.fromLTRB(350, 120, 100, 60),
+              child: FDottedLine(
+              color: Colors.black,
+              height: 500.0,
+              width: 500.0,
+              strokeWidth: 3.0,
+              dottedLength: 10.0,
+              space: 12.0,
+              ),
+              );
 
+  }
   //display a row of taggle to select the camera
   Widget _cameraToggleRowWidget() {
     if (cameras == null || cameras.isEmpty) {
@@ -206,6 +220,7 @@ class _CameraPageState extends State<CameraPage> {
     return Expanded(
       child: Align(
         alignment: Alignment.bottomLeft,
+        // ignore: deprecated_member_use
         child: FlatButton.icon(
             onPressed: _onSwitchCamera,
             icon: Icon(
