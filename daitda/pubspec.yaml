@@ -36,6 +36,7 @@ dependencies:
   path: ^1.7.0
   async: ^2.5.0
   fdottedline: ^1.0.1
+  flutter_svg: ^0.19.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,10 +60,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/gw.png
-    - images/pl.png
-    - images/ps.png
     - images/main.png
+    - images/text.svg
+    - images/sym.svg
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

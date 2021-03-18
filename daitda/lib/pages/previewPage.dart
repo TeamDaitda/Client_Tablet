@@ -40,54 +40,60 @@ class _PreviewPageState extends State<PreviewPage> {
 
   
    Widget build(BuildContext context) {
-    final double mirror = selectedCameraIndex == 1 ? math.pi : 0 ;
-    return Transform(
-      alignment: Alignment.center,
-      transform: Matrix4.rotationY(mirror),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: Image.file(File(widget.imgPath),fit: BoxFit.cover,),
+     final double mirror = selectedCameraIndex == 1 ? math.pi : 0 ;
+     return Scaffold(
+      body:Container(
+        child: Stack(
+          children: [
+            Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.rotationY(mirror),
+              child:  Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Image.file(File(widget.imgPath),fit: BoxFit.cover,),
+                    ),
+                  ],
+                ),
             ),
-          
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-          
-          children: <Widget>[
-          // ignore: deprecated_member_use
-          FlatButton(
-            child: Text('camera',style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,)),
+            
+            Center(
+              child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Get.toNamed('/cameraPage');
+                    },
+                    child: Text('다시찍기',style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
 
-              color: Colors.black,
-              onPressed: (){
-                Get.toNamed('/cameraPage');
-              },
-          ), 
-          
-          SizedBox(
-          width: 30.0,
-          ),
+                  SizedBox(
+                    width: 20,
+                  ),
 
-           // ignore: deprecated_member_use
-           FlatButton(
-                child: Text('start', style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,)),
-                color: Colors.black,
-                onPressed: () {
-                  Get.toNamed('/categoryPage');
-                },
+                   TextButton(
+                    onPressed: () {
+                      Get.toNamed('/resultPage');
+                    },
+                    child: Text('결과보기',style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                    ),
+                  ),
+                ],
               ),
-          ],
-          )
+            ),
+            
           ],
         ),
       ),
     );
   }
-  }
+}

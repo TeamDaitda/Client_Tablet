@@ -199,14 +199,15 @@ class _CameraPageState extends State<CameraPage> {
     return Container(
       padding: EdgeInsets.fromLTRB(350, 120, 100, 60),
               child: FDottedLine(
-              color: Colors.black,
+              color: Colors.white,
               height: 500.0,
               width: 500.0,
               strokeWidth: 3.0,
               dottedLength: 10.0,
               space: 12.0,
               ),
-              );
+      );
+              
 
   }
   //display a row of taggle to select the camera
