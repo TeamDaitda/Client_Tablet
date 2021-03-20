@@ -63,6 +63,7 @@ flutter:
     - images/main.png
     - images/text.svg
     - images/sym.svg
+    - images/both.svg
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

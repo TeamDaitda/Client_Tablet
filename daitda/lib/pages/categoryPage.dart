@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 class CategoryPage extends StatefulWidget {
   @override
   _CategoryPageState createState() => _CategoryPageState();
@@ -65,6 +65,15 @@ class _CategoryPageState extends State<CategoryPage> {
           width: 0.5,
           color: colorSet.dividorColor,
         ),
+      ),
+
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25),
+        child: SvgPicture.asset(
+                  'images/sym.svg',
+                  width:10,
+                  height:10,
+                ),
       ),
       width: designSet.getLogoAreaWidth(),
       height: designSet.getLogoAreaHeight(),

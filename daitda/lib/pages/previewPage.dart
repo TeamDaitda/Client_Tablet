@@ -59,32 +59,41 @@ class _PreviewPageState extends State<PreviewPage> {
                 ),
             ),
             
-            Center(
-              child: Row(
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Get.toNamed('/cameraPage');
-                    },
-                    child: Text('다시찍기',style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal:30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Get.toNamed('/cameraPage');
+                          },
+                          child: Text('다시찍기',style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
 
-                  SizedBox(
-                    width: 20,
-                  ),
+                        SizedBox(
+                          width: 20,
+                        ),
 
-                   TextButton(
-                    onPressed: () {
-                      Get.toNamed('/resultPage');
-                    },
-                    child: Text('결과보기',style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
+                         TextButton(
+                          onPressed: () {
+                            Get.toNamed('/resultPage');
+                          },
+                          child: Text('결과보기',style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

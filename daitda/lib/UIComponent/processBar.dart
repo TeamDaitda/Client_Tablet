@@ -20,7 +20,7 @@ class ProcessBar extends StatelessWidget {
       child: Center(
         child: Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               renderProcessBar(),
               renderProcessBarText(text, context),
@@ -70,15 +70,16 @@ class ProcessBar extends StatelessWidget {
     return option == true
         ? Container(
             width: 100,
-            height: 20,
+            height: 23,
             child: Text(
               text,
-              style: TextStyle(color: colorSet.fontColor),
+              style: TextStyle(color: colorSet.fontColor,
+              fontSize: 18),
             ),
           )
         : Container(
-            width: 20,
-            height: 20,
+            width: 13,
+            height: 24,
             decoration: BoxDecoration(
               color: index >= uniqueIndex
                   ? colorSet.processBarActivecolor

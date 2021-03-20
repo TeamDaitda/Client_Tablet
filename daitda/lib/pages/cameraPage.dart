@@ -53,7 +53,7 @@ class _CameraPageState extends State<CameraPage> {
       await cameraController.dispose();
     }
     cameraController =
-        CameraController(cameraDescription, ResolutionPreset.high);
+        CameraController(cameraDescription, ResolutionPreset.ultraHigh);
 
     cameraController.addListener(() {
       if (mounted) {
@@ -197,14 +197,26 @@ class _CameraPageState extends State<CameraPage> {
   }
     Widget _cameraoverlayWidget(){
     return Container(
-      padding: EdgeInsets.fromLTRB(350, 120, 100, 60),
-              child: FDottedLine(
-              color: Colors.white,
-              height: 500.0,
-              width: 500.0,
-              strokeWidth: 3.0,
-              dottedLength: 10.0,
-              space: 12.0,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(350, 120, 100, 60),
+                    child: FDottedLine(
+                    color: Colors.white,
+                    height: 500.0,
+                    width: 500.0,
+                    strokeWidth: 3.0,
+                    dottedLength: 10.0,
+                    space: 12.0,
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(280, 3, 50, 60),
+                    child: Text('사각형 안에 얼굴을 맞춰주세요', 
+                    style: TextStyle(fontSize: 30, color: Colors.white,),),
+                  ),
+                ],
               ),
       );
               
