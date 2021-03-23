@@ -70,7 +70,7 @@ class _CategoryPageState extends State<CategoryPage> {
       child: Padding(
         padding: const EdgeInsets.only(top: 25),
         child: SvgPicture.asset(
-                  'images/sym.svg',
+                  'images/test.svg',
                   width:10,
                   height:10,
                 ),
@@ -95,7 +95,7 @@ class _CategoryPageState extends State<CategoryPage> {
         children: [
           UICOMPONENTS.AnimatedLiquidLinearProgressIndicator(),
           UICOMPONENTS.ProcessBar(
-            index: 3,
+            index: 0,
           ),
         ],
       ),
