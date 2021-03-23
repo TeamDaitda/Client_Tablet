@@ -40,5 +40,3 @@ post_install do |installer|
   end
 end
 
-pod 'Firebase/Analytics'
-
