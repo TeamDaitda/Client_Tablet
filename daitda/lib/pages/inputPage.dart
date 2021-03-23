@@ -175,7 +175,7 @@ class _InputPageState extends State<InputPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    _showDialog(title: "이름을 알려주세요.", index: 1);
+                    _showDialog(title: "이름을 알려주세요.", index: 0);
                   },
                   child: Container(
                     width: 200,

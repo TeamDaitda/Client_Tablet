@@ -1,8 +1,11 @@
 import 'package:daitda/pages/categoryPage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:onboarding/onboarding.dart';
+
+import 'homePage.dart';
 
 class OnboardingPage extends StatefulWidget {
   OnboardingPage({Key key, this.title}) : super(key: key);

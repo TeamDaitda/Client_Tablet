@@ -8,9 +8,9 @@ class Category extends GetxController {
 
   Category() {
     categoryMember.add(CategoryMember(
-        id: 0, title: "한부모 가정 / 조손 가정", body: "null", imgUrl: "null",));
+        id: 0, title: "한부모 가정 / 조손 가정", body: "null", imgUrl: "null"));
     categoryMember.add(
-        CategoryMember(id: 1, title: "소년소녀 가정", body: "jhhkhjk", imgUrl: "null"));
+        CategoryMember(id: 1, title: "소년소녀 가정", body: "null", imgUrl: "null"));
     categoryMember.add(
         CategoryMember(id: 2, title: "중증 장애인", body: "null", imgUrl: "null"));
     categoryMember.add(
@@ -36,7 +36,7 @@ class CategoryMember {
   final int id;
   final String title;
   final String body;
-  final imgUrl;
+  final String imgUrl;
 
   CategoryMember({
     @required this.id,
