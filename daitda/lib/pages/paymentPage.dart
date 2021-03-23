@@ -1,118 +1,159 @@
-import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
-import 'package:daitda/controller/progress.dart';
-import 'package:daitda/UIComponent/processBar.dart';
-import 'package:daitda/design/colorSet.dart';
-import 'package:daitda/design/designSet.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:get/get.dart';
+
 
 class PaymentPage extends StatefulWidget {
   @override
   _PaymentPageState createState() => _PaymentPageState();
-}
+} 
 
 class _PaymentPageState extends State<PaymentPage> {
-  final designSet = Get.put(DesignSet());
-  final progressData = Get.put(ProgressData());
-  final colorSet = ColorSet();
+  InterstitialAd myInterstitial;
+  bool hasFailed;
 
   @override
   void initState() {
-    designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
-    progressData.setData(0.2);
     super.initState();
+    myInterstitial = InterstitialAd(
+      adUnitId: 'ca-app-pub-3940256099942544/4411468910', 
+      request: AdRequest(),
+      listener: AdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            hasFailed = false;
+          });
+        },
+        onAdClosed: (ad) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SecondPage(), // Navigate to second page
+            ),
+          );
+          ad.dispose(); // dispose of ad
+        },
+        onAdFailedToLoad: (ad, error) {
+          setState(() {
+            hasFailed = true;
+          });
+          ad.dispose(); // dispose of ad
+          print('Ad exited with error: $error');
+        },
+      ),
+    );
+    myInterstitial.load(); // loads ad before showing
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
-      body: Container(
-        child: Row(
-          children: [
-            Column(
-              children: [
-                renderLogoArea(),
-                renderProgressArea(),
-              ],
+      appBar: AppBar(
+        title: Text('Interstatial Ads'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            hasFailed
+                ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          SecondPage(), // Navigate to second page
+                    ),
+                  )
+                : myInterstitial.show();
+          },
+          child: Text('Go To Second Page'),
+        ),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatefulWidget {
+  @override
+  _SecondPageState createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
+  InterstitialAd myInterstitial;
+  bool hasFailed;
+
+  @override
+  void initState() {
+    super.initState();
+    myInterstitial = InterstitialAd(
+      adUnitId: 'ca-app-pub-3940256099942544/4411468910', // test ad ids for differemt platform
+      request: AdRequest(),
+      listener: AdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            hasFailed = false;
+          });
+        },
+        onAdClosed: (ad) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaymentPage(), // Navigate to first page
             ),
-            Row(
-              children: [
-                renderPaymentArea(),
-              ],
-            ),
-          ],
-        ),
+          );
+          ad.dispose(); // dispose of ad
+        },
+        onAdFailedToLoad: (ad, error) {
+          setState(() {
+            hasFailed = true;
+          });
+          ad.dispose(); // dispose of ad
+          print('Ad exited with error: $error');
+        },
       ),
     );
+    myInterstitial.load(); // loads ad before showing
   }
 
-  Widget renderLogoArea() {
-    return Container(
-      decoration: BoxDecoration(
-        color: colorSet.logoAreaColor,
-        border: Border.all(
-          width: 0.5,
-          color: colorSet.dividorColor,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second Page'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            Navigator.pop(context); // pops page
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    PaymentPage(), // replace popped page to call init again
+              ),
+            );
+          },
         ),
       ),
-      width: designSet.getLogoAreaWidth(),
-      height: designSet.getLogoAreaHeight(),
-    );
-  }
-
-  Widget renderProgressArea() {
-    return Container(
-      decoration: BoxDecoration(
-        color: colorSet.progressAreaColor,
-        border: Border.all(
-          width: 0.5,
-          color: colorSet.dividorColor,
-        ),
-      ),
-      width: designSet.getProgressAreaWidth(),
-      height: designSet.getProgressAreaHeight(),
-      child: Column(
-        children: [
-          AnimatedLiquidLinearProgressIndicator(),
-          ProcessBar(
-            index: 3,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget renderPaymentArea() {
-    return Container(
-      decoration: BoxDecoration(
-        color: colorSet.mainAreaColor,
-        border: Border.all(
-          width: 0.5,
-          color: colorSet.dividorColor,
-        ),
-      ),
-      width: designSet.getPaymentAreaWidth(),
-      height: designSet.getPaymentAreaHeight(),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: colorSet.mainCardMackgroundcolor,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: FlatButton(
-            child: Text('AD',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                )),
-            color: Colors.white,
-            onPressed: () {
-              Get.toNamed('/cameraPage');
-            },
-          ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            if (hasFailed) {
+              Navigator.pop(context); // pops page
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      PaymentPage(), // replace popped page to call init again
+                ),
+              );
+            } else {
+              myInterstitial.show();
+            }
+          },
+          child: Text('Go To First Page'),
         ),
       ),
     );

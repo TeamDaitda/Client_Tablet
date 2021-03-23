@@ -2,7 +2,6 @@ import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -284,6 +283,7 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                 ),
+                //이 곳 버튼
               ],
             ),
           ),

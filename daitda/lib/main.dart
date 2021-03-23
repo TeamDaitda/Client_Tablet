@@ -12,8 +12,12 @@ import 'package:daitda/pages/previewPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
+   WidgetsFlutterBinding
+      .ensureInitialized(); // needs to be called because run app isn't called first
+  MobileAds.instance.initialize(); // initialize mobile ads
   runApp(MyApp());
 }
 
