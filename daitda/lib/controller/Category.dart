@@ -58,4 +58,8 @@ class CategoryMember {
   String toString() {
     return "Category{id: $id, title: $title, body: $body, imgUrl: $imgUrl}";
   }
+
+  String getTitle() {
+    return title;
+  }
 }

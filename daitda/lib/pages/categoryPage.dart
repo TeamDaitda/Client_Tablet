@@ -179,6 +179,7 @@ class _CategoryPageState extends State<CategoryPage> {
                * 
                * Go to InputPage and pass information about the selected category.
                */
+              userController.setSelectedCategoryIndex(index: thisCategoryMember.id);
               Get.toNamed('/inputPage', arguments: thisCategoryMember);
             },
           ),
@@ -230,7 +231,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   width: 200,
                   decoration: BoxDecoration(
                     color: colorSet.mainCardMackgroundcolor,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Text(

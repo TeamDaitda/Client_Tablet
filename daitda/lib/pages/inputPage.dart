@@ -6,9 +6,7 @@ import 'package:daitda/design/designs.dart' as DESIGNS;
 import 'package:flutter/cupertino.dart';
 import 'package:daitda/pages/paymentPage.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -25,6 +23,7 @@ class _InputPageState extends State<InputPage> {
 
   //  Controller Setting.
   final progressData = Get.put(CONTROLLERS.ProgressData());
+  final userController = Get.put(CONTROLLERS.UserController());
 
   /*
    * 입력받을 사용자의 정보.
@@ -117,12 +116,7 @@ class _InputPageState extends State<InputPage> {
           });
         },
         onAdClosed: (ad) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PaymentPage(), // Navigate to second page
-            ),
-          );
+          Get.offAllNamed('/paymentPage');
           ad.dispose(); // dispose of ad
         },
         onAdFailedToLoad: (ad, error) {
@@ -228,6 +222,9 @@ class _InputPageState extends State<InputPage> {
             ),
             color: Colors.white,
             onPressed: () {
+              userController.setName(name: nameText);
+              userController.setPhone(phone: phoneText);
+              userController.setAffiliation(affiliation: affiliationText);
               if (hasFailed) {
                 Navigator.pop(context); // pops page
                 Navigator.pushReplacement(
@@ -263,7 +260,7 @@ class _InputPageState extends State<InputPage> {
         child: Container(
           decoration: BoxDecoration(
             color: colorSet.mainCardMackgroundcolor,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(3),
           ),
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 50),
@@ -412,7 +409,7 @@ class _InputPageState extends State<InputPage> {
                       // height: 150.5,
                       color: Colors.black,
                       child: Signature(
-                        width: 300,
+                        width: 260,
                         height: 150,
                         controller: signatureController,
                         backgroundColor: Colors.white,
@@ -420,43 +417,14 @@ class _InputPageState extends State<InputPage> {
                     ),
                     Column(
                       children: [
-                        CupertinoButton(
-                          child: Text(
-                            "확인",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onPressed: () async {
-                            if (signatureController.isNotEmpty) {
-                              final Uint8List data =
-                                  await signatureController.toPngBytes();
-                              Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (BuildContext context) {
-                                    return Scaffold(
-                                      appBar: AppBar(),
-                                      body: Center(
-                                        child: Container(
-                                          color: Colors.grey[300],
-                                          child: Image.memory(data),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-                          },
-                        ),
                         //CLEAR CANVAS
                         CupertinoButton(
                           child: Text(
-                            "지우기",
+                            "다시하기",
                             style: TextStyle(
-                              color: Colors.grey,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold,
+                              fontSize: 14,
                             ),
                           ),
                           onPressed: () {

@@ -1,5 +1,6 @@
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:camera/camera.dart';
+import 'package:daitda/controller/imageController.dart';
 import 'package:daitda/pages/previewPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
+  final imageController = Get.put(ImageController());
   final designSet = Get.put(DesignSet());
   final progressData = Get.put(ProgressData());
   final colorSet = ColorSet();
@@ -259,15 +261,10 @@ class _CameraPageState extends State<CameraPage> {
       final path =
           join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
       await cameraController.takePicture().then((value) {
-        print(value.path);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PreviewPage(
-              imgPath: value.path,
-            ),
-          ),
-        );
+        print("camera page -----");
+        print("print path + name :" + value.path + value.name);
+        imageController.setFile(file: value);
+        Get.toNamed('/resultPage');
       });
     } catch (e) {
       _showCameraException(e);

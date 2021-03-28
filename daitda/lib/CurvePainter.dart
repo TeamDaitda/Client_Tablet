@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import './Util/image.dart';
-
 class CurvePainter extends CustomPainter {
   dynamic input;
   CurvePainter({this.input});

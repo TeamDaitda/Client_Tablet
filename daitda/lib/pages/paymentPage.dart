@@ -30,6 +30,8 @@ class _PaymentPageState extends State<PaymentPage> {
 
   //  Controller Setting.
   final progressData = Get.put(CONTROLLERS.ProgressData());
+  final userController = Get.put(CONTROLLERS.UserController());
+  final categoryController = Get.put(CONTROLLERS.Category());
 
   /*
    * 현재 페이지의 인덱스와 이를 바탕으로 계산될 프로그래스의 인덱스입니다.
@@ -58,35 +60,6 @@ class _PaymentPageState extends State<PaymentPage> {
      */
     progressData.setData(thisPageProgressIndex);
     super.initState();
-    myInterstitial = InterstitialAd(
-      adUnitId:
-          'ca-app-pub-3940256099942544/4411468910', // test ad ids for differemt platform
-      request: AdRequest(),
-      listener: AdListener(
-        onAdLoaded: (ad) {
-          setState(() {
-            hasFailed = false;
-          });
-        },
-        onAdClosed: (ad) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PaymentPage(), // Navigate to first page
-            ),
-          );
-          ad.dispose(); // dispose of ad
-        },
-        onAdFailedToLoad: (ad, error) {
-          setState(() {
-            hasFailed = true;
-          });
-          ad.dispose(); // dispose of ad
-          print('Ad exited with error: $error');
-        },
-      ),
-    );
-    myInterstitial.load(); // loads ad before showing
   }
 
   @override
@@ -168,7 +141,7 @@ class _PaymentPageState extends State<PaymentPage> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: FlatButton(
-            child: Text('광고시청 후 페이지',
+            child: Text("타이틀 ${categoryController.categoryMember[userController.getSelectedCategoryIndex()].title}\n 이름 ${userController.getName()}",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
