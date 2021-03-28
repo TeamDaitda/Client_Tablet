@@ -1,11 +1,11 @@
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -109,6 +109,14 @@ class _CategoryPageState extends State<CategoryPage> {
         border: Border.all(
           width: 0.5,
           color: colorSet.dividorColor,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25),
+        child: SvgPicture.asset(
+          'images/sym.svg',
+          width: 10,
+          height: 10,
         ),
       ),
       width: designSet.getLogoAreaWidth(),

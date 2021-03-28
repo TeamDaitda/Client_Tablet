@@ -8,10 +8,16 @@ import 'package:daitda/pages/resultPage.dart';
 import 'package:daitda/pages/testPage.dart';
 import 'package:daitda/pages/onboardingPage.dart';
 import 'package:daitda/pages/galleryPage.dart';
+import 'package:daitda/pages/previewPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
+   WidgetsFlutterBinding
+      .ensureInitialized(); // needs to be called because run app isn't called first
+  MobileAds.instance.initialize(); // initialize mobile ads
   runApp(MyApp());
 }
 
@@ -55,10 +61,17 @@ class MyApp extends StatelessWidget {
             name: '/cameraPage',
             page: () => CameraPage(),
             transition: Transition.fadeIn),
+        
+        GetPage(
+            name: '/previewPage',
+            page: () => PreviewPage(),
+            transition: Transition.fadeIn),
+
         GetPage(
             name: '/resultPage',
             page: () => ResultPage(),
             transition: Transition.fadeIn),
+
         /*GetPage(
             name: '/testPage',
             page: () => TestPage(),

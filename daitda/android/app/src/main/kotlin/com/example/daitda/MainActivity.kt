@@ -1,4 +1,4 @@
-package com.example.daitda
+package com.daitda
 
 import io.flutter.embedding.android.FlutterActivity
 

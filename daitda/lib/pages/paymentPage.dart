@@ -8,6 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:get/get.dart';
+import 'package:daitda/design/colorSet.dart';
+import 'package:daitda/design/designSet.dart';
+import 'package:daitda/controller/progress.dart';
+import 'package:daitda/UIComponent/processBar.dart';
+import 'package:flutter/services.dart';
+import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -29,6 +38,8 @@ class _PaymentPageState extends State<PaymentPage> {
    */
   static double thisPageIndex;
   static double thisPageProgressIndex;
+  InterstitialAd myInterstitial;
+  bool hasFailed;
 
   @override
   void initState() {
@@ -47,6 +58,35 @@ class _PaymentPageState extends State<PaymentPage> {
      */
     progressData.setData(thisPageProgressIndex);
     super.initState();
+    myInterstitial = InterstitialAd(
+      adUnitId:
+          'ca-app-pub-3940256099942544/4411468910', // test ad ids for differemt platform
+      request: AdRequest(),
+      listener: AdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            hasFailed = false;
+          });
+        },
+        onAdClosed: (ad) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaymentPage(), // Navigate to first page
+            ),
+          );
+          ad.dispose(); // dispose of ad
+        },
+        onAdFailedToLoad: (ad, error) {
+          setState(() {
+            hasFailed = true;
+          });
+          ad.dispose(); // dispose of ad
+          print('Ad exited with error: $error');
+        },
+      ),
+    );
+    myInterstitial.load(); // loads ad before showing
   }
 
   @override
@@ -128,7 +168,7 @@ class _PaymentPageState extends State<PaymentPage> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: FlatButton(
-            child: Text('AD',
+            child: Text('광고시청 후 페이지',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
