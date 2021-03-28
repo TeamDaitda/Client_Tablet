@@ -2,9 +2,11 @@ import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
 import 'package:flutter/cupertino.dart';
+import 'package:daitda/pages/paymentPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -25,6 +27,9 @@ class _InputPageState extends State<InputPage> {
 
   CONTROLLERS.CategoryMember thisCategoryMember;
 
+  InterstitialAd myInterstitial;
+  bool hasFailed;
+
   @override
   void initState() {
     thisCategoryMember = Get.arguments;
@@ -35,13 +40,42 @@ class _InputPageState extends State<InputPage> {
     affiliationText = "OO대학교";
 
     progressData.setData(0.2);
+
+
     super.initState();
+    myInterstitial = InterstitialAd(
+      adUnitId: 'ca-app-pub-3940256099942544/4411468910', 
+      request: AdRequest(),
+      listener: AdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            hasFailed = false;
+          });
+        },
+        onAdClosed: (ad) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaymentPage(), // Navigate to second page
+            ),
+          );
+          ad.dispose(); // dispose of ad
+        },
+        onAdFailedToLoad: (ad, error) {
+          setState(() {
+            hasFailed = true;
+          });
+          ad.dispose(); // dispose of ad
+          print('Ad exited with error: $error');
+        },
+      ),
+    );
+    myInterstitial.load();
   }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -119,6 +153,7 @@ class _InputPageState extends State<InputPage> {
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
+          // ignore: deprecated_member_use
           child: FlatButton(
             child: Text(thisCategoryMember.toString(),
                 style: TextStyle(
@@ -127,7 +162,18 @@ class _InputPageState extends State<InputPage> {
                 )),
             color: Colors.white,
             onPressed: () {
-              Get.toNamed('/paymentPage');
+            if (hasFailed) {
+              Navigator.pop(context); // pops page
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      PaymentPage(), // replace popped page to call init again
+                ),
+              );
+            } else {
+              myInterstitial.show();
+            }
             },
           ),
         ),
@@ -284,6 +330,10 @@ class _InputPageState extends State<InputPage> {
                   ),
                 ),
                 //이 곳 버튼
+                // ElevatedButton(
+                //   onPressed :Get.toNamed('paymentPage'), 
+                //   child: Text('data'),
+                //   ),
               ],
             ),
           ),

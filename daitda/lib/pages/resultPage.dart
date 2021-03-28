@@ -103,14 +103,14 @@ class _ResultPageState extends State<ResultPage> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: FlatButton(
-            child: Text('AD',
+            child: Text('결과페이지',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                 )),
             color: Colors.white,
             onPressed: () {
-              Get.toNamed('/cameraPage');
+              Get.toNamed('/homePage');
             },
           ),
         ),

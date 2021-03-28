@@ -84,10 +84,7 @@ class _CameraPageState extends State<CameraPage> {
               Container(
                 width: Get.size.width,
                 height: Get.size.height,
-                child: Expanded(
-                  flex: 1,
-                  child: _cameraPreviewWidget(context),
-                ),
+                child: _cameraPreviewWidget(context),
               ),
             
               Column(

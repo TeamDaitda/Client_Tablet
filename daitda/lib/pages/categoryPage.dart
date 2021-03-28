@@ -16,7 +16,6 @@ class _CategoryPageState extends State<CategoryPage> {
   final colorSet = DESIGNS.ColorSet();
 
   final progressData = Get.put(CONTROLLERS.ProgressData());
-
   final userController = Get.put(CONTROLLERS.UserController());
   final categoryController = Get.put(CONTROLLERS.Category());
 
@@ -25,7 +24,6 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
     thisCategoryMember = categoryController.categoryMember[0];
-
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
     progressData.setData(0.2);
     super.initState();
