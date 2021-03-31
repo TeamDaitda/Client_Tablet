@@ -1,22 +1,12 @@
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:get/get.dart';
-import 'package:daitda/design/colorSet.dart';
-import 'package:daitda/design/designSet.dart';
-import 'package:daitda/controller/progress.dart';
-import 'package:daitda/UIComponent/processBar.dart';
-import 'package:flutter/services.dart';
-import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
@@ -103,10 +93,10 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget renderProgressArea() {
     return Container(
       decoration: BoxDecoration(
-        color: colorSet.progressAreaColor,
+        color: colorSet.logoAreaColor,
         border: Border.all(
           width: 0.5,
-          color: colorSet.dividorColor,
+          color: colorSet.logoAreaColor,
         ),
       ),
       width: designSet.getProgressAreaWidth(),
@@ -137,19 +127,52 @@ class _PaymentPageState extends State<PaymentPage> {
         padding: const EdgeInsets.all(20.0),
         child: Container(
           decoration: BoxDecoration(
-            color: colorSet.mainCardMackgroundcolor,
+            color: colorSet.positivetextColor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: FlatButton(
-            child: Text("타이틀 ${categoryController.categoryMember[userController.getSelectedCategoryIndex()].title}\n 이름 ${userController.getName()}",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                )),
-            color: Colors.white,
-            onPressed: () {
-              Get.toNamed('/cameraPage');
-            },
+          child: Stack(
+            children: <Widget> [
+              Center(
+                child: Opacity(
+                 child: SvgPicture.asset(
+              'images/sym.svg',
+              width:830,
+              height: 830,
+            ),
+            opacity: 0.05,),
+              ),
+
+              Center(
+                child: Text(
+                  "${userController.getName()}님께서 선택하신 ${categoryController.categoryMember[userController.getSelectedCategoryIndex()].title}에 기부가 완료되었어요.\n\n 하단 버튼을 누르면 촬영을 시작합니다. 기부자님의 아름다운 미소를 보여주세요! ",
+
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white
+                  ),
+                  ),
+              ),
+
+              Container(
+                alignment: Alignment(0.90, 0.95),
+                child: OutlinedButton(
+                  onPressed: () {
+                      Get.toNamed('/cameraPage');
+                  },
+                  child: Text('촬영하기',
+                  style: TextStyle(color: Colors.black,fontSize: 18),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Colors.white,
+                    shadowColor: Colors.black,
+                    elevation: 11,
+                  ),
+                  ),
+                  )
+            ],
+
           ),
         ),
       ),
