@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 import 'package:fdottedline/fdottedline.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CameraPage extends StatefulWidget {
   @override
@@ -121,6 +122,14 @@ class _CameraPageState extends State<CameraPage> {
           color: colorSet.tfColor,
         ),
       ),
+            child: Padding(
+        padding: const EdgeInsets.only(top: 25),
+        child: SvgPicture.asset(
+          'images/sym.svg',
+          width: 10,
+          height: 10,
+        ),
+      ),
       width: designSet.getLogoAreaWidth(),
       height: designSet.getLogoAreaHeight(),
     );
@@ -170,7 +179,7 @@ class _CameraPageState extends State<CameraPage> {
   Widget _cameraControlWidget(context) {
     return Expanded(
       child: Align(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment(0,0.95),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.max,
@@ -196,7 +205,7 @@ class _CameraPageState extends State<CameraPage> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(350, 120, 100, 60),
+            padding: const EdgeInsets.fromLTRB(320, 120, 100, 60),
             child: FDottedLine(
               color: Colors.white,
               height: 500.0,
@@ -207,7 +216,7 @@ class _CameraPageState extends State<CameraPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(280, 3, 50, 60),
+            padding: const EdgeInsets.fromLTRB(295, 3, 50, 60),
             child: Text(
               '사각형 안에 얼굴을 맞춰주세요',
               style: TextStyle(

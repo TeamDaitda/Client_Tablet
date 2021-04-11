@@ -3,6 +3,7 @@ import 'package:daitda/design/designSet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AnimatedLiquidLinearProgressIndicator extends StatefulWidget {
   @override
@@ -45,11 +46,23 @@ class AnimatedLiquidLinearProgressIndicatorState
           width: designSet.getProgressBarWidth(),
           height: designSet.getProgressBarHeight(),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-          child: LiquidLinearProgressIndicator(
-            value: progressData.getData(),
-            backgroundColor: Colors.white,
-            valueColor: AlwaysStoppedAnimation(Colors.black87),
-            borderRadius: 20.0,
+          child: Stack(
+            children: [
+              LiquidLinearProgressIndicator(
+                value: progressData.getData(),
+                backgroundColor: Color(0xff2b2b2b),
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+                borderRadius: 30.0,
+              ),
+
+          Center(
+            child: SvgPicture.asset(
+            'images/transparency2.svg',
+        ),
+          ),
+
+
+            ],
           ),
         ),
       ),

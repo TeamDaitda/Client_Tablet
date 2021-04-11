@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'DAITDA',
       theme: ThemeData(
+        fontFamily: 'SongMyung',
         primarySwatch: Colors.blue,
         splashColor: Colors.transparent,
         accentColor: Colors.white,

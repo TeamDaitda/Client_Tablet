@@ -23,14 +23,14 @@ class ColorSet {
 
   //  2020 02 08 Update Color
   //  Area Color
-  final Color logoAreaColor = Color(0xff2c2f33);
-  final Color progressAreaColor = Color(0xff2c2f33);
-  final Color mainAreaColor = Color(0xff2c2f33);
-  final Color bottomAreaColor = Color(0xff2c2f33);
-  final Color dividorColor = Color(0xff23272a);
-  final Color inputAreaColor = Color(0xff23272a);
-  final Color inputcardAreaColor = Color(0xff23272a);
-  final Color paymentAreaColor = Color(0xff23272a);
+  final Color logoAreaColor = Color(0xff2b2b2b);
+  final Color progressAreaColor = Color(0xff2b2b2b);
+  final Color mainAreaColor = Color(0xff2b2b2b);
+  final Color bottomAreaColor = Color(0xff2b2b2b);
+  final Color dividorColor = Color(0xff2b2b2b);
+  final Color inputAreaColor = Color(0xff2b2b2b);
+  final Color inputcardAreaColor = Color(0xff2b2b2b);
+  final Color paymentAreaColor = Color(0xff2b2b2b);
   //  UI Component Background Color
   final Color logoBackgroundColor = Colors.transparent;
   final Color progressBackgroundColor = Colors.transparent;
