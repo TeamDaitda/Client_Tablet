@@ -34,7 +34,7 @@ class ImageApi {
       // print(utf8.decode(await t.readAsBytes()));
 
       Response response = await Dio().post(
-          "http://172.20.10.2:3000/api/image/imageUploadAndTranslateToJson",
+          "http://58.123.40.137:3000/api/image/imageUploadAndTranslateToJson",
           data: await FormDataImage(filePath: filePath, fileName: fileName),
           onSendProgress: (received, total) {
         if (total != -1) {

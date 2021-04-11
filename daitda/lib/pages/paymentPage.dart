@@ -85,6 +85,14 @@ class _PaymentPageState extends State<PaymentPage> {
           color: colorSet.dividorColor,
         ),
       ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25),
+        child: SvgPicture.asset(
+          'images/sym.svg',
+          width: 10,
+          height: 10,
+        ),
+      ),
       width: designSet.getLogoAreaWidth(),
       height: designSet.getLogoAreaHeight(),
     );
@@ -127,7 +135,7 @@ class _PaymentPageState extends State<PaymentPage> {
         padding: const EdgeInsets.all(20.0),
         child: Container(
           decoration: BoxDecoration(
-            color: colorSet.positivetextColor,
+            color: colorSet.mainAreaColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Stack(
@@ -136,8 +144,8 @@ class _PaymentPageState extends State<PaymentPage> {
                 child: Opacity(
                  child: SvgPicture.asset(
               'images/sym.svg',
-              width:830,
-              height: 830,
+              width:840,
+              height: 840,
             ),
             opacity: 0.05,),
               ),
@@ -169,8 +177,8 @@ class _PaymentPageState extends State<PaymentPage> {
                     shadowColor: Colors.black,
                     elevation: 11,
                   ),
-                  ),
-                  )
+                ),
+              )
             ],
 
           ),

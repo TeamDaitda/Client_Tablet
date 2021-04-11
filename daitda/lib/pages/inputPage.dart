@@ -1,15 +1,13 @@
-import 'dart:typed_data';
-
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
 import 'package:flutter/cupertino.dart';
-import 'package:daitda/pages/paymentPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:signature/signature.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -156,7 +154,6 @@ class _InputPageState extends State<InputPage> {
       ),
     );
   }
-
   Widget renderLogoArea() {
     return Container(
       decoration: BoxDecoration(
@@ -164,6 +161,14 @@ class _InputPageState extends State<InputPage> {
         border: Border.all(
           width: 0.5,
           color: colorSet.dividorColor,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25),
+        child: SvgPicture.asset(
+          'images/sym.svg',
+          width: 10,
+          height: 10,
         ),
       ),
       width: designSet.getLogoAreaWidth(),
@@ -211,34 +216,28 @@ class _InputPageState extends State<InputPage> {
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
-          // ignore: deprecated_member_use
-          child: FlatButton(
-            child: Text(
-              thisCategoryMember.toString(),
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-              ),
-            ),
-            color: Colors.white,
-            onPressed: () {
-              userController.setName(name: nameText);
-              userController.setPhone(phone: phoneText);
-              userController.setAffiliation(affiliation: affiliationText);
-              if (hasFailed) {
-                Navigator.pop(context); // pops page
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        PaymentPage(), // replace popped page to call init again
+  
+          child: Column(
+            children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 70),
+                  child: Text(
+                    thisCategoryMember.toString(),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
                   ),
-                );
-              } else {
-                myInterstitial.show();
-              }
-            },
+                ),
+                
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: thisCategoryMember.getimg(),
+              ),
+                     
+            ],
           ),
+          
         ),
       ),
     );
@@ -249,7 +248,7 @@ class _InputPageState extends State<InputPage> {
       decoration: BoxDecoration(
         color: colorSet.inputAreaColor,
         border: Border.all(
-          width: 0.5,
+          width: 0.1,
           color: colorSet.dividorColor,
         ),
       ),
@@ -260,15 +259,15 @@ class _InputPageState extends State<InputPage> {
         child: Container(
           decoration: BoxDecoration(
             color: colorSet.mainCardMackgroundcolor,
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: BorderRadius.circular(20)
           ),
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 50),
+            margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "이름을 알려주세요.",
+                  "성함을 알려주세요.",
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -352,7 +351,7 @@ class _InputPageState extends State<InputPage> {
                 ),
                 UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
                 Text(
-                  "소속을 입력해주세요.",
+                  "직업을 입력해주세요.",
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -367,7 +366,7 @@ class _InputPageState extends State<InputPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    _showDialog(title: "소속을 입력해주세요.", index: 2);
+                    _showDialog(title: "직업을 입력해주세요.", index: 2);
                   },
                   child: Container(
                     width: 200,
@@ -388,6 +387,7 @@ class _InputPageState extends State<InputPage> {
                           "$affiliationText",
                           style: designSet.getStyleInputPageText(),
                         ),
+                      
                       ],
                     ),
                   ),
@@ -400,6 +400,7 @@ class _InputPageState extends State<InputPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+              
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
@@ -412,7 +413,8 @@ class _InputPageState extends State<InputPage> {
                         width: 260,
                         height: 150,
                         controller: signatureController,
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.grey,
+
                       ),
                     ),
                     Column(
@@ -435,6 +437,24 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ],
                 ),
+                
+                 Container(
+                alignment: Alignment(0.90, 0.9),
+                child: OutlinedButton(
+                  onPressed: () {
+                      Get.toNamed('/paymentPage');
+                  },
+                  child: Text('촬영하기',
+                  style: TextStyle(color: Colors.white,fontSize: 18),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.white,
+                    elevation: 8,
+                  ),
+                  ),
+                 ),
               ],
             ),
           ),

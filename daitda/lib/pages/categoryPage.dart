@@ -164,24 +164,63 @@ class _CategoryPageState extends State<CategoryPage> {
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: FlatButton(
-            child: Text(
-              thisCategoryMember.toString(),
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
+          child: Column(
+            children: [
+              Text(
+                thisCategoryMember.toString(),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            color: Colors.white,
-            onPressed: () {
-              /*
-               * inputPage로 이동하며 선택한 카테고리의 대한 정보를 arguments로 전달합니다.
-               * 
-               * Go to InputPage and pass information about the selected category.
-               */
-              userController.setSelectedCategoryIndex(index: thisCategoryMember.id);
-              Get.toNamed('/inputPage', arguments: thisCategoryMember);
-            },
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal:30,),
+                    child: Column(
+                      children: [
+                        Container(
+                          child: thisCategoryMember.getimg(),
+                          height: 500,
+                          width: 500,
+                          ),
+                      ],
+                    ),
+                  ),
+
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: OutlinedButton(
+                          child: Text(
+                            '다음으로',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+              ),
+              onPressed: () {
+                  /*
+                   * inputPage로 이동하며 선택한 카테고리의 대한 정보를 arguments로 전달합니다.
+                   * 
+                   * Go to InputPage and pass information about the selected category.
+                   */
+                  userController.setSelectedCategoryIndex(index: thisCategoryMember.id);
+                  Get.toNamed('/inputPage', arguments: thisCategoryMember);
+              },
+                      style: OutlinedButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: Colors.black,
+                        shadowColor: Colors.white,
+                        elevation: 8,
+                      ),
+                  ),
+          ),
+        
+                  
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -220,7 +259,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         id: categoryController.categoryMember[index].id,
                         title: categoryController.categoryMember[index].title,
                         body: categoryController.categoryMember[index].body,
-                        imgUrl: categoryController.categoryMember[index].imgUrl,
+                        img: categoryController.categoryMember[index].getimg(),
                       );
                       print(
                           categoryController.categoryMember[index].toString());
@@ -234,14 +273,25 @@ class _CategoryPageState extends State<CategoryPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
-                    child: Text(
-                      /*
-                       * 카테고리의 정보를 텍스트로 출력합니다.
-                       * 
-                       * Prints information of categories in Text.
-                       */
-                      "${categoryController.categoryMember[index].id.toString()}\n${categoryController.categoryMember[index].toString()}",
-                      style: TextStyle(fontSize: 18),
+                    // child: Text(
+                    //   /*
+                    //    * 카테고리의 정보를 텍스트로 출력합니다.
+                    //    * 
+                    //    * Prints information of categories in Text.
+                    //    */
+                    //   "${categoryController.categoryMember[index].id.toString()}\n${categoryController.categoryMember[index].toString()}",
+                    //   style: TextStyle(fontSize: 18),
+                    // ),
+                    child: Column(
+                      children: [
+                        Text (
+                          categoryController.categoryMember[index].title.toString()),
+                        
+                        Container(
+                          child: categoryController.categoryMember[index].getimg(),
+                          width: 180,
+                          height: 180,),
+                      ],
                     ),
                   ),
                 ),

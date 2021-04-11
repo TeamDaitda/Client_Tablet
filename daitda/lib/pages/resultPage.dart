@@ -127,64 +127,89 @@ class _ResultPageState extends State<ResultPage> {
       width: designSet.getPaymentAreaWidth(),
       height: designSet.getPaymentAreaHeight(),
       color: colorSet.mainAreaColor,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(onPressed: () async {
-              final Uint8List data = await _capturePng();
-              await Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) {
-                    return Scaffold(
-                      appBar: AppBar(),
-                      body: Center(
-                        child: Container(
-                          color: Colors.grey[300],
-                          child: Image.memory(data),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            }),
-            FutureBuilder(
-                future: imageAPI.transImage(
-                    filePath: file.path, fileName: file.name),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData == false) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Error: ${snapshot.error}',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    );
-                  } else {
-                    return Align(
-                      alignment: Alignment.center,
-                      child: RepaintBoundary(
-                        key: _globalKey,
-                        child: Container(
-                          color: Colors.blue,
-                          height: MediaQuery.of(context).size.height * 0.8,
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: CustomPaint(
-                            painter: CurvePainter(
-                                input: snapshot.data,
-                                displaySize: MediaQuery.of(context).size),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                child: RaisedButton(
+                  child: Text('포토카드 받기'),
+                  onPressed: () async {
+                  final Uint8List data = await _capturePng();
+                  await Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return Scaffold(
+                          appBar: AppBar(
+                            backgroundColor: Colors.black,
                           ),
+                          body: Center(
+                            child: Container(
+                              color: Colors.grey,
+                              child: Image.memory(data),
+
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+
+          SizedBox(
+            height: 30,
+          ),
+
+          FutureBuilder(
+              future: imageAPI.transImage(
+                  filePath: file.path, fileName: file.name),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData == false) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  );
+                } else {
+                  return Align(
+                    alignment: Alignment.center,
+                    child: RepaintBoundary(
+                      key: _globalKey,
+                      child: Container(
+                        color: Colors.black,
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: CustomPaint(
+                          painter: CurvePainter(
+                              input: snapshot.data,
+                              displaySize: MediaQuery.of(context).size),
                         ),
                       ),
-                    );
-                  }
-                }),
-          ],
-        ),
-      ),
-    );
-  }
+                    ),
+                  );
+                }
+              }),
+              SizedBox(
+                height: 50,
+              ),
+
+              Text('당신의 선이 완성되었습니다.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                ),
+              ),
+            ],
+           ),
+          );
+        }
 }
