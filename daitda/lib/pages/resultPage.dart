@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:camera/camera.dart';
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:daitda/controller/imageController.dart';
@@ -130,35 +129,29 @@ class _ResultPageState extends State<ResultPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                child: RaisedButton(
-                  child: Text('포토카드 받기'),
-                  onPressed: () async {
-                  final Uint8List data = await _capturePng();
-                  await Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return Scaffold(
-                          appBar: AppBar(
-                            backgroundColor: Colors.black,
-                          ),
-                          body: Center(
-                            child: Container(
-                              color: Colors.grey,
-                              child: Image.memory(data),
-
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }),
-              ),
-            ],
+          Container(
+            child: RaisedButton(
+              child: Text('포토카드 받기'),
+              onPressed: () async {
+              final Uint8List data = await _capturePng();
+              await Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return Scaffold(
+                      appBar: AppBar(
+                        backgroundColor: Colors.black,
+                      ),
+                      body: Center(
+                        child: Container(
+                          color: Colors.grey,
+                          child: Image.memory(data),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            }),
           ),
 
           SizedBox(
@@ -186,12 +179,15 @@ class _ResultPageState extends State<ResultPage> {
                       key: _globalKey,
                       child: Container(
                         color: Colors.black,
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        child: CustomPaint(
-                          painter: CurvePainter(
-                              input: snapshot.data,
-                              displaySize: MediaQuery.of(context).size),
+                        height: MediaQuery.of(context).size.height * 0.6,
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Container(
+                          child: CustomPaint(
+                            painter: CurvePainter(
+                                input: snapshot.data,
+                                displaySize: MediaQuery.of(context).size),
+                          ),
+                          
                         ),
                       ),
                     ),
