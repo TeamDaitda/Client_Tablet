@@ -222,17 +222,23 @@ class _InputPageState extends State<InputPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 70),
                   child: Text(
-                    thisCategoryMember.toString(),
+                    "${thisCategoryMember.getTitle()}\n${thisCategoryMember.getsubTitle()}",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 23,
                       color: Colors.black,
                     ),
                   ),
                 ),
+
+                SizedBox(height:250),
                 
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: thisCategoryMember.getimg(),
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: thisCategoryMember.getimg(),
+                  
+                ),
               ),
                      
             ],
@@ -262,7 +268,7 @@ class _InputPageState extends State<InputPage> {
             borderRadius: BorderRadius.circular(20)
           ),
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 50),
+            margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -282,7 +288,7 @@ class _InputPageState extends State<InputPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    _showDialog(title: "이름을 알려주세요.", index: 0);
+                    _showDialog(title: "성함을 알려주세요.", index: 0);
                   },
                   child: Container(
                     width: 200,
@@ -307,6 +313,7 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                 ),
+                
                 UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
                 Text(
                   "연락처를 입력해주세요.",
@@ -438,24 +445,26 @@ class _InputPageState extends State<InputPage> {
                   ],
                 ),
                 
-                 Container(
-                alignment: Alignment(0.90, 0.9),
-                child: OutlinedButton(
-                  onPressed: () {
-                      Get.toNamed('/paymentPage');
-                  },
-                  child: Text('촬영하기',
-                  style: TextStyle(color: Colors.white,fontSize: 18),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    primary: Colors.white,
-                    backgroundColor: Colors.black,
-                    shadowColor: Colors.white,
-                    elevation: 8,
-                  ),
-                  ),
-                 ),
+                SizedBox(height: 50),
+                Container(
+                  alignment: Alignment(1.0,0.0),
+                  child: OutlinedButton(
+                    onPressed: () {
+                        Get.toNamed('/paymentPage');
+                    },
+                    child: Text('기부하기',
+                    style: TextStyle(color: Colors.white,fontSize: 18),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      primary: Colors.white,
+                      backgroundColor: Colors.black,
+                      shadowColor: Colors.white,
+                      elevation: 8,
+                    ),
+                    ),
+                ),
               ],
+
             ),
           ),
         ),

@@ -38,6 +38,7 @@ dependencies:
   fdottedline: ^1.0.1
   flutter_svg: ^0.19.3
   google_mobile_ads: ^0.11.0+4
+  flutter_gifimage: ^1.0.0
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -67,8 +68,16 @@ flutter:
     - images/sym.svg
     - images/both.svg
     - images/transparency2.svg
-    - images/hanbumo.png
+    - images/singleparent.png
     - images/refugee.png
+    - images/globalWarming.png
+    - images/abandoneddog.png
+    - images/household.png
+    - images/soldier.png
+    - images/disabled.png
+    - images/elders.png
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

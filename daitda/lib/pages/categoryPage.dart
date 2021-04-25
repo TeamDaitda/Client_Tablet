@@ -164,63 +164,63 @@ class _CategoryPageState extends State<CategoryPage> {
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            children: [
-              Text(
-                thisCategoryMember.toString(),
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
+          child: Stack(
+            children: <Widget> [
+              
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                child: Text(
+                  "${thisCategoryMember.getTitle()}\n\n ${thisCategoryMember.getBody()}",
+                  
+                  style: TextStyle(
+                    fontSize: 23,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal:30,),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: thisCategoryMember.getimg(),
-                          height: 500,
-                          width: 500,
-                          ),
-                      ],
+
+            Container(
+              alignment: Alignment(-0.94, 0.95),
+              child: OutlinedButton(
+                child: Text(
+                    '다음으로',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
                     ),
-                  ),
+                ),
+                onPressed: () {
+                    /*
+                     * inputPage로 이동하며 선택한 카테고리의 대한 정보를 arguments로 전달합니다.
+                     * 
+                     * Go to InputPage and pass information about the selected category.
+                     */
+                    userController.setSelectedCategoryIndex(index: thisCategoryMember.id);
+                    Get.toNamed('/inputPage', arguments: thisCategoryMember);
+                },
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.black,
+                          shadowColor: Colors.white,
+                          elevation: 8,
+                        ),
+                    ),
+            ),
 
-
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OutlinedButton(
-                          child: Text(
-                            '다음으로',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-              ),
-              onPressed: () {
-                  /*
-                   * inputPage로 이동하며 선택한 카테고리의 대한 정보를 arguments로 전달합니다.
-                   * 
-                   * Go to InputPage and pass information about the selected category.
-                   */
-                  userController.setSelectedCategoryIndex(index: thisCategoryMember.id);
-                  Get.toNamed('/inputPage', arguments: thisCategoryMember);
-              },
-                      style: OutlinedButton.styleFrom(
-                        primary: Colors.white,
-                        backgroundColor: Colors.black,
-                        shadowColor: Colors.white,
-                        elevation: 8,
-                      ),
-                  ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(550, 230, 40, 0),
+              child: Expanded(
+                    child: Container(
+                    child: thisCategoryMember.getimg(),
+                    height: 290,
+                    width: 290,
           ),
-        
-                  
-                ],
               ),
-            ],
+            ),
+
+
+          ],
           ),
         ),
       ),
@@ -257,7 +257,8 @@ class _CategoryPageState extends State<CategoryPage> {
                      */
                       thisCategoryMember = CONTROLLERS.CategoryMember(
                         id: categoryController.categoryMember[index].id,
-                        title: categoryController.categoryMember[index].title,
+                        subtitle: categoryController.categoryMember[index].title,
+                        title: categoryController.categoryMember[index].subtitle,
                         body: categoryController.categoryMember[index].body,
                         img: categoryController.categoryMember[index].getimg(),
                       );
@@ -284,13 +285,17 @@ class _CategoryPageState extends State<CategoryPage> {
                     // ),
                     child: Column(
                       children: [
-                        Text (
-                          categoryController.categoryMember[index].title.toString()),
-                        
+                         SizedBox(height: 23),
+
                         Container(
                           child: categoryController.categoryMember[index].getimg(),
-                          width: 180,
-                          height: 180,),
+                          width: 140,
+                          height: 140,),
+                        SizedBox(height: 17),
+                        Text (
+                          categoryController.categoryMember[index].title.toString(),
+                          style: TextStyle(fontSize: 20,),),
+                        
                       ],
                     ),
                   ),
