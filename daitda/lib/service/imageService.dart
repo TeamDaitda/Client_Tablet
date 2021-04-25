@@ -54,8 +54,11 @@ class ImageApi {
         }
       }
       for (int i = 0; i < length; i++) {
-        outputObjs[i].dX -= minX + Random().nextInt(30) - 200;
-        outputObjs[i].dY -= minY + Random().nextInt(30) - 100;
+        outputObjs[i].dX -= minX + Random().nextInt(50) - 200;
+        outputObjs[i].dY -= minY + Random().nextInt(50) - 100;
+
+        // outputObjs[i].dX -= minX - 200;
+        // outputObjs[i].dY -= minY - 100;
       }
       return outputObjs;
     } catch (e) {

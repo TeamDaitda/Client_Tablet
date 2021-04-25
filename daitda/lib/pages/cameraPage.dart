@@ -122,7 +122,7 @@ class _CameraPageState extends State<CameraPage> {
           color: colorSet.tfColor,
         ),
       ),
-            child: Padding(
+      child: Padding(
         padding: const EdgeInsets.only(top: 25),
         child: SvgPicture.asset(
           'images/sym.svg',
@@ -179,7 +179,7 @@ class _CameraPageState extends State<CameraPage> {
   Widget _cameraControlWidget(context) {
     return Expanded(
       child: Align(
-        alignment: Alignment(0,0.95),
+        alignment: Alignment(0, 0.95),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.max,
@@ -202,27 +202,31 @@ class _CameraPageState extends State<CameraPage> {
 
   Widget _cameraoverlayWidget() {
     return Container(
-      child: Column(
+      child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(320, 120, 100, 60),
-            child: FDottedLine(
-              color: Colors.white,
-              height: 500.0,
-              width: 500.0,
-              strokeWidth: 3.0,
-              dottedLength: 10.0,
-              space: 12.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(295, 3, 50, 60),
-            child: Text(
-              '사각형 안에 얼굴을 맞춰주세요',
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.white,
-              ),
+          Align(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FDottedLine(
+                  color: Colors.white,
+                  height: 400,
+                  width: 400,
+                  strokeWidth: 3.0,
+                  dottedLength: 10.0,
+                  space: 12.0,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Text(
+                  '사각형 안에 얼굴을 맞춰주세요',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -16,7 +16,7 @@ class ProcessBar extends StatelessWidget {
   Widget build(BuildContext context) {
     print(index);
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(18.0),
       child: Center(
         child: Container(
           child: Row(
@@ -73,8 +73,7 @@ class ProcessBar extends StatelessWidget {
             height: 23,
             child: Text(
               text,
-              style: TextStyle(color: colorSet.fontColor,
-              fontSize: 18),
+              style: TextStyle(color: colorSet.fontColor, fontSize: 18),
             ),
           )
         : Container(

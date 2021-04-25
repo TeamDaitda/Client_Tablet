@@ -154,6 +154,7 @@ class _InputPageState extends State<InputPage> {
       ),
     );
   }
+
   Widget renderLogoArea() {
     return Container(
       decoration: BoxDecoration(
@@ -216,11 +217,12 @@ class _InputPageState extends State<InputPage> {
             color: colorSet.mainCardMackgroundcolor,
             borderRadius: BorderRadius.circular(20),
           ),
-  
-          child: Column(
+          child: Stack(
             children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 70),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     "${thisCategoryMember.getTitle()}\n${thisCategoryMember.getsubTitle()}",
                     textAlign: TextAlign.center,
@@ -230,20 +232,20 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                 ),
-
-                SizedBox(height:250),
-                
-              Container(
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: thisCategoryMember.getimg(),
-                  
+                  padding:
+                      const EdgeInsets.only(bottom: 20, right: 20, left: 20),
+                  child: Container(
+                    height: Get.size.height * 0.7,
+                    child: thisCategoryMember.getimg(),
+                  ),
                 ),
               ),
-                     
             ],
           ),
-          
         ),
       ),
     );
@@ -264,9 +266,8 @@ class _InputPageState extends State<InputPage> {
         padding: const EdgeInsets.all(20.0),
         child: Container(
           decoration: BoxDecoration(
-            color: colorSet.mainCardMackgroundcolor,
-            borderRadius: BorderRadius.circular(20)
-          ),
+              color: colorSet.mainCardMackgroundcolor,
+              borderRadius: BorderRadius.circular(20)),
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
             child: Column(
@@ -275,7 +276,7 @@ class _InputPageState extends State<InputPage> {
                 Text(
                   "성함을 알려주세요.",
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -313,12 +314,11 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                 ),
-                
                 UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
                 Text(
                   "연락처를 입력해주세요.",
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -360,7 +360,7 @@ class _InputPageState extends State<InputPage> {
                 Text(
                   "직업을 입력해주세요.",
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -394,77 +394,81 @@ class _InputPageState extends State<InputPage> {
                           "$affiliationText",
                           style: designSet.getStyleInputPageText(),
                         ),
-                      
                       ],
                     ),
                   ),
                 ),
                 UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
-                Text(
-                  "사인을 해주세요.",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Container(
-                      // width: 300.5,
-                      // height: 150.5,
-                      color: Colors.black,
-                      child: Signature(
-                        width: 260,
-                        height: 150,
-                        controller: signatureController,
-                        backgroundColor: Colors.grey,
-
+                  children: [
+                    Text(
+                      "사인을 해주세요.",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Column(
-                      children: [
-                        //CLEAR CANVAS
-                        CupertinoButton(
-                          child: Text(
-                            "다시하기",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() => signatureController.clear());
-                          },
+                    SizedBox(
+                      width: 10,
+                    ),
+                    InkWell(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black,
                         ),
-                      ],
+                        child: Icon(
+                          Icons.refresh_sharp,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        setState(() => signatureController.clear());
+                      },
                     ),
                   ],
                 ),
-                
-                SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: 301,
+                      height: 121,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                      ),
+                      child: Signature(
+                        width: 300,
+                        height: 120,
+                        controller: signatureController,
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
                 Container(
-                  alignment: Alignment(1.0,0.0),
-                  child: OutlinedButton(
-                    onPressed: () {
-                        Get.toNamed('/paymentPage');
-                    },
-                    child: Text('기부하기',
-                    style: TextStyle(color: Colors.white,fontSize: 18),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: Colors.black,
-                      shadowColor: Colors.white,
-                      elevation: 8,
-                    ),
-                    ),
+                  child: Row(
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          Get.toNamed('/paymentPage');
+                        },
+                        child: Text(
+                          '기부하기',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.black,
+                          shadowColor: Colors.white,
+                          elevation: 8,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-
             ),
           ),
         ),

@@ -131,36 +131,34 @@ class _ResultPageState extends State<ResultPage> {
         children: <Widget>[
           Container(
             child: RaisedButton(
-              child: Text('포토카드 받기'),
-              onPressed: () async {
-              final Uint8List data = await _capturePng();
-              await Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) {
-                    return Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: Colors.black,
-                      ),
-                      body: Center(
-                        child: Container(
-                          color: Colors.grey,
-                          child: Image.memory(data),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            }),
+                child: Text('포토카드 받기'),
+                onPressed: () async {
+                  final Uint8List data = await _capturePng();
+                  await Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return Scaffold(
+                          appBar: AppBar(
+                            backgroundColor: Colors.black,
+                          ),
+                          body: Center(
+                            child: Container(
+                              color: Colors.grey,
+                              child: Image.memory(data),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }),
           ),
-
           SizedBox(
             height: 30,
           ),
-
           FutureBuilder(
-              future: imageAPI.transImage(
-                  filePath: file.path, fileName: file.name),
+              future:
+                  imageAPI.transImage(filePath: file.path, fileName: file.name),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData == false) {
                   return CircularProgressIndicator();
@@ -178,34 +176,56 @@ class _ResultPageState extends State<ResultPage> {
                     child: RepaintBoundary(
                       key: _globalKey,
                       child: Container(
-                        color: Colors.black,
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        child: Container(
-                          child: CustomPaint(
-                            painter: CurvePainter(
-                                input: snapshot.data,
-                                displaySize: MediaQuery.of(context).size),
-                          ),
-                          
+                        width: Get.size.width * 0.6,
+                        height: Get.size.height * 0.6,
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.6,
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Container(
+                                  child: CustomPaint(
+                                    painter: CurvePainter(
+                                        input: snapshot.data,
+                                        displaySize:
+                                            MediaQuery.of(context).size),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Text(
+                                "이름이름이름이름",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   );
                 }
               }),
-              SizedBox(
-                height: 50,
-              ),
-
-              Text('당신의 선이 완성되었습니다.',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                ),
-              ),
-            ],
-           ),
-          );
-        }
+          SizedBox(
+            height: 50,
+          ),
+          Text(
+            '당신의 선이 완성되었습니다.',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

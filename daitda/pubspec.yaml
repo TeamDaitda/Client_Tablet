@@ -39,7 +39,7 @@ dependencies:
   flutter_svg: ^0.19.3
   google_mobile_ads: ^0.11.0+4
   flutter_gifimage: ^1.0.0
-  
+  auto_size_text: ^2.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

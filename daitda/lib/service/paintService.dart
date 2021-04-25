@@ -1,9 +1,8 @@
-import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
+import 'package:daitda/design/designs.dart';
 import 'package:daitda/model/outputModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 class CurvePainter extends CustomPainter {
   List<OutPut> input;
   Size lastSize;
@@ -12,10 +11,13 @@ class CurvePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    double xc;
+    double yc;
+
     lastSize = size;
     var paint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 5
+      ..color = ColorSet().backgroundColor
+      ..strokeWidth = 3
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
     canvas.scale(1);
@@ -23,24 +25,15 @@ class CurvePainter extends CustomPainter {
     displaySize.width;
     displaySize.height;
     Path path = Path();
-    for (int i = 0; i <= input.length; i++) {
-      if (i == 0) {
-        path.moveTo(0, size.height / 2);
-        path.quadraticBezierTo(0, size.height / 2, input[0].dX, input[0].dY);
-      } else if (i == input.length) {
-        path.moveTo(size.width, size.height / 2);
-        path.quadraticBezierTo(
-            size.width, size.height / 2, input[63].dX, input[63].dY);
-      } else {
-        path.moveTo(input[i].dX, input[i].dY);
-      }
-      if (i < input.length - 6) {
-        if (i == 0 || i % 6 == 0) {
-          path.cubicTo(input[i + 1].dX, input[i + 1].dY, input[i + 2].dX,
-              input[i + 2].dY, input[i + 3].dX, input[i + 3].dY);
-        }
-      }
+
+    path.moveTo(0, size.height / 2);
+    for (int i = 0; i < input.length - 1; i++) {
+      xc = (input[i].dX + input[i + 1].dX) / 2;
+      yc = (input[i].dY + input[i + 1].dY) / 2;
+      path.quadraticBezierTo(input[i].dX, input[i].dY, xc, yc);
     }
+    path.quadraticBezierTo(input[input.length - 1].dX,
+        input[input.length - 1].dY, size.width, size.height / 2);
 
     canvas.drawPath(path, paint);
     print(input);

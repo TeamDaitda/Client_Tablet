@@ -165,62 +165,56 @@ class _CategoryPageState extends State<CategoryPage> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Stack(
-            children: <Widget> [
-              
+            children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
                 child: Text(
                   "${thisCategoryMember.getTitle()}\n\n ${thisCategoryMember.getBody()}",
-                  
                   style: TextStyle(
                     fontSize: 23,
                     color: Colors.black,
                   ),
                 ),
               ),
-
-            Container(
-              alignment: Alignment(-0.94, 0.95),
-              child: OutlinedButton(
-                child: Text(
+              Container(
+                alignment: Alignment(-0.94, 0.95),
+                child: OutlinedButton(
+                  child: Text(
                     '다음으로',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                     ),
-                ),
-                onPressed: () {
+                  ),
+                  onPressed: () {
                     /*
                      * inputPage로 이동하며 선택한 카테고리의 대한 정보를 arguments로 전달합니다.
                      * 
                      * Go to InputPage and pass information about the selected category.
                      */
-                    userController.setSelectedCategoryIndex(index: thisCategoryMember.id);
+                    userController.setSelectedCategoryIndex(
+                        index: thisCategoryMember.id);
                     Get.toNamed('/inputPage', arguments: thisCategoryMember);
-                },
-                        style: OutlinedButton.styleFrom(
-                          primary: Colors.white,
-                          backgroundColor: Colors.black,
-                          shadowColor: Colors.white,
-                          elevation: 8,
-                        ),
-                    ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(550, 230, 40, 0),
-              child: Expanded(
-                    child: Container(
-                    child: thisCategoryMember.getimg(),
-                    height: 290,
-                    width: 290,
-          ),
+                  },
+                  style: OutlinedButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Colors.black,
+                    shadowColor: Colors.white,
+                    elevation: 8,
+                  ),
+                ),
               ),
-            ),
-
-
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(550, 230, 40, 0),
+                child: Container(
+                  child: thisCategoryMember.getimg(),
+                  height: 290,
+                  width: 290,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -257,8 +251,9 @@ class _CategoryPageState extends State<CategoryPage> {
                      */
                       thisCategoryMember = CONTROLLERS.CategoryMember(
                         id: categoryController.categoryMember[index].id,
-                        subtitle: categoryController.categoryMember[index].title,
-                        title: categoryController.categoryMember[index].subtitle,
+                        subtitle:
+                            categoryController.categoryMember[index].subtitle,
+                        title: categoryController.categoryMember[index].title,
                         body: categoryController.categoryMember[index].body,
                         img: categoryController.categoryMember[index].getimg(),
                       );
@@ -277,7 +272,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     // child: Text(
                     //   /*
                     //    * 카테고리의 정보를 텍스트로 출력합니다.
-                    //    * 
+                    //    *
                     //    * Prints information of categories in Text.
                     //    */
                     //   "${categoryController.categoryMember[index].id.toString()}\n${categoryController.categoryMember[index].toString()}",
@@ -285,17 +280,20 @@ class _CategoryPageState extends State<CategoryPage> {
                     // ),
                     child: Column(
                       children: [
-                         SizedBox(height: 23),
-
+                        SizedBox(height: 23),
                         Container(
-                          child: categoryController.categoryMember[index].getimg(),
+                          child:
+                              categoryController.categoryMember[index].getimg(),
                           width: 140,
-                          height: 140,),
-                        SizedBox(height: 17),
-                        Text (
-                          categoryController.categoryMember[index].title.toString(),
-                          style: TextStyle(fontSize: 20,),),
-                        
+                          height: 140,
+                        ),
+                        Text(
+                          categoryController.categoryMember[index].title
+                              .toString(),
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
                       ],
                     ),
                   ),
