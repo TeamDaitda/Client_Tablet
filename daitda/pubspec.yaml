@@ -91,9 +91,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: SongMyung
+    - family: JejuMyeongjo
       fonts:
-        - asset: fonts/SongMyung-Regular.ttf
+        - asset: fonts/JejuMyeongjo.ttf
 
   #   - family: Trajan Pro
   #     fonts:

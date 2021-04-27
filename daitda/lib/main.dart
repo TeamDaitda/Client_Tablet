@@ -5,7 +5,6 @@ import 'package:daitda/pages/homePage.dart';
 import 'package:daitda/pages/inputPage.dart';
 import 'package:daitda/pages/paymentPage.dart';
 import 'package:daitda/pages/resultPage.dart';
-import 'package:daitda/pages/testPage.dart';
 import 'package:daitda/pages/onboardingPage.dart';
 import 'package:daitda/pages/galleryPage.dart';
 import 'package:daitda/pages/previewPage.dart';
@@ -13,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 
 void main() {
    WidgetsFlutterBinding
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'DAITDA',
       theme: ThemeData(
-        fontFamily: 'SongMyung',
+        fontFamily: 'JejuMyeongjo',
         primarySwatch: Colors.blue,
         splashColor: Colors.transparent,
         accentColor: Colors.white,
