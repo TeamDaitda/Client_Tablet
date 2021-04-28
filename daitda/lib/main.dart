@@ -34,6 +34,8 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.white,
         highlightColor: Colors.transparent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+      
+
       ),
       initialRoute: '/',
       getPages: [

@@ -167,14 +167,24 @@ class _CategoryPageState extends State<CategoryPage> {
           child: Stack(
             children: <Widget>[
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 40, horizontal:25),
                 child: Text(
-                  "${thisCategoryMember.getTitle()}\n\n ${thisCategoryMember.getBody()}",
+                  "${thisCategoryMember.getTitle()}\n",
                   style: TextStyle(
-                    fontSize: 23,
+                    fontSize: 35,
                     color: Colors.black,
+                    fontWeight: FontWeight.w800,
                   ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical:120,horizontal:20),
+                child: Text('${thisCategoryMember.getBody()}',
+                style: TextStyle(
+                  fontSize: 23,
+                  color: Colors.black,
+                ),
                 ),
               ),
               Container(
