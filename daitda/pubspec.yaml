@@ -94,6 +94,7 @@ flutter:
     - family: JejuMyeongjo
       fonts:
         - asset: fonts/JejuMyeongjo.ttf
+                          
 
   #   - family: Trajan Pro
   #     fonts:
