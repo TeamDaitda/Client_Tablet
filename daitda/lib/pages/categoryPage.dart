@@ -179,11 +179,13 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
 
               Padding(
-                padding: const EdgeInsets.symmetric(vertical:120,horizontal:20),
+                padding: const EdgeInsets.symmetric(vertical:90,horizontal:30),
                 child: Text('${thisCategoryMember.getBody()}',
                 style: TextStyle(
                   fontSize: 23,
                   color: Colors.black,
+                  wordSpacing: -3,
+                  height: 1.4,
                 ),
                 ),
               ),
