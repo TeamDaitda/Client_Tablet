@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
@@ -8,13 +9,16 @@ import 'package:daitda/UIComponent/processBar.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';
 import 'package:daitda/model/outputModel.dart';
-import 'package:daitda/service/imageService.dart';
+import 'package:daitda/service/fileUploadApi.dart';
+import 'package:daitda/service/imageTransApi.dart';
 import 'package:daitda/service/paintService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
+
+import 'package:path_provider/path_provider.dart';
 
 class ResultPage extends StatefulWidget {
   @override
@@ -27,11 +31,13 @@ class _ResultPageState extends State<ResultPage> {
   final colorSet = ColorSet();
 
   List<OutPut> drawImage;
-  ImageApi imageAPI = ImageApi();
+  ImageTransApi imageAPI = ImageTransApi();
   final imageController = Get.put(ImageController());
 
   GlobalKey _globalKey = new GlobalKey();
   XFile file;
+
+  FileUploadApi _fileUploadApi = new FileUploadApi();
 
   Future<Uint8List> _capturePng() async {
     try {
@@ -40,8 +46,8 @@ class _ResultPageState extends State<ResultPage> {
       ui.Image image = await boundary.toImage(pixelRatio: 3.0);
       ByteData byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
-      var pngBytes = byteData.buffer.asUint8List();
-      var bs64 = base64Encode(pngBytes);
+      Uint8List pngBytes = byteData.buffer.asUint8List();
+      String bs64 = base64Encode(pngBytes);
       print(pngBytes);
       print(bs64);
       setState(() {});
@@ -49,6 +55,7 @@ class _ResultPageState extends State<ResultPage> {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   @override
@@ -130,10 +137,14 @@ class _ResultPageState extends State<ResultPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            child: RaisedButton(
+            child: ElevatedButton(
                 child: Text('포토카드 받기'),
                 onPressed: () async {
                   final Uint8List data = await _capturePng();
+                  _fileUploadApi
+                      .upload(data: data)
+                      .then((value) => print(value));
+
                   await Navigator.of(context).push(
                     MaterialPageRoute<void>(
                       builder: (BuildContext context) {
