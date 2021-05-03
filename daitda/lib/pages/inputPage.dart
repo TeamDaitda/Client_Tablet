@@ -453,8 +453,8 @@ class _InputPageState extends State<InputPage> {
                       OutlinedButton(
                         onPressed: () {
                           hasFailed
-                            ? Get.toNamed('/paymentPage')
-                            : myInterstitial.show() ;                          
+                              ? Get.toNamed('/paymentPage')
+                              : myInterstitial.show();
                           // Get.toNamed('/paymentPage');
                         },
                         child: Text(
