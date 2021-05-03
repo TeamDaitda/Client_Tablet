@@ -76,7 +76,8 @@ flutter:
     - images/soldier.png
     - images/disabled.png
     - images/elders.png
-
+    - images/unta2.png
+    - images/logo.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
