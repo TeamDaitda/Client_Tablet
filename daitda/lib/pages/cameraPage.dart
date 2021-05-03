@@ -1,7 +1,6 @@
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:camera/camera.dart';
 import 'package:daitda/controller/imageController.dart';
-import 'package:daitda/pages/previewPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:daitda/design/colorSet.dart';
@@ -14,6 +13,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 import 'package:fdottedline/fdottedline.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
+
 
 class CameraPage extends StatefulWidget {
   @override
@@ -21,19 +22,29 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
+  
   final imageController = Get.put(ImageController());
   final designSet = Get.put(DesignSet());
   final progressData = Get.put(ProgressData());
   final colorSet = ColorSet();
+  
+
   CameraController cameraController;
   List cameras;
   int selectedCameraIndex;
   String imgPath;
 
+  static double thisPageIndex;
+  static double thisPageProgressIndex;
+
   @override
   void initState() {
+    thisPageIndex = 3;
+    thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
+    progressData.setData(thisPageProgressIndex);
+
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
-    progressData.setData(0.2);
+    //progressData.setData(0.2);
     super.initState();
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
@@ -135,6 +146,7 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
+ 
   Widget renderProgressArea() {
     return Container(
       decoration: BoxDecoration(
@@ -148,9 +160,9 @@ class _CameraPageState extends State<CameraPage> {
       height: designSet.getProgressAreaHeight(),
       child: Column(
         children: [
-          AnimatedLiquidLinearProgressIndicator(),
-          ProcessBar(
-            index: 3,
+          UICOMPONENTS.AnimatedLiquidLinearProgressIndicator(),
+          UICOMPONENTS.ProcessBar(
+            index: thisPageIndex.toInt(),
           ),
         ],
       ),

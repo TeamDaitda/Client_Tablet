@@ -15,6 +15,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
+import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 
 class ResultPage extends StatefulWidget {
   @override
@@ -25,6 +26,9 @@ class _ResultPageState extends State<ResultPage> {
   final designSet = Get.put(DesignSet());
   final progressData = Get.put(ProgressData());
   final colorSet = ColorSet();
+
+  static double thisPageIndex;
+  static double thisPageProgressIndex;
 
   List<OutPut> drawImage;
   ImageApi imageAPI = ImageApi();
@@ -56,6 +60,11 @@ class _ResultPageState extends State<ResultPage> {
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
     progressData.setData(0.2);
     file = imageController.getFile();
+
+    thisPageIndex = 4;
+    thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
+    progressData.setData(thisPageProgressIndex);
+
     super.initState();
   }
 
@@ -110,9 +119,9 @@ class _ResultPageState extends State<ResultPage> {
       height: designSet.getProgressAreaHeight(),
       child: Column(
         children: [
-          AnimatedLiquidLinearProgressIndicator(),
-          ProcessBar(
-            index: 4,
+          UICOMPONENTS.AnimatedLiquidLinearProgressIndicator(),
+          UICOMPONENTS.ProcessBar(
+            index: thisPageIndex.toInt(),
           ),
         ],
       ),
