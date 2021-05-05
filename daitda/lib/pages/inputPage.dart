@@ -452,10 +452,17 @@ class _InputPageState extends State<InputPage> {
                     children: [
                       OutlinedButton(
                         onPressed: () {
+                          // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
+                          userController.setName(name: nameText); // 이름
+                          userController.setAffiliation(
+                              affiliation: affiliationText); // 소속
+                          userController.setPhone(phone: phoneText); // 휴대폰 번호
+                          userController.setSelectedCategoryIndex(
+                              index: this.thisCategoryMember.id); // 카테고리 아이디
+
                           hasFailed
                               ? Get.toNamed('/paymentPage')
                               : myInterstitial.show();
-                          // Get.toNamed('/paymentPage');
                         },
                         child: Text(
                           '기부하기',

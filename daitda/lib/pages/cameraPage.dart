@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:fdottedline/fdottedline.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
-
+import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 
 class CameraPage extends StatefulWidget {
   @override
@@ -22,30 +22,40 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  
-  final imageController = Get.put(ImageController());
+  //  Design Setting.
   final designSet = Get.put(DesignSet());
-  final progressData = Get.put(ProgressData());
   final colorSet = ColorSet();
-  
+
+  //  Controller Setting
+  final progressData = Get.put(ProgressData());
+  final imageController = Get.put(ImageController());
+  final userController = Get.put(CONTROLLERS.UserController());
 
   CameraController cameraController;
   List cameras;
   int selectedCameraIndex;
   String imgPath;
 
+  /*
+   * 현재 페이지의 인덱스와 이를 바탕으로 계산될 프로그래스의 인덱스입니다.
+   * 
+   * The index of the current page and the progress that will be calculated based on it.
+   */
   static double thisPageIndex;
   static double thisPageProgressIndex;
 
   @override
   void initState() {
+    /*
+     * 현재 페이지의 인덱스.
+     * 
+     * The index of the current page.
+     */
     thisPageIndex = 3;
     thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
     progressData.setData(thisPageProgressIndex);
 
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
-    //progressData.setData(0.2);
-    super.initState();
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
 
@@ -60,6 +70,7 @@ class _CameraPageState extends State<CameraPage> {
     }).catchError((err) {
       print('Error :${err.code}Error message : ${err.message}');
     });
+    super.initState();
   }
 
   Future _initCameraController(CameraDescription cameraDescription) async {
@@ -146,7 +157,6 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
- 
   Widget renderProgressArea() {
     return Container(
       decoration: BoxDecoration(
@@ -282,6 +292,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   void _onCapturePressed(context) async {
+    userController.setIsShoot(isShoot: true);
     try {
       final path =
           join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
