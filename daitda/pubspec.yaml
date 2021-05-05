@@ -27,7 +27,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   flutter_page_indicator: ^0.0.3
   flip_card: ^0.4.4
-  dio: ^4.0.0
+  dio: ^3.0.10
   liquid_progress_indicator: ^0.3.2
   onboarding: ^1.0.5
   signature: ^3.2.1
