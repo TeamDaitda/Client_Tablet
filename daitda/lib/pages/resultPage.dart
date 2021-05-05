@@ -1,14 +1,12 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
-import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:daitda/controller/imageController.dart';
 import 'package:daitda/controller/progress.dart';
-import 'package:daitda/UIComponent/processBar.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';
 import 'package:daitda/model/outputModel.dart';
+import 'package:daitda/pages/drawPage.dart';
 import 'package:daitda/service/fileUploadApi.dart';
 import 'package:daitda/service/imageTransApi.dart';
 import 'package:daitda/service/paintService.dart';
@@ -18,8 +16,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
-
-import 'package:path_provider/path_provider.dart';
 
 class ResultPage extends StatefulWidget {
   @override
@@ -145,37 +141,6 @@ class _ResultPageState extends State<ResultPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
-            child: ElevatedButton(
-                child: Text('포토카드 받기'),
-                onPressed: () async {
-                  final Uint8List data = await _capturePng();
-                  _fileUploadApi
-                      .upload(data: data)
-                      .then((value) => print(value));
-
-                  await Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return Scaffold(
-                          appBar: AppBar(
-                            backgroundColor: Colors.black,
-                          ),
-                          body: Center(
-                            child: Container(
-                              color: Colors.grey,
-                              child: Image.memory(data),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }),
-          ),
-          SizedBox(
-            height: 30,
-          ),
           FutureBuilder(
               future:
                   imageAPI.transImage(filePath: file.path, fileName: file.name),
@@ -191,59 +156,98 @@ class _ResultPageState extends State<ResultPage> {
                     ),
                   );
                 } else {
-                  return Align(
-                    alignment: Alignment.center,
-                    child: RepaintBoundary(
-                      key: _globalKey,
-                      child: Container(
-                        width: Get.size.width * 0.6,
-                        height: Get.size.height * 0.6,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.6,
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Container(
-                                  child: CustomPaint(
-                                    painter: CurvePainter(
-                                        input: snapshot.data,
-                                        displaySize:
-                                            MediaQuery.of(context).size),
-                                  ),
-                                ),
+                  return Column(
+                    children: [
+                      Container(
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            primary: Colors.white,
+                            backgroundColor: Colors.black,
+                            shadowColor: Colors.white,
+                          ),
+                          child: Text('포토카드 받기'),
+                          onPressed: () async {
+                            final Uint8List data = await _capturePng();
+                            _fileUploadApi
+                                .upload(data: data)
+                                .then((value) => print(value));
+
+                            await Navigator.of(context).push(
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) {
+                                  return Scaffold(
+                                    appBar: AppBar(
+                                      backgroundColor: Colors.black,
+                                    ),
+                                    body: Center(
+                                      child: Container(
+                                        color: Colors.grey,
+                                        child: Image.memory(data),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                "이름이름이름이름",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: RepaintBoundary(
+                          key: _globalKey,
+                          child: Container(
+                            width: Get.size.width * 0.6,
+                            height: Get.size.height * 0.6,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.6,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    child: Container(
+                                      child: DrawPage(
+                                        positionData: snapshot.data,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // Align(
+                                //   alignment: Alignment.bottomCenter,
+                                //   child: Text(
+                                //     "이름이름이름이름",
+                                //     style: TextStyle(color: Colors.black),
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Text(
+                        '당신의 선이 완성되었습니다.',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   );
                 }
               }),
-          SizedBox(
-            height: 50,
-          ),
-          Text(
-            '당신의 선이 완성되었습니다.',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
         ],
       ),
     );
