@@ -222,17 +222,33 @@ class _InputPageState extends State<InputPage> {
               Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 40),
                   child: Text(
-                    "${thisCategoryMember.getTitle()}\n${thisCategoryMember.getsubTitle()}",
+                    "${thisCategoryMember.getTitle()}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 23,
+                      fontSize: 30,
                       color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
+
+              Align(
+                alignment: Alignment.topCenter,
+                              child: Padding(
+                  padding: const EdgeInsets.only(top: 80),
+                  child: Text('${thisCategoryMember.getsubTitle()}',
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w600,
+                  ),),
+                ),
+              ),
+
+
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
