@@ -19,22 +19,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final onboardingPagesList = [
     PageModel(
-      assetPath: 'images/main.png',
+      assetPath: 'images/page1.png',
       title: '선을 모아 마음을 잇다',
       info: "당신만의 아름다운 선을 그려드려요.\n모두의 선이 모여 하나의 마음이 됩니다.",
     ),
     PageModel(
-      assetPath: 'images/main.png',
+      assetPath: 'images/page2.png',
       title: '간편하게, 재미있게, 의미있게.',
       info: '기부하고 싶은 카테고리를 선택하세요.\n광고시청 후 촬영 한 번이면 기부 끝!',
     ),
     PageModel(
-      assetPath: 'images/main.png',
+      assetPath: 'images/page3.png',
       title: '하나 뿐인 당신만의 기부 명세서',
       info: '기부가 끝나면, 명세가 담긴 포토카드를 드려요.\n세상에서 단 하나뿐인 감사의 마음입니다.',
     ),
     PageModel(
-      assetPath: 'images/main.png',
+      assetPath: 'images/page4.png',
       title: '이제 시작해볼까요?',
       info: '당신의 선을 확인해보세요.',
     ),

@@ -1,5 +1,3 @@
-import 'package:daitda/pages/categoryPage.dart';
-import 'package:daitda/pages/galleryPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,34 +67,50 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 SizedBox(
-                  height: 10,
+                  height: 22,
                 ),
 
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(
+                    OutlinedButton( 
                       onPressed: () {
                        Get.toNamed('/galleryPage');
                       },
                        child: Text('갤러리',style: TextStyle(
-                         fontSize: 22,
+                         fontSize: 20,
                          color: Colors.white,
-                       ),),),
+                       ),),
+                       style: OutlinedButton.styleFrom(
+                         primary: Colors.white,
+                         backgroundColor: Colors.black,
+                         shadowColor: Colors.black,
+                         elevation: 8,
+                       ),
+                       ),
 
                     SizedBox(
-                      width: 14.0,
+                      width: 29.0,
                     ),
 
-                    TextButton(
+                  OutlinedButton(
                       onPressed: () {
                        Get.toNamed('/categoryPage');
                       },
                        child: Text('시작하기',style: TextStyle(
-                         fontSize: 22,
+                         fontSize: 20,
                          color: Colors.white,
-                       ),),),
+                       ),),
+                       
+                       style: OutlinedButton.styleFrom(
+                         primary: Colors.white,
+                         backgroundColor: Colors.black,
+                         shadowColor: Colors.black,
+                         elevation: 8,
+                       ),
+                       
+                       ),
 
                   ],
                 )
