@@ -55,6 +55,8 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                     fontSize: 26,
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
+
                   ),
                 ),
 
@@ -63,6 +65,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                     fontSize: 26,
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
 
@@ -111,15 +114,24 @@ class _HomePageState extends State<HomePage> {
                        ),
                        
                        ),
-
                   ],
-                )
+                ),
               ],
         ),
       ),
-    )
-          
+    ),
+      Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 30, right: 30, left:30),
+            child: Image.asset('images/apply.png',
+              width: 110,
+              height: 110,
+        ),
+          ),
+      ),    
         ],
+        
       ),
     );
   }

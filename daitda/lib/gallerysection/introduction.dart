@@ -18,9 +18,9 @@ class _IntroDuctionState extends State<IntroDuction> {
       height: displaySize != null ? displaySize.height * 0.2 : 0,
       child: Container(
             alignment: Alignment.center,
-            child: Image.asset('images/logo.png',
-            width: 210,
-            height: 210,
+            child: Image.asset('images/logo.gif',
+            width: 280,
+            height: 280,
             ),
             // child: Text('DaitDa',
             // style: TextStyle(color: Colors.white,

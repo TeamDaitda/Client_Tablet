@@ -26,7 +26,7 @@ class Result {
   String phone;
   int category;
   String path;
-
+  
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"],
         userId: json["userId"],
