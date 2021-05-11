@@ -1,6 +1,7 @@
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:camera/camera.dart';
 import 'package:daitda/controller/imageController.dart';
+import 'package:daitda/model/ArgumentsDataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:daitda/design/colorSet.dart';
@@ -44,6 +45,8 @@ class _CameraPageState extends State<CameraPage> {
   static double thisPageIndex;
   static double thisPageProgressIndex;
 
+  ArgumentsData argumentsData;
+
   @override
   void initState() {
     /*
@@ -54,6 +57,8 @@ class _CameraPageState extends State<CameraPage> {
     thisPageIndex = 3;
     thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
     progressData.setData(thisPageProgressIndex);
+
+    argumentsData = Get.arguments;
 
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
     availableCameras().then((availableCameras) {
@@ -291,6 +296,7 @@ class _CameraPageState extends State<CameraPage> {
     print(errorText);
   }
 
+  // Captured
   void _onCapturePressed(context) async {
     userController.setIsShoot(isShoot: true);
     try {
@@ -300,6 +306,9 @@ class _CameraPageState extends State<CameraPage> {
         print("camera page -----");
         print("print path + name :" + value.path + value.name);
         imageController.setFile(file: value);
+        userController.setName(name: argumentsData.name);
+        userController.setPhone(phone: argumentsData.phone);
+        userController.setAffiliation(affiliation: argumentsData.affiliation);
         Get.toNamed('/resultPage');
       });
     } catch (e) {
