@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    'Makes our life,',
+                    'Make our life,',
                     style: TextStyle(
                       fontSize: 26,
                       color: Colors.white,
