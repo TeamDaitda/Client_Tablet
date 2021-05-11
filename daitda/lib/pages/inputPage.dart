@@ -1,6 +1,7 @@
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
+import 'package:daitda/model/ArgumentsDataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -114,7 +115,15 @@ class _InputPageState extends State<InputPage> {
           });
         },
         onAdClosed: (ad) {
-          Get.offAllNamed('/paymentPage');
+          Get.offAllNamed(
+            '/paymentPage',
+            arguments: new ArgumentsData(
+              userController.getName(),
+              userController.getPhone(),
+              userController.getAffiliation(),
+              thisCategoryMember.id,
+            ),
+          );
           ad.dispose(); // dispose of ad
         },
         onAdFailedToLoad: (ad, error) {
