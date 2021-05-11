@@ -20,7 +20,7 @@ class _DrawPageState extends State<DrawPage>
   @override
   void initState() {
     _animationController = AnimationController(
-        duration: Duration(milliseconds: 3000), vsync: this);
+        duration: Duration(milliseconds: 10000), vsync: this);
     _animationController.forward();
     super.initState();
   }
