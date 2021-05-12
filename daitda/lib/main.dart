@@ -4,18 +4,20 @@ import 'package:daitda/pages/categoryPage.dart';
 import 'package:daitda/pages/homePage.dart';
 import 'package:daitda/pages/inputPage.dart';
 import 'package:daitda/pages/paymentPage.dart';
+import 'package:daitda/pages/photoCardPage.dart';
 import 'package:daitda/pages/resultPage.dart';
 import 'package:daitda/pages/onboardingPage.dart';
 import 'package:daitda/pages/galleryPage.dart';
 import 'package:daitda/pages/previewPage.dart';
+import 'package:daitda/service/DrawingService/DrawingProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
+import 'package:provider/provider.dart';
 
 void main() {
-   WidgetsFlutterBinding
+  WidgetsFlutterBinding
       .ensureInitialized(); // needs to be called because run app isn't called first
   MobileAds.instance.initialize(); // initialize mobile ads
   runApp(MyApp());
@@ -34,8 +36,6 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.white,
         highlightColor: Colors.transparent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      
-
       ),
       initialRoute: '/',
       getPages: [
@@ -64,15 +64,20 @@ class MyApp extends StatelessWidget {
             name: '/cameraPage',
             page: () => CameraPage(),
             transition: Transition.fadeIn),
-        
         GetPage(
             name: '/previewPage',
             page: () => PreviewPage(),
             transition: Transition.fadeIn),
-
         GetPage(
             name: '/resultPage',
             page: () => ResultPage(),
+            transition: Transition.fadeIn),
+        GetPage(
+            name: '/photoCardPage',
+            page: () => ChangeNotifierProvider(
+                  create: (context) => DrawingProvider(),
+                  child: PhotoCardPage(),
+                ),
             transition: Transition.fadeIn),
 
         /*GetPage(

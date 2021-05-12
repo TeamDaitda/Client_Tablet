@@ -166,10 +166,9 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
           child: Stack(
             children: <Widget>[
-              
-
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40, horizontal:25),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 40, horizontal: 25),
                 child: Text(
                   "${thisCategoryMember.getTitle()}\n",
                   style: TextStyle(
@@ -179,18 +178,17 @@ class _CategoryPageState extends State<CategoryPage> {
                   ),
                 ),
               ),
-
               Padding(
-                padding: const EdgeInsets.symmetric(vertical:100,horizontal:30),
-                child: Text('${thisCategoryMember.getBody()}',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Colors.black,
-                  wordSpacing: -3,
-                  height: 1.5,
-                  fontWeight: FontWeight.w600,
-                  
-                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 90, horizontal: 30),
+                child: Text(
+                  '${thisCategoryMember.getBody()}',
+                  style: TextStyle(
+                    fontSize: 23,
+                    color: Colors.black,
+                    wordSpacing: -3,
+                    height: 1.4,
+                  ),
                 ),
               ),
               Container(
@@ -303,7 +301,6 @@ class _CategoryPageState extends State<CategoryPage> {
                           width: 140,
                           height: 140,
                         ),
-
                         SizedBox(height: 8),
                         Text(
                           categoryController.categoryMember[index].title
