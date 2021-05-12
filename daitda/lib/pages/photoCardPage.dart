@@ -21,7 +21,7 @@ class PhotoCardPage extends StatefulWidget {
 class _PhotoCardPageState extends State<PhotoCardPage> {
   final userController = Get.put(UserController());
 
-  ArgumentsData argumentData;
+  Uint8List pictureData;
   GlobalKey _globalKey = new GlobalKey();
   FileUploadApi _fileUploadApi = new FileUploadApi();
 
@@ -47,7 +47,11 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
   @override
   void initState() {
     super.initState();
-    argumentData = Get.arguments;
+    pictureData = Get.arguments;
+
+    print("포토카드 페이지 컨트톨러 데이터");
+    print(userController.getId());
+    print(userController.getName());
   }
 
   @override
@@ -76,7 +80,7 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                                 width: 500,
                                 bottom: 250,
                                 child: Center(
-                                  child: Image.memory(argumentData.data),
+                                  child: Image.memory(pictureData),
                                 ),
                               ),
                               CustomPaint(
@@ -91,8 +95,13 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                           child: Container(
                             width: 80,
                             height: 80,
-                            child: Image.network(
-                                "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://15.164.195.117:8080/backend-0.0.1-SNAPSHOT/result/view/${argumentData.id}"),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                            ),
+                            child: Text(
+                                " QR코드 들어가는 곳  QR코드 들어가는 곳  QR코드 들어가는 곳  QR코드 들어가는 곳  QR코드 들어가는 곳  QR코드 들어가는 곳  QR코드 들어가는 곳 "),
                           ),
                         ),
                         Positioned(
@@ -167,6 +176,11 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                             _fileUploadApi
                                 .upload(data: data)
                                 .then((value) => print(value));
+
+                            userController.reset();
+                            // 포토카드 서버에 업로드 후
+                            // 유저컨트롤러 파일 컨트롤러 리셋 후
+                            // 메인으로 돌아가기
 
                             Get.offAllNamed('/homePage');
                           },

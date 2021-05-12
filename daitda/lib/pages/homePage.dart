@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daitda/pages/categoryPage.dart';
 import 'package:daitda/pages/galleryPage.dart';
 import 'package:daitda/service/adApi.dart';

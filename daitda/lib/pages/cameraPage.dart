@@ -1,7 +1,6 @@
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:camera/camera.dart';
 import 'package:daitda/controller/imageController.dart';
-import 'package:daitda/controller/paintController.dart';
 import 'package:daitda/model/ArgumentsDataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,6 @@ class _CameraPageState extends State<CameraPage> {
   final progressData = Get.put(ProgressData());
   final imageController = Get.put(ImageController());
   final userController = Get.put(CONTROLLERS.UserController());
-  final paintController = Get.put(PaintController());
 
   CameraController cameraController;
   List cameras;
@@ -59,8 +57,6 @@ class _CameraPageState extends State<CameraPage> {
     thisPageIndex = 3;
     thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
     progressData.setData(thisPageProgressIndex);
-
-    paintController.setPaintState(false);
 
     argumentsData = Get.arguments;
 
@@ -313,7 +309,7 @@ class _CameraPageState extends State<CameraPage> {
         userController.setName(name: argumentsData.name);
         userController.setPhone(phone: argumentsData.phone);
         userController.setAffiliation(affiliation: argumentsData.affiliation);
-        Get.toNamed('/resultPage', arguments: argumentsData);
+        Get.toNamed('/resultPage');
       });
     } catch (e) {
       _showCameraException(e);

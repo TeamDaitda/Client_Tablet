@@ -48,7 +48,7 @@ class ImageTransApi {
       return outputObjs;
     } catch (e) {
       print(e);
-      return Future.error(e.toString());
+      return null;
     }
   }
 }

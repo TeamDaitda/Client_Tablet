@@ -118,7 +118,6 @@ class _InputPageState extends State<InputPage> {
           Get.offAllNamed(
             '/paymentPage',
             arguments: new ArgumentsData(
-              -1,
               userController.getName(),
               userController.getPhone(),
               userController.getAffiliation(),
