@@ -1,51 +1,16 @@
-# DoitDoit - DaitDa
 
-기부목적 인터랙션 광고 어플리케이션
 
-### **클라이언트**
+### 다잇다
 
-**사용환경**
+사람의 ‘善’을 선으로 잇다.
 
-`Android` `IOS` `Web`
+‘코로나 바이러스’로 기억될 올해, 여느 때보다 도움의 손길이 필요한 이웃들이 많습니다.  
+그러나 경직된 사회 분위기 속에서 주변을 돌아 볼 만한 마음의 여유를 잃어버렸기 때문일까요?  
+기부와 나눔이라는 단어는 어딘가 어색하기만 합니다.   
 
-**사용언어 및 프레임워크**
+하지만 잊고 살았을 뿐, 우리는 누구나 가슴속 타인을 위한 선(善)을 품고 있습니다.  
 
-`Dart` `Flutter`
+팀 다잇다는 우리가 잊고 지내던 ‘선(善)’을 기부의 형태로 다시 확인할 수 있도록, 그리고 그 순간의 마음을 ‘선(line)’으로 평생 간직할 수 있도록 나누고 싶습니다.  
 
-**사용패키지**
-
-`Get` `Dio` `flutter_swiper` `flutter_page_indicator` `liquid_progress_indicator` `onboarding` `animated_text_kit` `signature`
-
-**파일구조**
-
-- lib
-    - main.dart
-    - util
-        - image.dart
-    - api
-        - image.dart
-    - controllers
-        - controllers.dart
-        - category.dart
-        - progress.dart
-        - user.dart
-    - pages
-        - cameraPage.dart
-        - categoryPage.dart
-        - galleryPage.dart
-        - homePage.dart
-        - inputPage.dart
-        - onboardingPage.dart
-        - paymentPage.dart
-        - resultPage.dart
-    - design
-        - designs.dart
-        - colorSet.dart
-        - designSet.dart
-    - uiComponent
-        - uiComponents.dart
-        - uiComponent.dart
-        - uiComponentCalc.dart
-        - processBar.dart
-        - animatedLiquidLinearProgressIndicator.dart
-    - curvePainter.dart
+여러분의 선은 어떤 모양을 가지고 있나요?  
+이번 전시를 통해 확인해보시기 바랍니다.
