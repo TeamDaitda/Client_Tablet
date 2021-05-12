@@ -232,17 +232,33 @@ class _InputPageState extends State<InputPage> {
               Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 40),
                   child: Text(
-                    "${thisCategoryMember.getTitle()}\n${thisCategoryMember.getsubTitle()}",
+                    "${thisCategoryMember.getTitle()}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 23,
+                      fontSize: 30,
                       color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
+
+              Align(
+                alignment: Alignment.topCenter,
+                              child: Padding(
+                  padding: const EdgeInsets.only(top: 80),
+                  child: Text('${thisCategoryMember.getsubTitle()}',
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w600,
+                  ),),
+                ),
+              ),
+
+
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
@@ -488,6 +504,8 @@ class _InputPageState extends State<InputPage> {
                     ],
                   ),
                 ),
+                SizedBox(height: 7),
+                Text('개인정보 수집·이용 동의\n이용자 확인을 위해 아래와 같이 개인정보를 수집·이용합니다.\n1.개인정보의 수집·이용 목적 : 이용자 확인 및 포토카드 출력\n2.수집하는 개인정보의 항목 : 이름,휴대폰번호, 소속 \n3.개인정보의 보유·이용기간 : 전시 종료 후 즉시 파기\n4.동의를 거부할 수 있으며, 이 경우 이후 서비스 이용이 제한됩니다.'),
               ],
             ),
           ),

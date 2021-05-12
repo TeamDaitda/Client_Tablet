@@ -77,6 +77,13 @@ flutter:
     - images/soldier.png
     - images/disabled.png
     - images/elders.png
+    - images/logo.png
+    - images/page1.png
+    - images/page2.png
+    - images/page3.png
+    - images/page4.png
+    - images/apply.png
+    - images/logo.gif
     - images/photoCardLogo.png
 
 

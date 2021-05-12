@@ -109,6 +109,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 26,
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
@@ -116,47 +117,71 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 26,
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 22,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextButton(
+                      OutlinedButton(
                         onPressed: () {
                           Get.toNamed('/galleryPage');
                         },
                         child: Text(
                           '갤러리',
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             color: Colors.white,
                           ),
                         ),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.black,
+                          shadowColor: Colors.black,
+                          elevation: 8,
+                        ),
                       ),
                       SizedBox(
-                        width: 14.0,
+                        width: 29.0,
                       ),
-                      TextButton(
+                      OutlinedButton(
                         onPressed: () {
                           Get.toNamed('/categoryPage');
                         },
                         child: Text(
                           '시작하기',
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             color: Colors.white,
                           ),
                         ),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.black,
+                          shadowColor: Colors.black,
+                          elevation: 8,
+                        ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
-          )
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 30, right: 30, left: 30),
+              child: Image.asset(
+                'images/apply.png',
+                width: 110,
+                height: 110,
+              ),
+            ),
+          ),
         ],
       ),
     );
