@@ -4,9 +4,11 @@ import 'package:camera/camera.dart';
 import 'package:daitda/controller/Category.dart';
 import 'package:daitda/controller/Controllers.dart';
 import 'package:daitda/controller/imageController.dart';
+import 'package:daitda/controller/paintController.dart';
 import 'package:daitda/controller/progress.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';
+import 'package:daitda/model/ArgumentsDataModel.dart';
 import 'package:daitda/model/outputModel.dart';
 import 'package:daitda/pages/drawPage.dart';
 import 'package:daitda/service/fileUploadApi.dart';
@@ -36,6 +38,7 @@ class _ResultPageState extends State<ResultPage> {
   final progressData = Get.put(ProgressData());
   final categoryController = Get.put(Category());
   final userController = Get.put(UserController());
+  final paintController = Get.put(PaintController());
 
   static double thisPageIndex;
   static double thisPageProgressIndex;
@@ -54,6 +57,8 @@ class _ResultPageState extends State<ResultPage> {
   XFile file;
 
   String name;
+
+  ArgumentsData argumentsData;
 
   Future<Uint8List> _capturePng() async {
     try {
@@ -76,15 +81,13 @@ class _ResultPageState extends State<ResultPage> {
 
   @override
   void initState() {
-    print("status data ===");
-    print(userController.name);
-
     designSet.setScreenWidthAndHeight(w: Get.size.width, h: Get.size.height);
     progressData.setData(0.2);
     file = imageController.getFile();
     thisPageIndex = 4;
     thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
     progressData.setData(thisPageProgressIndex);
+    argumentsData = Get.arguments;
     super.initState();
   }
 
@@ -159,105 +162,124 @@ class _ResultPageState extends State<ResultPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          FutureBuilder(
-              future: _imageTransAPI.transImage(
-                  filePath: file.path, fileName: file.name),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData == false) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Error: ${snapshot.error}',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  );
-                } else {
-                  // 회원가입
-                  _userApi
-                      .save(
-                    affiliation: userController.getAffiliation(),
-                    category: userController.getSelectedCategoryIndex(),
-                    name: userController.getName(),
-                    phone: userController.getPhone(),
-                  )
-                      .then((value) {
-                    userController.setId(id: value);
-                  });
-
-                  return Column(
-                    children: [
-                      Container(
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            primary: Colors.white,
-                            backgroundColor: Colors.black,
-                            shadowColor: Colors.white,
-                          ),
-                          child: Text('포토카드 꾸미기'),
-                          onPressed: () async {
-                            final Uint8List data = await _capturePng();
-                            _fileUploadApi.upload(data: data).then((value) {
-                              _imageApi
-                                  .save(path: value, id: userController.id)
-                                  .then((_) {
-                                _resultApi.save(id: userController.id);
-                              });
-                            });
-                            Get.toNamed('/photoCardPage', arguments: data);
-                          },
+          paintController.getPaintState() == true
+              ? Container()
+              : FutureBuilder(
+                  future: _imageTransAPI.transImage(
+                      filePath: file.path, fileName: file.name),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData == false) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Error: ${snapshot.error}',
+                          style: TextStyle(fontSize: 15),
                         ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: RepaintBoundary(
-                          key: _globalKey,
-                          child: Container(
-                            width: Get.size.width * 0.6,
-                            height: Get.size.height * 0.6,
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.6,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.6,
-                                    child: Container(
-                                      child: DrawPage(
-                                        positionData: snapshot.data,
+                      );
+                    } else {
+                      if (paintController.getPaintState() == true) {
+                        return Container();
+                      } else {
+                        paintController.setPaintState(true);
+                        return Column(
+                          children: [
+                            Container(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  primary: Colors.white,
+                                  backgroundColor: Colors.black,
+                                  shadowColor: Colors.white,
+                                ),
+                                child: Text('포토카드 꾸미기'),
+                                onPressed: () async {
+                                  // 회원가입
+                                  _userApi
+                                      .save(
+                                    affiliation: argumentsData.affiliation,
+                                    category: argumentsData.category,
+                                    name: argumentsData.name,
+                                    phone: argumentsData.phone,
+                                  )
+                                      .then((value) {
+                                    argumentsData.id = value;
+                                  });
+
+                                  final Uint8List data = await _capturePng();
+                                  argumentsData.data = data;
+                                  _fileUploadApi
+                                      .upload(data: data)
+                                      .then((value) {
+                                    _imageApi
+                                        .save(path: value, id: argumentsData.id)
+                                        .then((_) {
+                                      _resultApi
+                                          .save(id: argumentsData.id)
+                                          .then((_) {
+                                        Get.offAllNamed('/photoCardPage',
+                                            arguments: argumentsData);
+                                      });
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: RepaintBoundary(
+                                key: _globalKey,
+                                child: Container(
+                                  width: Get.size.width * 0.6,
+                                  height: Get.size.height * 0.6,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.6,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
+                                          child: Container(
+                                            child: DrawPage(
+                                              positionData: snapshot.data,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Text(
-                        '당신의 선이 완성되었습니다.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  );
-                }
-              }),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Text(
+                              '당신의 선이 완성되었습니다.',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    }
+                  }),
         ],
       ),
     );
