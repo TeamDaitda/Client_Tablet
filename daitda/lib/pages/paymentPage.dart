@@ -1,6 +1,7 @@
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
+import 'package:daitda/model/ArgumentsDataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +15,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-//  Design Setting.
+  //  Design Setting.
   final designSet = Get.put(DESIGNS.DesignSet());
   final colorSet = DESIGNS.ColorSet();
 
@@ -33,6 +34,9 @@ class _PaymentPageState extends State<PaymentPage> {
   InterstitialAd myInterstitial;
   bool hasFailed;
 
+  //  Argument 로 전달받은 데이터들
+  ArgumentsData argumentsData;
+
   @override
   void initState() {
     /*
@@ -49,6 +53,11 @@ class _PaymentPageState extends State<PaymentPage> {
      * Configure using the index on the current page.
      */
     progressData.setData(thisPageProgressIndex);
+
+    argumentsData = Get.arguments;
+
+    print("status data ===");
+    print(userController.name);
     super.initState();
   }
 
@@ -139,37 +148,33 @@ class _PaymentPageState extends State<PaymentPage> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Stack(
-            children: <Widget> [
+            children: <Widget>[
               Center(
                 child: Opacity(
-                 child: SvgPicture.asset(
-              'images/sym.svg',
-              width:840,
-              height: 840,
-            ),
-            opacity: 0.05,),
+                  child: SvgPicture.asset(
+                    'images/sym.svg',
+                    width: 840,
+                    height: 840,
+                  ),
+                  opacity: 0.05,
+                ),
               ),
-
               Center(
                 child: Text(
-                  "${userController.getName()}님께서 선택하신 ${categoryController.categoryMember[userController.getSelectedCategoryIndex()].title}에 기부가 완료되었어요.\n\n 하단 버튼을 누르면 촬영을 시작합니다. 기부자님의 아름다운 미소를 보여주세요! ",
-
+                  "${argumentsData.name}님께서 선택하신항목에 기부가 완료되었어요.\n\n 하단 버튼을 누르면 촬영을 시작합니다. \n기부자님의 아름다운 미소를 보여주세요! ",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white
-                  ),
-                  ),
+                  style: TextStyle(fontSize: 24, color: Colors.white),
+                ),
               ),
-
               Container(
                 alignment: Alignment(0.90, 0.95),
                 child: OutlinedButton(
                   onPressed: () {
-                      Get.toNamed('/cameraPage');
+                    Get.toNamed('/cameraPage', arguments: argumentsData);
                   },
-                  child: Text('촬영하기',
-                  style: TextStyle(color: Colors.black,fontSize: 18),
+                  child: Text(
+                    '촬영하기',
+                    style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
                   style: OutlinedButton.styleFrom(
                     primary: Colors.white,
@@ -180,7 +185,6 @@ class _PaymentPageState extends State<PaymentPage> {
                 ),
               )
             ],
-
           ),
         ),
       ),

@@ -167,7 +167,8 @@ class _CategoryPageState extends State<CategoryPage> {
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40, horizontal:25),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 40, horizontal: 25),
                 child: Text(
                   "${thisCategoryMember.getTitle()}\n",
                   style: TextStyle(
@@ -177,16 +178,17 @@ class _CategoryPageState extends State<CategoryPage> {
                   ),
                 ),
               ),
-
               Padding(
-                padding: const EdgeInsets.symmetric(vertical:90,horizontal:30),
-                child: Text('${thisCategoryMember.getBody()}',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Colors.black,
-                  wordSpacing: -3,
-                  height: 1.4,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 90, horizontal: 30),
+                child: Text(
+                  '${thisCategoryMember.getBody()}',
+                  style: TextStyle(
+                    fontSize: 23,
+                    color: Colors.black,
+                    wordSpacing: -3,
+                    height: 1.4,
+                  ),
                 ),
               ),
               Container(

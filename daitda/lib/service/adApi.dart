@@ -15,12 +15,3 @@ class AdApi {
     return response.data;
   }
 }
-
-// 광고 API 사용 예제
-main(List<String> args) {
-  AdApi adApi = new AdApi();
-
-  adApi.update(id: 1).then((value) {
-    print(value);
-  });
-}

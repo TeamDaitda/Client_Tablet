@@ -1,6 +1,7 @@
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
+import 'package:daitda/model/ArgumentsDataModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -114,7 +115,16 @@ class _InputPageState extends State<InputPage> {
           });
         },
         onAdClosed: (ad) {
-          Get.offAllNamed('/paymentPage');
+          Get.offAllNamed(
+            '/paymentPage',
+            arguments: new ArgumentsData(
+              -1,
+              userController.getName(),
+              userController.getPhone(),
+              userController.getAffiliation(),
+              thisCategoryMember.id,
+            ),
+          );
           ad.dispose(); // dispose of ad
         },
         onAdFailedToLoad: (ad, error) {
@@ -452,10 +462,17 @@ class _InputPageState extends State<InputPage> {
                     children: [
                       OutlinedButton(
                         onPressed: () {
+                          // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
+                          userController.setName(name: nameText); // 이름
+                          userController.setAffiliation(
+                              affiliation: affiliationText); // 소속
+                          userController.setPhone(phone: phoneText); // 휴대폰 번호
+                          userController.setSelectedCategoryIndex(
+                              index: this.thisCategoryMember.id); // 카테고리 아이디
+
                           hasFailed
                               ? Get.toNamed('/paymentPage')
                               : myInterstitial.show();
-                          // Get.toNamed('/paymentPage');
                         },
                         child: Text(
                           '기부하기',

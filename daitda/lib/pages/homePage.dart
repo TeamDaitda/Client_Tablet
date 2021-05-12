@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daitda/pages/categoryPage.dart';
 import 'package:daitda/pages/galleryPage.dart';
 import 'package:daitda/service/adApi.dart';
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    'Makes our life,',
+                    'Make our life,',
                     style: TextStyle(
                       fontSize: 26,
                       color: Colors.white,
