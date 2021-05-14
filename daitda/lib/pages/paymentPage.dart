@@ -161,7 +161,7 @@ class _PaymentPageState extends State<PaymentPage> {
               ),
               Center(
                 child: Text(
-                  "${argumentsData.name}님께서 선택하신항목에 기부가 완료되었어요.\n\n 하단 버튼을 누르면 촬영을 시작합니다. \n기부자님의 아름다운 미소를 보여주세요! ",
+                  "${argumentsData.name}님께서 선택하신항목에 기부가 완료되었어요.\n\n 하단 버튼을 누르면 촬영을 시작합니다. \n\n기부자님의 아름다운 미소를 보여주세요! ",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),

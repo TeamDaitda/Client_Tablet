@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
@@ -15,7 +16,7 @@ class InputPage extends StatefulWidget {
   _InputPageState createState() => _InputPageState();
 }
 
-class _InputPageState extends State<InputPage> {
+class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
   //  Design Setting.
   final designSet = Get.put(DESIGNS.DesignSet());
   final colorSet = DESIGNS.ColorSet();
@@ -61,6 +62,18 @@ class _InputPageState extends State<InputPage> {
   InterstitialAd myInterstitial;
   bool hasFailed;
 
+  /// 기부하기 버튼 누를 시 애니메이션 출력용
+  /// 1. SLIDE ANIMATION
+  AnimationController _animationController;
+  Animation _animationToRight;
+  Animation _animationToLeft;
+  Animation<double> curve;
+
+  /// 2. FLIP ANIMATION
+  AnimationController _flipAnimationController;
+  Animation<double> _frontScale;
+  Animation<double> _backScale;
+
   @override
   void initState() {
     /*
@@ -104,7 +117,35 @@ class _InputPageState extends State<InputPage> {
      */
     signatureController.addListener(() => print('Value changed'));
 
+    // SLIDE Animation 전용 초기화
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 3000));
+    curve =
+        CurvedAnimation(parent: _animationController, curve: Curves.decelerate);
+    _animationToRight =
+        Tween<Offset>(begin: Offset(0, 0), end: Offset(0.551, 0))
+            .animate(curve);
+    _animationToLeft = Tween<Offset>(begin: Offset(0, 0), end: Offset(-0.55, 0))
+        .animate(curve);
+
+    // FLIP Animation 전용 초기화
+    _flipAnimationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1000));
+    _frontScale = new Tween(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(new CurvedAnimation(
+      parent: _flipAnimationController,
+      curve: new Interval(0.0, 0.5, curve: Curves.easeIn),
+    ));
+    _backScale = new CurvedAnimation(
+      parent: _flipAnimationController,
+      curve: new Interval(0.5, 1.0, curve: Curves.easeOut),
+    );
+
     super.initState();
+
+    // Google AdMob 관련 초기화
     myInterstitial = InterstitialAd(
       adUnitId: 'ca-app-pub-3940256099942544/4411468910',
       request: AdRequest(),
@@ -140,26 +181,71 @@ class _InputPageState extends State<InputPage> {
   }
 
   @override
+  void dispose() {
+    _flipAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        child: Row(
-          children: [
-            Column(
-              children: [
-                renderLogoArea(),
-                renderProgressArea(),
-              ],
-            ),
-            Row(
-              children: [
-                renderInputcardArea(),
-                renderInputArea(),
-              ],
-            ),
-          ],
+      backgroundColor: colorSet.backgroundColor,
+      body: SafeArea(
+        child: Container(
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  renderLogoArea(),
+                  renderProgressArea(),
+                ],
+              ),
+              Container(
+                width: designSet.getInputAreaWidth() +
+                    designSet.getInputcardAreaWidth(),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: 0,
+                      child: renderInputArea(),
+                    ),
+                    Stack(
+                      children: [
+                        AnimatedBuilder(
+                          child: renderInputCardAreaBack(),
+                          animation: _backScale,
+                          builder: (BuildContext context, Widget child) {
+                            final Matrix4 transform = new Matrix4.identity()
+                              ..scale(1.0, _backScale.value, 1.0);
+                            return new Transform(
+                              transform: transform,
+                              alignment: FractionalOffset.center,
+                              child: child,
+                            );
+                          },
+                        ),
+                        AnimatedBuilder(
+                          child: renderInputcardArea(),
+                          animation: _frontScale,
+                          builder: (BuildContext context, Widget child) {
+                            final Matrix4 transform = new Matrix4.identity()
+                              ..scale(1.0, _frontScale.value, 1.0);
+                            return new Transform(
+                              transform: transform,
+                              alignment: FractionalOffset.center,
+                              child: child,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -212,7 +298,7 @@ class _InputPageState extends State<InputPage> {
   Widget renderInputcardArea() {
     return Container(
       decoration: BoxDecoration(
-        color: colorSet.mainAreaColor,
+        color: colorSet.inputcardAreaColor,
         border: Border.all(
           width: 0.5,
           color: colorSet.dividorColor,
@@ -222,63 +308,118 @@ class _InputPageState extends State<InputPage> {
       height: designSet.getInputcardAreaHeight(),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: colorSet.mainCardMackgroundcolor,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: Text(
-                    "${thisCategoryMember.getTitle()}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+        child: SlideTransition(
+          position: _animationToRight,
+          child: Container(
+            decoration: BoxDecoration(
+              color: colorSet.mainCardMackgroundcolor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: AutoSizeText(
+                      "${thisCategoryMember.getTitle()}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-
-              Align(
-                alignment: Alignment.topCenter,
-                              child: Padding(
-                  padding: const EdgeInsets.only(top: 80),
-                  child: Text('${thisCategoryMember.getsubTitle()}',
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w600,
-                  ),),
-                ),
-              ),
-
-
-
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 20, right: 20, left: 20),
-                  child: Container(
-                    height: Get.size.height * 0.7,
-                    child: thisCategoryMember.getimg(),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 80, left: 20, right: 20),
+                    child: Container(
+                      height: 20,
+                      child: AutoSizeText(
+                        '${thisCategoryMember.getsubTitle()}',
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(bottom: 20, right: 20, left: 20),
+                    child: Container(
+                      height: Get.size.height * 0.7,
+                      child: thisCategoryMember.getimg(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  Widget renderInputCardAreaBack() {
+    return Container(
+        width: designSet.getInputAreaWidth(),
+        height: designSet.getInputAreaHeight(),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SlideTransition(
+            position: _animationToRight,
+            child: Container(
+              decoration: BoxDecoration(
+                color: colorSet.cardBackColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    "To. ${thisCategoryMember.getTitle()}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SvgPicture.asset(
+                    'images/text.svg',
+                    width: 110,
+                    height: 110,
+                  ),
+                  Text(
+                    "From. ${nameText}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
   Widget renderInputArea() {
     return Container(
+      key: ValueKey(true),
       decoration: BoxDecoration(
         color: colorSet.inputAreaColor,
         border: Border.all(
@@ -290,223 +431,268 @@ class _InputPageState extends State<InputPage> {
       height: designSet.getInputAreaHeight(),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Container(
-          decoration: BoxDecoration(
-              color: colorSet.mainCardMackgroundcolor,
-              borderRadius: BorderRadius.circular(20)),
+        child: SlideTransition(
+          position: _animationToLeft,
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "성함을 알려주세요.",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  "결과물에 기부자님의 성함이 기재됩니다.",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    _showDialog(title: "성함을 알려주세요.", index: 0);
-                  },
-                  child: Container(
-                    width: 200,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "$nameText",
-                          style: designSet.getStyleInputPageText(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
-                Text(
-                  "연락처를 입력해주세요.",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  "결과물에 기부자님의 연락처가 기재됩니다.",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    _showDialog(title: "연락처를 입력해주세요", index: 1);
-                  },
-                  child: Container(
-                    width: 200,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "$phoneText",
-                          style: designSet.getStyleInputPageText(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
-                Text(
-                  "직업을 입력해주세요.",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  "결과물에 기부자님의 직업이 기재됩니다.",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    _showDialog(title: "직업을 입력해주세요.", index: 2);
-                  },
-                  child: Container(
-                    width: 200,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 2,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "$affiliationText",
-                          style: designSet.getStyleInputPageText(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
-                Row(
+            decoration: BoxDecoration(
+                color: colorSet.mainCardMackgroundcolor,
+                borderRadius: BorderRadius.circular(20)),
+            child: SingleChildScrollView(
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "사인을 해주세요.",
+                      "성함을 알려주세요.",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "결과물에 기부자님의 성함이 기재됩니다.",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
                     ),
                     InkWell(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black,
-                        ),
-                        child: Icon(
-                          Icons.refresh_sharp,
-                          color: Colors.white,
-                        ),
-                      ),
                       onTap: () {
-                        setState(() => signatureController.clear());
+                        _showDialog(title: "성함을 알려주세요.", index: 0);
                       },
+                      child: Container(
+                        width: 200,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "$nameText",
+                              style: designSet.getStyleInputPageText(),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
+                    UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
+                    Text(
+                      "연락처를 입력해주세요.",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "결과물에 기부자님의 연락처가 기재됩니다.",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        _showDialog(title: "연락처를 입력해주세요", index: 1);
+                      },
+                      child: Container(
+                        width: 200,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "$phoneText",
+                              style: designSet.getStyleInputPageText(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
+                    Text(
+                      "소속을 입력해주세요.",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "결과물에 기부자님의 소속이 기재됩니다.",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        _showDialog(title: "소속을 입력해주세요.", index: 2);
+                      },
+                      child: Container(
+                        width: 200,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 1,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "$affiliationText",
+                              style: designSet.getStyleInputPageText(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
+                    Row(
+                      children: [
+                        Text(
+                          "사인을 해주세요.",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black,
+                            ),
+                            child: Icon(
+                              Icons.refresh_sharp,
+                              color: Colors.white,
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() => signatureController.clear());
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: 301,
+                          height: 121,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                          ),
+                          child: Signature(
+                            width: 300,
+                            height: 120,
+                            controller: signatureController,
+                            backgroundColor: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
                     Container(
-                      width: 301,
-                      height: 121,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                      ),
-                      child: Signature(
-                        width: 300,
-                        height: 120,
-                        controller: signatureController,
-                        backgroundColor: Colors.white,
+                      child: Row(
+                        children: [
+                          OutlinedButton(
+                            onPressed: () {
+                              // 애니메이션 실행
+                              _flipAnimationController
+                                  .forward()
+                                  .whenComplete(() {
+                                _animationController.forward().whenComplete(() {
+                                  // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
+                                  userController.setName(name: nameText); // 이름
+                                  userController.setAffiliation(
+                                      affiliation: affiliationText); // 소속
+                                  userController.setPhone(
+                                      phone: phoneText); // 휴대폰 번호
+                                  userController.setSelectedCategoryIndex(
+                                      index: this
+                                          .thisCategoryMember
+                                          .id); // 카테고리 아이디
+
+                                  hasFailed
+                                      ? Get.toNamed('/paymentPage')
+                                      : myInterstitial.show();
+                                });
+                              });
+                            },
+                            child: Text(
+                              '기부하기',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.white,
+                              backgroundColor: Colors.black,
+                              shadowColor: Colors.white,
+                              elevation: 8,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AutoSizeText(
+                        '개인정보 수집·이용 동의\n이용자 확인을 위해 아래와 같이 개인정보를 수집·이용합니다.\n1.개인정보의 수집·이용 목적 : 이용자 확인 및 포토카드 출력\n2.수집하는 개인정보의 항목 : 이름,휴대폰번호, 소속 \n3.개인정보의 보유·이용기간 : 전시 종료 후 즉시 파기\n4.동의를 거부할 수 있으며, 이 경우 이후 서비스 이용이 제한됩니다.',
+                        style: TextStyle(
+                          fontSize: 5,
+                          color: Colors.grey,
+                        )),
                   ],
                 ),
-                SizedBox(height: 20),
-                Container(
-                  child: Row(
-                    children: [
-                      OutlinedButton(
-                        onPressed: () {
-                          // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
-                          userController.setName(name: nameText); // 이름
-                          userController.setAffiliation(
-                              affiliation: affiliationText); // 소속
-                          userController.setPhone(phone: phoneText); // 휴대폰 번호
-                          userController.setSelectedCategoryIndex(
-                              index: this.thisCategoryMember.id); // 카테고리 아이디
-
-                          hasFailed
-                              ? Get.toNamed('/paymentPage')
-                              : myInterstitial.show();
-                        },
-                        child: Text(
-                          '기부하기',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          primary: Colors.white,
-                          backgroundColor: Colors.black,
-                          shadowColor: Colors.white,
-                          elevation: 8,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 7),
-                Text('개인정보 수집·이용 동의\n이용자 확인을 위해 아래와 같이 개인정보를 수집·이용합니다.\n1.개인정보의 수집·이용 목적 : 이용자 확인 및 포토카드 출력\n2.수집하는 개인정보의 항목 : 이름,휴대폰번호, 소속 \n3.개인정보의 보유·이용기간 : 전시 종료 후 즉시 파기\n4.동의를 거부할 수 있으며, 이 경우 이후 서비스 이용이 제한됩니다.'),
-              ],
+              ),
             ),
           ),
         ),

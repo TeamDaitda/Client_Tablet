@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:camera/camera.dart';
 import 'package:daitda/controller/Category.dart';
 import 'package:daitda/controller/Controllers.dart';
@@ -152,9 +153,6 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Widget renderPaymentArea() {
-    print("result page -----");
-    print("print path + name :" + file.path + file.name);
-
     return Container(
       width: designSet.getPaymentAreaWidth(),
       height: designSet.getPaymentAreaHeight(),
@@ -169,17 +167,53 @@ class _ResultPageState extends State<ResultPage> {
                       filePath: file.path, fileName: file.name),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData == false) {
-                      return CircularProgressIndicator();
+                      return Container(
+                        height: 500,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(width: 20.0, height: 100.0),
+                              RotateAnimatedTextKit(
+                                duration: Duration(milliseconds: 2000),
+                                text: [
+                                  "${userController.getName()}님을 위해",
+                                  "${userController.getName()}님을 위해",
+                                  "${userController.getName()}님을 위해"
+                                ],
+                                textStyle: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                              SizedBox(width: 20.0, height: 100.0),
+                              RotateAnimatedTextKit(
+                                duration: Duration(milliseconds: 2000),
+                                text: ["잉크를 찾는중", "이쁜 붓을 고르는중", "열심히 잇는중"],
+                                textStyle: TextStyle(
+                                  fontSize: 30.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     } else if (snapshot.hasError) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Error: ${snapshot.error}',
+                          'Error: 11',
                           style: TextStyle(fontSize: 15),
                         ),
                       );
                     } else {
                       if (paintController.getPaintState() == true) {
+                        print("getPaintState == true");
                         return Container();
                       } else {
                         paintController.setPaintState(true);
