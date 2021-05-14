@@ -132,11 +132,6 @@ class _CameraPageState extends State<CameraPage> {
                 ],
               ),
               _cameraoverlayWidget(),
-              Row(
-                children: [
-                  _cameraToggleRowWidget(),
-                ],
-              ),
             ],
           ),
         ),
@@ -240,10 +235,11 @@ class _CameraPageState extends State<CameraPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FDottedLine(
+                  corner: FDottedLineCorner.all(500),
                   color: Colors.white,
                   height: 400,
-                  width: 400,
-                  strokeWidth: 3.0,
+                  width: 300,
+                  strokeWidth: 5.0,
                   dottedLength: 10.0,
                   space: 12.0,
                 ),
@@ -261,36 +257,6 @@ class _CameraPageState extends State<CameraPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  //display a row of taggle to select the camera
-  Widget _cameraToggleRowWidget() {
-    if (cameras == null || cameras.isEmpty) {
-      return Spacer();
-    }
-    CameraDescription selectedCamera = cameras[selectedCameraIndex];
-    CameraLensDirection lensDirection = selectedCamera.lensDirection;
-
-    return Expanded(
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        // ignore: deprecated_member_use
-        child: FlatButton.icon(
-            onPressed: _onSwitchCamera,
-            icon: Icon(
-              _getCameraLensIcon(lensDirection),
-              color: Colors.white,
-              size: 24,
-            ),
-            label: Text(
-              '${lensDirection.toString().substring(lensDirection.toString().indexOf('.') + 1).toUpperCase()}',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
-            )),
       ),
     );
   }
