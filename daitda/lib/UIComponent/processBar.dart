@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daitda/design/colorSet.dart';
 import 'package:daitda/design/designSet.dart';
 import 'package:flutter/material.dart';
@@ -70,8 +71,8 @@ class ProcessBar extends StatelessWidget {
     return option == true
         ? Container(
             width: 100,
-            height: 23,
-            child: Text(
+            height: 24,
+            child: AutoSizeText(
               text,
               style: TextStyle(color: colorSet.fontColor, fontSize: 18),
             ),

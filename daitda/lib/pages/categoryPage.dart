@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
@@ -12,7 +13,8 @@ class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _CategoryPageState extends State<CategoryPage>
+    with TickerProviderStateMixin {
   //  Design Setting.
   final designSet = Get.put(DESIGNS.DesignSet());
   final colorSet = DESIGNS.ColorSet();
@@ -36,6 +38,11 @@ class _CategoryPageState extends State<CategoryPage> {
    */
   static double thisPageIndex;
   static double thisPageProgressIndex;
+
+  /// FLIP ANIMATION
+  AnimationController _flipAnimationController;
+  Animation<double> _frontScale;
+  Animation<double> _backScale;
 
   @override
   void initState() {
@@ -68,7 +75,28 @@ class _CategoryPageState extends State<CategoryPage> {
      */
     progressData.setData(thisPageProgressIndex);
 
+// FLIP Animation 전용 초기화
+    _flipAnimationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1000));
+    _frontScale = new Tween(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(new CurvedAnimation(
+      parent: _flipAnimationController,
+      curve: new Interval(0.0, 0.5, curve: Curves.easeIn),
+    ));
+    _backScale = new CurvedAnimation(
+      parent: _flipAnimationController,
+      curve: new Interval(0.5, 1.0, curve: Curves.easeOut),
+    );
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _flipAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -81,6 +109,7 @@ class _CategoryPageState extends State<CategoryPage> {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
     return Scaffold(
+      backgroundColor: colorSet.backgroundColor,
       body: Container(
         child: Row(
           children: [
@@ -92,7 +121,36 @@ class _CategoryPageState extends State<CategoryPage> {
             ),
             Column(
               children: [
-                renderMainArea(),
+                Stack(
+                  children: [
+                    AnimatedBuilder(
+                      child: renderMainBackArea(),
+                      animation: _backScale,
+                      builder: (BuildContext context, Widget child) {
+                        final Matrix4 transform = new Matrix4.identity()
+                          ..scale(1.0, _backScale.value, 1.0);
+                        return new Transform(
+                          transform: transform,
+                          alignment: FractionalOffset.center,
+                          child: child,
+                        );
+                      },
+                    ),
+                    AnimatedBuilder(
+                      child: renderMainArea(),
+                      animation: _frontScale,
+                      builder: (BuildContext context, Widget child) {
+                        final Matrix4 transform = new Matrix4.identity()
+                          ..scale(1.0, _frontScale.value, 1.0);
+                        return new Transform(
+                          transform: transform,
+                          alignment: FractionalOffset.center,
+                          child: child,
+                        );
+                      },
+                    ),
+                  ],
+                ),
                 renderBottomArea(),
               ],
             ),
@@ -146,15 +204,31 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  Widget renderMainArea() {
+  Widget renderMainBackArea() {
     return Container(
-      decoration: BoxDecoration(
-        color: colorSet.mainAreaColor,
-        border: Border.all(
-          width: 0.5,
-          color: colorSet.dividorColor,
+      width: designSet.getMainAreaWidth(),
+      height: designSet.getMainAreaHeight(),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: thisCategoryMember.getimg(),
+            ),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget renderMainArea() {
+    return Container(
+      color: colorSet.mainAreaColor,
       width: designSet.getMainAreaWidth(),
       height: designSet.getMainAreaHeight(),
       child: Padding(
@@ -166,6 +240,14 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
           child: Stack(
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(580, 240, 40, 0),
+                child: Container(
+                  child: thisCategoryMember.getimg(),
+                  height: 290,
+                  width: 290,
+                ),
+              ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 40, horizontal: 25),
@@ -181,14 +263,31 @@ class _CategoryPageState extends State<CategoryPage> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 90, horizontal: 30),
-                child: Text(
+                child: AutoSizeText(
                   '${thisCategoryMember.getBody()}',
                   style: TextStyle(
-                    fontSize: 23,
-                    color: Colors.black,
-                    wordSpacing: -3,
-                    height: 1.4,
-                  ),
+                      fontSize: 23,
+                      color: Colors.black,
+                      wordSpacing: -3,
+                      height: 1.4,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(-1.5, -1.5),
+                          color: Colors.white,
+                        ),
+                        Shadow(
+                          offset: Offset(1.5, -1.5),
+                          color: Colors.white,
+                        ),
+                        Shadow(
+                          offset: Offset(1.5, 1.5),
+                          color: Colors.white,
+                        ),
+                        Shadow(
+                          offset: Offset(-1.5, 1.5),
+                          color: Colors.white,
+                        ),
+                      ]),
                 ),
               ),
               Container(
@@ -203,14 +302,18 @@ class _CategoryPageState extends State<CategoryPage> {
                     ),
                   ),
                   onPressed: () {
-                    /*
+                    _flipAnimationController.forward().whenComplete(() {
+                      /*
                      * inputPage로 이동하며 선택한 카테고리의 대한 정보를 arguments로 전달합니다.
                      * 
                      * Go to InputPage and pass information about the selected category.
                      */
-                    userController.setSelectedCategoryIndex(
-                        index: thisCategoryMember.id);
-                    Get.toNamed('/inputPage', arguments: thisCategoryMember);
+                      userController.setSelectedCategoryIndex(
+                          index: thisCategoryMember.id);
+                      Get.toNamed('/inputPage', arguments: thisCategoryMember);
+                    }).whenComplete(() {
+                      _flipAnimationController.reverse();
+                    });
                   },
                   style: OutlinedButton.styleFrom(
                     primary: Colors.white,
@@ -218,14 +321,6 @@ class _CategoryPageState extends State<CategoryPage> {
                     shadowColor: Colors.white,
                     elevation: 8,
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(580, 240, 40, 0),
-                child: Container(
-                  child: thisCategoryMember.getimg(),
-                  height: 290,
-                  width: 290,
                 ),
               ),
             ],
@@ -271,8 +366,6 @@ class _CategoryPageState extends State<CategoryPage> {
                         body: categoryController.categoryMember[index].body,
                         img: categoryController.categoryMember[index].getimg(),
                       );
-                      print(
-                          categoryController.categoryMember[index].toString());
                     },
                   );
                 },
@@ -289,12 +382,10 @@ class _CategoryPageState extends State<CategoryPage> {
                     //    *
                     //    * Prints information of categories in Text.
                     //    */
-                    //   "${categoryController.categoryMember[index].id.toString()}\n${categoryController.categoryMember[index].toString()}",
-                    //   style: TextStyle(fontSize: 18),
                     // ),
                     child: Column(
                       children: [
-                        SizedBox(height: 23),
+                        SizedBox(height: 10),
                         Container(
                           child:
                               categoryController.categoryMember[index].getimg(),

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daitda/controller/Category.dart';
 import 'package:daitda/model/result/resultGetAllDto.dart';
 import 'package:daitda/service/resultApi.dart';
+import 'package:daitda/service/userService.dart';
 import 'package:flutter/material.dart';
 import 'package:daitda/gallerysection/introduction.dart';
 import 'package:daitda/gallerysection/scoreboard.dart';
@@ -21,19 +22,21 @@ class GalleryPage extends StatefulWidget {
 class _GalleryPageState extends State<GalleryPage> {
   CategoryService _categoryService = new CategoryService();
 
+  UserApi _userApi = new UserApi();
   ResultApi _resultApi = new ResultApi();
 
   int itemLength;
   List<Result> resultData;
   Size displaySize;
 
-  bool isLoading;
+  bool flag;
 
   int goal = 500;
   int now = 0;
   double progress;
   @override
   void initState() {
+    flag = false;
     super.initState();
   }
 
@@ -50,7 +53,9 @@ class _GalleryPageState extends State<GalleryPage> {
               builder: (BuildContext context,
                   AsyncSnapshot<ResultGetAllDto> snapshot) {
                 if (snapshot.hasData == false) {
-                  return CircularProgressIndicator();
+                  return CircularProgressIndicator(
+                    backgroundColor: Colors.black,
+                  );
                 } else if (snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -64,15 +69,68 @@ class _GalleryPageState extends State<GalleryPage> {
                     itemCount: data.length,
                     itemBuilder: (BuildContext context, int index) {
                       int reverseIndex = data.length - 1 - index;
+                      // if (reverseIndex == data.length - 1) {
+                      //   flag = true;
+                      //   if (flag) {
+                      //     Future.delayed(Duration.zero, () async {
+                      //       setState(() {
+                      //         print(data.length);
+                      //         flag = false;
+                      //       });
+                      //     });
+                      //   }
+                      //   // } else {
+                      //   //   Future.delayed(Duration.zero, () async {});
+                      // }
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CachedNetworkImage(
-                            placeholder: (context, url) => Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: CircularProgressIndicator(),
+                          InkWell(
+                            onTap: () {
+                              _userApi
+                                  .get(id: data[reverseIndex].userId)
+                                  .then((value) {
+                                Get.dialog(
+                                  Center(
+                                    child: Material(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Container(
+                                        width: Get.size.width * 0.4,
+                                        height: Get.size.height * 0.8,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text("${value.name}"),
+                                            Text("${value.affiliation}"),
+                                            CachedNetworkImage(
+                                              placeholder: (context, url) =>
+                                                  Padding(
+                                                padding:
+                                                    const EdgeInsets.all(20.0),
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              ),
+                                              imageUrl: data[reverseIndex].path,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
+                            },
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: CircularProgressIndicator(),
+                              ),
+                              imageUrl: data[reverseIndex].path,
                             ),
-                            imageUrl: data[reverseIndex].path,
                           ),
                           const SizedBox(
                             height: 50,

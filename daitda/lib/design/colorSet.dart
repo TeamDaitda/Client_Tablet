@@ -13,7 +13,7 @@ class ColorSet {
   final Color fontColorBlack = Color(0xff2c2f33);
 
   //  Container Color
-  final Color backgroundColor = Color(0xff2c2f33);
+  final Color backgroundColor = Color(0xff2b2b2b);
   final Color mainBoxColor = Color(0xfff6f5f5);
   final Color buttonColor = Color(0xfff0f0f3);
   final Color boxDecorationColor = Color(0xfff0f0f3);
@@ -49,6 +49,9 @@ class ColorSet {
   //  Text Color
   final Color positivetextColor = Color(0xff2c2f33);
   final Color notPositiveTextColor = Color(0xffE53A40);
+
+  //  card Back Color
+  final Color cardBackColor = Color(0xff2C2F33);
 
   Color randomColor() {
     return Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
