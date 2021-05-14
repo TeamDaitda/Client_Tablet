@@ -1,4 +1,6 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:daitda/design/designs.dart';
 import 'package:daitda/pages/categoryPage.dart';
 import 'package:daitda/pages/galleryPage.dart';
 import 'package:daitda/service/adApi.dart';
@@ -27,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff2C2F33),
+      backgroundColor: ColorSet().backgroundColor,
       body: Stack(
         children: <Widget>[
           Center(
@@ -54,56 +56,6 @@ class _HomePageState extends State<HomePage> {
             child: Center(
               child: Column(
                 children: [
-                  OutlinedButton(
-                    onPressed: () async {
-                      // userApi
-                      //     .save(
-                      //         affiliation: "소속입니다",
-                      //         category: 1234,
-                      //         name: "이름입니다",
-                      //         phone: "휴대폰입니다")
-                      //     .then((value) => print(value));
-                      //
-                      //
-                      // userApi
-                      //     .update(id: 20, categoryId: 10)
-                      //     .then((value) => print(value));
-                      //
-                      //
-                      // userApi.get(id: 3).then((value) {
-                      //   print(value.id);
-                      //   print(value.name);
-                      //   print(value.category);
-                      //   print(value.affiliation);
-                      //   print(value.phone);
-                      // });
-                      //
-                      // userApi.getAll().then((value) {
-                      //   value.result.forEach((element) {
-                      //     print(element.id);
-                      //     print(element.name);
-                      //     print(element.category);
-                      //     print(element.affiliation);
-                      //     print(element.phone);
-                      //   });
-                      // });
-                      //
-                      // imageApi.imageFindByUserIdDto(id: 1).then((value) {
-                      //   print(value.id);
-                      //   print(value.path);
-                      //   print(value.users.id);
-                      //   print(value.users.category);
-                      //   print(value.users.affiliation);
-                      //   print(value.users.createDate);
-                      //   print(value.users.modifiedDate);
-                      //   print(value.users.name);
-                      //   print(value.users.phone);
-                      // });
-                      //
-                      adApi.update(id: 1).then((value) => print(value));
-                    },
-                    child: Text("테스트"),
-                  ),
                   Text(
                     'Draw your line,',
                     style: TextStyle(
