@@ -21,6 +21,7 @@ import 'package:daitda/service/userService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
@@ -125,6 +126,14 @@ class _ResultPageState extends State<ResultPage> {
           color: colorSet.dividorColor,
         ),
       ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 25),
+        child: SvgPicture.asset(
+          'images/sym.svg',
+          width: 10,
+          height: 10,
+        ),
+      ),
       width: designSet.getLogoAreaWidth(),
       height: designSet.getLogoAreaHeight(),
     );
@@ -178,9 +187,9 @@ class _ResultPageState extends State<ResultPage> {
                               RotateAnimatedTextKit(
                                 duration: Duration(milliseconds: 2000),
                                 text: [
-                                  "${userController.getName()}님을 위해",
-                                  "${userController.getName()}님을 위해",
-                                  "${userController.getName()}님을 위해"
+                                  "${userController.getName()} 기부자님에게 어울리는",
+                                  "${userController.getName()} 기부자님을 그릴",
+                                  "${userController.getName()} 기부자님의 선을"
                                 ],
                                 textStyle: TextStyle(
                                   fontSize: 18.0,
@@ -191,7 +200,7 @@ class _ResultPageState extends State<ResultPage> {
                               SizedBox(width: 20.0, height: 100.0),
                               RotateAnimatedTextKit(
                                 duration: Duration(milliseconds: 2000),
-                                text: ["잉크를 찾는중", "이쁜 붓을 고르는중", "열심히 잇는중"],
+                                text: ["잉크를 찾는중", "붓을 고르는중", "열심히 잇는중"],
                                 textStyle: TextStyle(
                                   fontSize: 30.0,
                                   color: Colors.white,
@@ -219,44 +228,11 @@ class _ResultPageState extends State<ResultPage> {
                         paintController.setPaintState(true);
                         return Column(
                           children: [
-                            Container(
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  primary: Colors.white,
-                                  backgroundColor: Colors.black,
-                                  shadowColor: Colors.white,
-                                ),
-                                child: Text('포토카드 꾸미기'),
-                                onPressed: () async {
-                                  // 회원가입
-                                  _userApi
-                                      .save(
-                                    affiliation: argumentsData.affiliation,
-                                    category: argumentsData.category,
-                                    name: argumentsData.name,
-                                    phone: argumentsData.phone,
-                                  )
-                                      .then((value) {
-                                    argumentsData.id = value;
-                                  });
-
-                                  final Uint8List data = await _capturePng();
-                                  argumentsData.data = data;
-                                  _fileUploadApi
-                                      .upload(data: data)
-                                      .then((value) {
-                                    _imageApi
-                                        .save(path: value, id: argumentsData.id)
-                                        .then((_) {
-                                      _resultApi
-                                          .save(id: argumentsData.id)
-                                          .then((_) {
-                                        Get.offAllNamed('/photoCardPage',
-                                            arguments: argumentsData);
-                                      });
-                                    });
-                                  });
-                                },
+                            Text(
+                              '당신의 선을 확인해보세요.',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
                               ),
                             ),
                             SizedBox(
@@ -300,15 +276,51 @@ class _ResultPageState extends State<ResultPage> {
                               ),
                             ),
                             SizedBox(
-                              height: 50,
+                              height: 43,
                             ),
-                            Text(
-                              '당신의 선이 완성되었습니다.',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
+
+                              Container(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  primary: Colors.white,
+                                  backgroundColor: Colors.white,
+                                  shadowColor: Colors.white,
+                                ),
+                                child: Text('포토카드 꾸미기',
+                                style: TextStyle( color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold,),),
+                                onPressed: () async {
+                                  // 회원가입
+                                  _userApi
+                                      .save(
+                                    affiliation: argumentsData.affiliation,
+                                    category: argumentsData.category,
+                                    name: argumentsData.name,
+                                    phone: argumentsData.phone,
+                                  )
+                                      .then((value) {
+                                    argumentsData.id = value;
+                                  });
+
+                                  final Uint8List data = await _capturePng();
+                                  argumentsData.data = data;
+                                  _fileUploadApi
+                                      .upload(data: data)
+                                      .then((value) {
+                                    _imageApi
+                                        .save(path: value, id: argumentsData.id)
+                                        .then((_) {
+                                      _resultApi
+                                          .save(id: argumentsData.id)
+                                          .then((_) {
+                                        Get.offAllNamed('/photoCardPage',
+                                            arguments: argumentsData);
+                                      });
+                                    });
+                                  });
+                                },
                               ),
                             ),
+
                           ],
                         );
                       }

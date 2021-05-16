@@ -147,7 +147,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
 
     // Google AdMob 관련 초기화
     myInterstitial = InterstitialAd(
-      adUnitId: 'ca-app-pub-3940256099942544/4411468910',
+      adUnitId: 'ca-app-pub-3940256099942544/5135589807',
       request: AdRequest(),
       listener: AdListener(
         onAdLoaded: (ad) {
@@ -541,7 +541,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
                     ),
                     UICOMPONENTS.UIComponent().buildHeightSizedBox(50),
                     Text(
-                      "소속을 입력해주세요.",
+                      "직업을 입력해주세요.",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -551,7 +551,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
                       height: 5,
                     ),
                     Text(
-                      "결과물에 기부자님의 소속이 기재됩니다.",
+                      "결과물에 기부자님의 직업이 기재됩니다.",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
@@ -562,7 +562,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
                     ),
                     InkWell(
                       onTap: () {
-                        _showDialog(title: "소속을 입력해주세요.", index: 2);
+                        _showDialog(title: "직업을 입력해주세요.", index: 2);
                       },
                       child: Container(
                         width: 200,
