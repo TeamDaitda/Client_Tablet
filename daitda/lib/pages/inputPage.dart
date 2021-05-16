@@ -685,11 +685,12 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
                       height: 20,
                     ),
                     AutoSizeText(
-                        '개인정보 수집·이용 동의\n이용자 확인을 위해 아래와 같이 개인정보를 수집·이용합니다.\n1.개인정보의 수집·이용 목적 : 이용자 확인 및 포토카드 출력\n2.수집하는 개인정보의 항목 : 이름,휴대폰번호, 소속 \n3.개인정보의 보유·이용기간 : 전시 종료 후 즉시 파기\n4.동의를 거부할 수 있으며, 이 경우 이후 서비스 이용이 제한됩니다.',
-                        style: TextStyle(
-                          fontSize: 5,
-                          color: Colors.grey,
-                        )),
+                      '개인정보 수집·이용 동의\n이용자 확인을 위해 아래와 같이 개인정보를 수집·이용합니다.\n1.개인정보의 수집·이용 목적 : 이용자 확인 및 포토카드 출력\n2.수집하는 개인정보의 항목 : 이름,휴대폰번호, 소속 \n3.개인정보의 보유·이용기간 : 전시 종료 후 즉시 파기\n4.동의를 거부할 수 있으며, 이 경우 이후 서비스 이용이 제한됩니다.',
+                      style: TextStyle(
+                        fontSize: 5,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -716,7 +717,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
             keyboardType: index == 0
                 ? TextInputType.name
                 : index == 1
-                    ? TextInputType.phone
+                    ? TextInputType.number
                     : index == 2
                         ? TextInputType.text
                         : null,
