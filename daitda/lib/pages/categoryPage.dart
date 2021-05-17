@@ -385,14 +385,14 @@ class _CategoryPageState extends State<CategoryPage>
                     // ),
                     child: Column(
                       children: [
-                        SizedBox(height: 10),
+                        SizedBox(height: 13),
                         Container(
                           child:
                               categoryController.categoryMember[index].getimg(),
-                          width: 140,
-                          height: 140,
+                          width: 150,
+                          height: 150,
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 19),
                         Text(
                           categoryController.categoryMember[index].title
                               .toString(),

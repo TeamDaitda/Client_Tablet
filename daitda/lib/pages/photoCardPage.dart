@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 import 'dart:convert';
 
@@ -55,7 +56,7 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
     var p = Provider.of<DrawingProvider>(context);
 
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Color(0xff2b2b2b),
       body: Container(
         child: Row(
           children: [
@@ -66,6 +67,7 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                     key: _globalKey,
                     child: Stack(
                       children: [
+                        //포토카드
                         Container(
                           width: 500,
                           height: 700,
@@ -104,59 +106,159 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                       ],
                     ),
                   ),
+
+                  //색상 팔레트
                   Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Row(
+                    top: 8,
+                    left: 530,
+                    child: Column(
                       children: [
                         Container(
                           decoration: BoxDecoration(
                             color: ColorSet().backgroundColor,
-                            borderRadius: BorderRadius.circular(50),
+                            borderRadius: BorderRadius.circular(30),
                           ),
+                          //팔레트 위치
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 10,
+                              horizontal: 50,
+                              vertical: 170,
                             ),
-                            child: Row(
-                              children: [
-                                colorWidget(Colors.black),
-                                colorWidget(Colors.deepOrange),
-                                colorWidget(Colors.deepPurple),
-                                colorWidget(Colors.lightGreen),
-                                colorWidget(Colors.pink),
-                                colorWidget(Colors.yellow),
-                                colorWidget(Colors.green),
-                                colorWidget(Colors.blue),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () {
-                                    p.changeEraseMode();
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: Text(
-                                      '지우개',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: p.eraseMode
-                                              ? FontWeight.w900
-                                              : FontWeight.w100),
+
+                            child: Column(
+                                children: [
+                                  Text('거의 다 왔어요. \n마지막으로 색을 채워볼까요?',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                  fontSize: 32, 
+                                  color: Colors.white,
+                                  //fontWeight: FontWeight.bold,
+                                  ),),
+                                  SizedBox(height: 40),
+                                Row(
+                                  children: [
+                                    colorWidget(Colors.black),
+                                    colorWidget(Color(0xffA2A4AB)),
+                                    colorWidget(Color(0xff696A6E)),
+                                    colorWidget(Color(0xff6F614C)),
+                                    colorWidget(Color(0xff6F6761)),
+                                    colorWidget(Color(0xff6F614C)),
+                                    colorWidget(Color(0xffEBCDA0)),
+                                    colorWidget(Color(0xffF7D8A8)),
+                                    colorWidget(Color(0xffD1CD9B)),
+
+                                  
+
+                                  ],
+                                ),
+                                  SizedBox(height: 30),
+                                Row(
+                                    children: [
+                                      colorWidget(Color(0xff686BA1)),
+                                      colorWidget(Color(0xff523B61)),
+                                      colorWidget(Color(0xff9A9EED)),
+                                      colorWidget(Color(0xff8184C7)),
+                                      colorWidget(Color(0xff537AA3)),
+                                      colorWidget(Color(0xff314861)),
+                                      colorWidget(Color(0xff72A8E0)),
+                                      colorWidget(Color(0xff91AEB5)),
+                                      colorWidget(Color(0xff6595C7)),
+                                    ],
+                                ),
+
+                                SizedBox(height: 30),
+
+                                      Row(
+                                    children: [
+                                      colorWidget(Color(0xff6FA199)),
+                                      colorWidget(Color(0xff43615C)),
+                                      colorWidget(Color(0xffA4EDE2)),
+                                      colorWidget(Color(0xff89C7BE)),
+                                      colorWidget(Color(0xff76A370)),
+                                      colorWidget(Color(0xff466143)),
+                                      colorWidget(Color(0xffA3E09B)),
+                                      colorWidget(Color(0xffD2DDBA)),
+                                      colorWidget(Color(0xff90C789)),
+                                    ],
+                                ),
+
+                                SizedBox(height: 30),
+                                      Row(
+                                    children: [
+                                      colorWidget(Color(0xffA3A15D)),
+                                      colorWidget(Color(0xff616037)),
+                                      colorWidget(Color(0xffEDEA87)),
+                                      colorWidget(Color(0xffC7C471)),
+                                      colorWidget(Color(0xffA3605C)),
+                                      colorWidget(Color(0xff613836)),
+                                      colorWidget(Color(0xffE0837E)),
+                                      colorWidget(Color(0xffDEA795)),
+                                      colorWidget(Color(0xffC7746F)),
+                                  
+                                    ],
+                                ),
+                                SizedBox(
+                                  height: 30
+                                ),
+
+                                Row(
+                                    children: [
+                                      colorWidget(Color(0xffAB637F)),
+                                      colorWidget(Color(0xffEB88AE)),
+                                      colorWidget(Color(0xff704153)),
+                                      colorWidget(Color(0xff362631)),
+                                      colorWidget(Color(0xff9AA6B8)),
+                                      colorWidget(Color(0xff636A75)),
+                                      colorWidget(Color(0xffCEDDF5)),
+                                      colorWidget(Color(0xffACB5AF)),
+                                      colorWidget(Color(0xff6D736F)),
+                                  
+                                    ],
+                                ),
+
+                                  SizedBox(
+                                  height: 16
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () {
+                                        p.changeEraseMode();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 380),
+                                        child: Text(
+                                          '지우개',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                              fontWeight: p.eraseMode
+                                                  ? FontWeight.w900
+                                                  : FontWeight.w100),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ]
                                 )
+
+
+
                               ],
                             ),
                           ),
                         ),
+
+
                       ],
                     ),
+
+
+
                   ),
                   Positioned(
-                    right: 10,
-                    bottom: 10,
+                    right: 40,
+                    bottom: 30,
                     child: Row(
                       children: [
                         OutlinedButton(
@@ -170,11 +272,12 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
 
                             Get.offAllNamed('/homePage');
                           },
-                          child: Text("포토카드 받기"),
+                          child: Text("포토카드 받기",
+                          style: TextStyle(fontWeight: FontWeight.w700,color: Colors.black),),
                           style: OutlinedButton.styleFrom(
                             primary: Colors.white,
-                            backgroundColor: ColorSet().backgroundColor,
-                            shadowColor: Colors.white,
+                            backgroundColor: Colors.white,
+                            //shadowColor: Colors.white,
                             elevation: 8,
                           ),
                         ),
@@ -211,19 +314,19 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
   Widget colorWidget(Color color) {
     var p = Provider.of<DrawingProvider>(context);
     return Padding(
-      padding: const EdgeInsets.only(right: 10),
+      padding: const EdgeInsets.only(right: 3),
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
           p.changeColor = color;
         },
         child: Container(
-          width: 30,
-          height: 30,
+          width: 45,
+          height: 40,
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: p.color == color
-                  ? Border.all(color: Colors.white, width: 4)
+                  ? Border.all(color: Colors.white, width: 3)
                   : null,
               color: color),
         ),

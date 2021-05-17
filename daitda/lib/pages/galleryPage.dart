@@ -1,18 +1,12 @@
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daitda/controller/Category.dart';
 import 'package:daitda/model/result/resultGetAllDto.dart';
 import 'package:daitda/service/resultApi.dart';
 import 'package:daitda/service/userService.dart';
 import 'package:flutter/material.dart';
-import 'package:daitda/gallerysection/introduction.dart';
-import 'package:daitda/gallerysection/scoreboard.dart';
-import 'package:daitda/gallerysection/showcase.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
-import 'package:path/path.dart';
 
 class GalleryPage extends StatefulWidget {
   @override
