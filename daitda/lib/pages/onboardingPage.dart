@@ -54,11 +54,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
       ),
       home: Onboarding(
         background: ColorSet().backgroundColor,
+        skipButtonStyle: SkipButtonStyle(),
         proceedButtonStyle: ProceedButtonStyle(
             proceedButtonRoute: (context) {
               Get.toNamed('/homePage');
             },
-            proceedButtonText: 'main',
+            proceedButtonText: 'Main',
             proceedButtonColor: Colors.black),
         pages: onboardingPagesList,
         indicator: Indicator(
