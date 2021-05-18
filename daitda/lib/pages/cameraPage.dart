@@ -246,6 +246,9 @@ class _CameraPageState extends State<CameraPage> {
                     duration: Duration(milliseconds: 1000),
                     repeatForever: false,
                     onFinished: () {
+                      setState(() {
+                        pressed = false;
+                      });
                       _onCapturePressed(context);
                     },
                     text: [
