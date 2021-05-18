@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:daitda/model/outputModel.dart';
 import 'package:daitda/service/paintService.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +29,13 @@ class _DrawPageState extends State<DrawPage>
 
   @override
   Widget build(BuildContext context) {
+    int random = new Random().nextInt(5);
     return CustomPaint(
       painter: CurvePainter(
-        // animationProgress: animationProgress,
-        // input: widget.positionData,
-        // displaySize: MediaQuery.of(context).size,
-        _animationController, widget.positionData, MediaQuery.of(context).size,
+        _animationController,
+        widget.positionData,
+        MediaQuery.of(context).size,
+        random,
       ),
     );
   }
