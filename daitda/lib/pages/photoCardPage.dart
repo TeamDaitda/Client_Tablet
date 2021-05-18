@@ -277,7 +277,7 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                           style: OutlinedButton.styleFrom(
                             primary: Colors.white,
                             backgroundColor: Colors.white,
-                            //shadowColor: Colors.white,
+                            
                             elevation: 8,
                           ),
                         ),
