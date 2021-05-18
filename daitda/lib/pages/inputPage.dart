@@ -101,7 +101,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
      */
     nameText = "홍길동";
     phoneText = "010-1234-5678";
-    affiliationText = "OO대학교";
+    affiliationText = "학생";
 
     /*
      * 현재 페이지의 인덱스를 사용하여 구성합니다.
@@ -639,57 +639,51 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
                       ],
                     ),
                     SizedBox(height: 20),
-                    Container(
-                      child: Row(
-                        children: [
-                          OutlinedButton(
-                            onPressed: () {
-                              // 애니메이션 실행
-                              _flipAnimationController
-                                  .forward()
-                                  .whenComplete(() {
-                                _animationController.forward().whenComplete(() {
-                                  // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
-                                  userController.setName(name: nameText); // 이름
-                                  userController.setAffiliation(
-                                      affiliation: affiliationText); // 소속
-                                  userController.setPhone(
-                                      phone: phoneText); // 휴대폰 번호
-                                  userController.setSelectedCategoryIndex(
-                                      index: this
-                                          .thisCategoryMember
-                                          .id); // 카테고리 아이디
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          // 애니메이션 실행
+                          _flipAnimationController.forward().whenComplete(() {
+                            _animationController.forward().whenComplete(() {
+                              // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
+                              userController.setName(name: nameText); // 이름
+                              userController.setAffiliation(
+                                  affiliation: affiliationText); // 소속
+                              userController.setPhone(
+                                  phone: phoneText); // 휴대폰 번호
+                              userController.setSelectedCategoryIndex(
+                                  index:
+                                      this.thisCategoryMember.id); // 카테고리 아이디
 
-                                  hasFailed
-                                      ? Get.toNamed('/paymentPage')
-                                      : myInterstitial.show();
-                                });
-                              });
-                            },
-                            child: Text(
-                              '기부하기',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              primary: Colors.white,
-                              backgroundColor: Colors.black,
-                              shadowColor: Colors.white,
-                              elevation: 8,
-                            ),
-                          ),
-                        ],
+                              hasFailed
+                                  ? Get.toNamed('/paymentPage')
+                                  : myInterstitial.show();
+                            });
+                          });
+                        },
+                        child: Text(
+                          '기부하기',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.black,
+                          shadowColor: Colors.white,
+                          elevation: 8,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     AutoSizeText(
-                        '개인정보 수집·이용 동의\n이용자 확인을 위해 아래와 같이 개인정보를 수집·이용합니다.\n1.개인정보의 수집·이용 목적 : 이용자 확인 및 포토카드 출력\n2.수집하는 개인정보의 항목 : 이름,휴대폰번호, 소속 \n3.개인정보의 보유·이용기간 : 전시 종료 후 즉시 파기\n4.동의를 거부할 수 있으며, 이 경우 이후 서비스 이용이 제한됩니다.',
-                        style: TextStyle(
-                          fontSize: 5,
-                          color: Colors.grey,
-                        )),
+                      '개인정보 수집·이용 동의\n이용자 확인을 위해 아래와 같이 개인정보를 수집·이용합니다.\n1.개인정보의 수집·이용 목적 : 이용자 확인 및 포토카드 출력\n2.수집하는 개인정보의 항목 : 이름,휴대폰번호, 소속 \n3.개인정보의 보유·이용기간 : 전시 종료 후 즉시 파기\n4.동의를 거부할 수 있으며, 이 경우 이후 서비스 이용이 제한됩니다.',
+                      style: TextStyle(
+                        fontSize: 5,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -716,7 +710,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
             keyboardType: index == 0
                 ? TextInputType.name
                 : index == 1
-                    ? TextInputType.phone
+                    ? TextInputType.number
                     : index == 2
                         ? TextInputType.text
                         : null,

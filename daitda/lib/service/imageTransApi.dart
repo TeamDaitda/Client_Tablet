@@ -30,7 +30,9 @@ class ImageTransApi {
       });
 
       var objJson = jsonDecode(response.toString())['output'] as List;
+
       List<OutPut> outputObjs = objJson.map((_) => OutPut.fromJson(_)).toList();
+
       var length = outputObjs.length;
       for (int i = 0; i < length; i++) {
         if (outputObjs[i].dX < minX) {
@@ -46,8 +48,7 @@ class ImageTransApi {
       }
       return outputObjs;
     } catch (e) {
-      print(e);
-      return Future.error(e.toString());
+      return throw true;
     }
   }
 }

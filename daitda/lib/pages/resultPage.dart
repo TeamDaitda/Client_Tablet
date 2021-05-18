@@ -62,6 +62,8 @@ class _ResultPageState extends State<ResultPage> {
 
   ArgumentsData argumentsData;
 
+  bool isError;
+
   Future<Uint8List> _capturePng() async {
     try {
       RenderRepaintBoundary boundary =
@@ -90,6 +92,7 @@ class _ResultPageState extends State<ResultPage> {
     thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
     progressData.setData(thisPageProgressIndex);
     argumentsData = Get.arguments;
+    isError = false;
     super.initState();
   }
 
@@ -172,9 +175,41 @@ class _ResultPageState extends State<ResultPage> {
           paintController.getPaintState() == true
               ? Container()
               : FutureBuilder(
-                  future: _imageTransAPI.transImage(
-                      filePath: file.path, fileName: file.name),
+                  future: _imageTransAPI
+                      .transImage(filePath: file.path, fileName: file.name)
+                      .catchError((err) {
+                    print(err);
+                    isError = true;
+                  }),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (isError == true) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              '저희가 얼굴을 찾지 못했어요. \n\n 다시 한번 촬영해 주세요.',
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.white),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                primary: Colors.white,
+                                backgroundColor: Colors.black,
+                                shadowColor: Colors.white,
+                              ),
+                              child: Text('다시 촬영하기'),
+                              onPressed: () {
+                                Get.back();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                     if (snapshot.hasData == false) {
                       return Container(
                         height: 500,
@@ -278,16 +313,21 @@ class _ResultPageState extends State<ResultPage> {
                             SizedBox(
                               height: 43,
                             ),
-
-                              Container(
+                            Container(
                               child: OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   primary: Colors.white,
                                   backgroundColor: Colors.white,
                                   shadowColor: Colors.white,
                                 ),
-                                child: Text('포토카드 꾸미기',
-                                style: TextStyle( color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold,),),
+                                child: Text(
+                                  '포토카드 꾸미기',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 onPressed: () async {
                                   // 회원가입
                                   _userApi
@@ -320,7 +360,6 @@ class _ResultPageState extends State<ResultPage> {
                                 },
                               ),
                             ),
-
                           ],
                         );
                       }

@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:camera/camera.dart';
 import 'package:daitda/controller/imageController.dart';
@@ -39,6 +40,8 @@ class _CameraPageState extends State<CameraPage> {
   int selectedCameraIndex;
   String imgPath;
 
+  bool pressed;
+
   /*
    * 현재 페이지의 인덱스와 이를 바탕으로 계산될 프로그래스의 인덱스입니다.
    * 
@@ -60,6 +63,8 @@ class _CameraPageState extends State<CameraPage> {
     thisPageProgressIndex = 0.2 * (thisPageIndex + 1);
     progressData.setData(thisPageProgressIndex);
 
+    pressed = false;
+
     paintController.setPaintState(false);
 
     argumentsData = Get.arguments;
@@ -79,6 +84,7 @@ class _CameraPageState extends State<CameraPage> {
     }).catchError((err) {
       print('Error :${err.code}Error message : ${err.message}');
     });
+
     super.initState();
   }
 
@@ -131,7 +137,7 @@ class _CameraPageState extends State<CameraPage> {
                   _cameraControlWidget(context),
                 ],
               ),
-              _cameraoverlayWidget(),
+              _cameraoverlayWidget(context),
             ],
           ),
         ),
@@ -217,7 +223,9 @@ class _CameraPageState extends State<CameraPage> {
               ),
               backgroundColor: Colors.white,
               onPressed: () {
-                _onCapturePressed(context);
+                setState(() {
+                  pressed = true;
+                });
               },
             )
           ],
@@ -226,10 +234,38 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
-  Widget _cameraoverlayWidget() {
+  Widget _cameraoverlayWidget(BuildContext context) {
     return Container(
       child: Stack(
         children: [
+          pressed
+              ? Align(
+                  alignment: Alignment.center,
+                  child: FadeAnimatedTextKit(
+                    totalRepeatCount: 1,
+                    duration: Duration(milliseconds: 1000),
+                    repeatForever: false,
+                    onFinished: () {
+                      setState(() {
+                        pressed = false;
+                      });
+                      _onCapturePressed(context);
+                    },
+                    text: [
+                      '5',
+                      '4',
+                      '3',
+                      '2',
+                      '1',
+                    ],
+                    textStyle: TextStyle(
+                      color: Colors.red,
+                      fontSize: 80,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              : SizedBox(),
           Align(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -246,13 +282,13 @@ class _CameraPageState extends State<CameraPage> {
                 SizedBox(
                   height: 50,
                 ),
-                Text(
-                  '사각형 안에 얼굴을 맞춰주세요',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                  ),
-                ),
+                // Text(
+                //   '타원 안에 얼굴을 맞춰주세요',
+                //   style: TextStyle(
+                //     fontSize: 30,
+                //     color: Colors.white,
+                //   ),
+                // ),
               ],
             ),
           ),

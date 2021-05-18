@@ -1,3 +1,4 @@
+import 'package:daitda/design/designs.dart';
 import 'package:daitda/service/userService.dart';
 import 'package:daitda/pages/categoryPage.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -53,11 +53,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Onboarding(
+        background: ColorSet().backgroundColor,
+        skipButtonStyle: SkipButtonStyle(),
         proceedButtonStyle: ProceedButtonStyle(
             proceedButtonRoute: (context) {
               Get.toNamed('/homePage');
             },
-            proceedButtonText: 'main',
+            proceedButtonText: 'Main',
             proceedButtonColor: Colors.black),
         pages: onboardingPagesList,
         indicator: Indicator(
@@ -68,8 +70,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
         ),
         titleStyle: TextStyle(
-            fontSize: 45, fontWeight: FontWeight.bold, color: Colors.white),
-        infoStyle: TextStyle(fontSize: 28, color: Colors.white),
+            fontSize: 45,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontFamily: 'Nanum'),
+        infoStyle: TextStyle(
+          fontSize: 28,
+          color: Colors.white,
+          fontFamily: 'Nanum',
+        ),
         titleAndInfoPadding: EdgeInsets.symmetric(vertical: 35, horizontal: 5),
       ),
     );
