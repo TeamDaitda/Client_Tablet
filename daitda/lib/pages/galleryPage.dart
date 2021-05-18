@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';

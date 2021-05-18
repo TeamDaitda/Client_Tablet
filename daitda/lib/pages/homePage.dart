@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    'Make our life,',
+                    'Make our life.',
                     style: TextStyle(
                       fontSize: 26,
                       color: Colors.white,
@@ -87,12 +87,13 @@ class _HomePageState extends State<HomePage> {
                           '갤러리',
                           style: TextStyle(
                             fontSize: 20,
-                            color: Colors.white,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         style: OutlinedButton.styleFrom(
                           primary: Colors.white,
-                          backgroundColor: Colors.black,
+                          backgroundColor: Colors.white,
                           shadowColor: Colors.black,
                           elevation: 8,
                         ),
@@ -108,12 +109,13 @@ class _HomePageState extends State<HomePage> {
                           '시작하기',
                           style: TextStyle(
                             fontSize: 20,
-                            color: Colors.white,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         style: OutlinedButton.styleFrom(
                           primary: Colors.white,
-                          backgroundColor: Colors.black,
+                          backgroundColor: Colors.white,
                           shadowColor: Colors.black,
                           elevation: 8,
                         ),
@@ -135,6 +137,16 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+
+          Align(
+            alignment: Alignment.bottomRight,
+                      child: Padding(
+              padding: const EdgeInsets.only(bottom: 10, right: 35, left: 30),
+              child: Text('다잇다와 함께 하기',
+              style: TextStyle(color: Colors.white,),),
+                ),
+          ),
+
         ],
       ),
     );
