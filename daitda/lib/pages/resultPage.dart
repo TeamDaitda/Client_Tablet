@@ -188,9 +188,12 @@ class _ResultPageState extends State<ResultPage> {
                         child: Column(
                           children: [
                             Text(
-                              '저희가 얼굴을 찾지 못했어요. \n 다시 한번 촬영해 주세요.',
+                              '저희가 얼굴을 찾지 못했어요. \n\n 다시 한번 촬영해 주세요.',
                               style:
                                   TextStyle(fontSize: 30, color: Colors.white),
+                            ),
+                            SizedBox(
+                              height: 20,
                             ),
                             OutlinedButton(
                               style: OutlinedButton.styleFrom(
@@ -198,7 +201,7 @@ class _ResultPageState extends State<ResultPage> {
                                 backgroundColor: Colors.black,
                                 shadowColor: Colors.white,
                               ),
-                              child: Text('포토카드 꾸미기'),
+                              child: Text('다시 촬영하기'),
                               onPressed: () {
                                 Get.back();
                               },
@@ -310,16 +313,21 @@ class _ResultPageState extends State<ResultPage> {
                             SizedBox(
                               height: 43,
                             ),
-
-                              Container(
+                            Container(
                               child: OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   primary: Colors.white,
                                   backgroundColor: Colors.white,
                                   shadowColor: Colors.white,
                                 ),
-                                child: Text('포토카드 꾸미기',
-                                style: TextStyle( color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold,),),
+                                child: Text(
+                                  '포토카드 꾸미기',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 onPressed: () async {
                                   // 회원가입
                                   _userApi
@@ -352,7 +360,6 @@ class _ResultPageState extends State<ResultPage> {
                                 },
                               ),
                             ),
-
                           ],
                         );
                       }

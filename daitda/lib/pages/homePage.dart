@@ -126,27 +126,31 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
+          Positioned(
+            bottom: 0,
+            right: 0,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 30, right: 30, left: 30),
-              child: Image.asset(
-                'images/apply.png',
-                width: 110,
-                height: 110,
+              child: Column(
+                children: [
+                  Image.asset(
+                    'images/apply.png',
+                    width: 110,
+                    height: 110,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '다잇다와 함께 하기',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-
-          Align(
-            alignment: Alignment.bottomRight,
-                      child: Padding(
-              padding: const EdgeInsets.only(bottom: 10, right: 35, left: 30),
-              child: Text('다잇다와 함께 하기',
-              style: TextStyle(color: Colors.white,),),
-                ),
-          ),
-
         ],
       ),
     );

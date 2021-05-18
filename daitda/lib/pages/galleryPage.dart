@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daitda/controller/Category.dart';
@@ -212,7 +211,7 @@ class _GalleryPageState extends State<GalleryPage> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(5),
                   color: Colors.black,
                   boxShadow: ShadowSet.shadow(),
                 ),

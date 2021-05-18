@@ -101,7 +101,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
      */
     nameText = "홍길동";
     phoneText = "010-1234-5678";
-    affiliationText = "OO대학교";
+    affiliationText = "학생";
 
     /*
      * 현재 페이지의 인덱스를 사용하여 구성합니다.
