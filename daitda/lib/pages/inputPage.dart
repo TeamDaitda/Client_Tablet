@@ -639,46 +639,39 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
                       ],
                     ),
                     SizedBox(height: 20),
-                    Container(
-                      child: Row(
-                        children: [
-                          OutlinedButton(
-                            onPressed: () {
-                              // 애니메이션 실행
-                              _flipAnimationController
-                                  .forward()
-                                  .whenComplete(() {
-                                _animationController.forward().whenComplete(() {
-                                  // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
-                                  userController.setName(name: nameText); // 이름
-                                  userController.setAffiliation(
-                                      affiliation: affiliationText); // 소속
-                                  userController.setPhone(
-                                      phone: phoneText); // 휴대폰 번호
-                                  userController.setSelectedCategoryIndex(
-                                      index: this
-                                          .thisCategoryMember
-                                          .id); // 카테고리 아이디
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          // 애니메이션 실행
+                          _flipAnimationController.forward().whenComplete(() {
+                            _animationController.forward().whenComplete(() {
+                              // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
+                              userController.setName(name: nameText); // 이름
+                              userController.setAffiliation(
+                                  affiliation: affiliationText); // 소속
+                              userController.setPhone(
+                                  phone: phoneText); // 휴대폰 번호
+                              userController.setSelectedCategoryIndex(
+                                  index:
+                                      this.thisCategoryMember.id); // 카테고리 아이디
 
-                                  hasFailed
-                                      ? Get.toNamed('/paymentPage')
-                                      : myInterstitial.show();
-                                });
-                              });
-                            },
-                            child: Text(
-                              '기부하기',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              primary: Colors.white,
-                              backgroundColor: Colors.black,
-                              shadowColor: Colors.white,
-                              elevation: 8,
-                            ),
-                          ),
-                        ],
+                              hasFailed
+                                  ? Get.toNamed('/paymentPage')
+                                  : myInterstitial.show();
+                            });
+                          });
+                        },
+                        child: Text(
+                          '기부하기',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.black,
+                          shadowColor: Colors.white,
+                          elevation: 8,
+                        ),
                       ),
                     ),
                     const SizedBox(
