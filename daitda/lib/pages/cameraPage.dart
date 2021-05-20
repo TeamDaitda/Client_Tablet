@@ -255,17 +255,12 @@ class _CameraPageState extends State<CameraPage> {
                         pressed = false;
                       });
                       _onCapturePressed(context);
-                    },  
-                    text: [
-                      '셋',
-                      '둘',
-                      '하나'
-                    ],
+                    },
+                    text: ['셋', '둘', '하나'],
                     textStyle: TextStyle(
                       color: Colors.limeAccent,
                       fontSize: 60,
                       fontWeight: FontWeight.bold,
-                    
                     ),
                   ),
                 )
