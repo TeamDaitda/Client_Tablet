@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:daitda/UIComponent/snackBar.dart';
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
@@ -142,6 +143,10 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
       parent: _flipAnimationController,
       curve: new Interval(0.5, 1.0, curve: Curves.easeOut),
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SnackBarComponent.inputPageIntro(context);
+    });
 
     super.initState();
 
@@ -643,24 +648,34 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
                       alignment: Alignment.centerRight,
                       child: OutlinedButton(
                         onPressed: () {
-                          // 애니메이션 실행
-                          _flipAnimationController.forward().whenComplete(() {
-                            _animationController.forward().whenComplete(() {
-                              // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
-                              userController.setName(name: nameText); // 이름
-                              userController.setAffiliation(
-                                  affiliation: affiliationText); // 소속
-                              userController.setPhone(
-                                  phone: phoneText); // 휴대폰 번호
-                              userController.setSelectedCategoryIndex(
-                                  index:
-                                      this.thisCategoryMember.id); // 카테고리 아이디
+                          if (nameText == "홍길동" ||
+                              nameText == null ||
+                              nameText == "") {
+                            SnackBarComponent.inputPageTextFormName(context);
+                          } else if (phoneText == "010-1234-5678" ||
+                              phoneText == null ||
+                              phoneText == "") {
+                            SnackBarComponent.inputPageTextFormPhone(context);
+                          } else {
+                            // 애니메이션 실행
+                            _flipAnimationController.forward().whenComplete(() {
+                              _animationController.forward().whenComplete(() {
+                                // 유저 컨트롤러에 입력받은 정보들을 저장합니다.
+                                userController.setName(name: nameText); // 이름
+                                userController.setAffiliation(
+                                    affiliation: affiliationText); // 소속
+                                userController.setPhone(
+                                    phone: phoneText); // 휴대폰 번호
+                                userController.setSelectedCategoryIndex(
+                                    index:
+                                        this.thisCategoryMember.id); // 카테고리 아이디
 
-                              hasFailed
-                                  ? Get.toNamed('/paymentPage')
-                                  : myInterstitial.show();
+                                hasFailed
+                                    ? Get.toNamed('/paymentPage')
+                                    : myInterstitial.show();
+                              });
                             });
-                          });
+                          }
                         },
                         child: Text(
                           '기부하기',

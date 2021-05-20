@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:daitda/UIComponent/AnimatedLiquidLinearProgressIndicator.dart';
 import 'package:camera/camera.dart';
+import 'package:daitda/UIComponent/snackBar.dart';
 import 'package:daitda/controller/imageController.dart';
 import 'package:daitda/controller/paintController.dart';
 import 'package:daitda/model/ArgumentsDataModel.dart';
@@ -83,6 +84,10 @@ class _CameraPageState extends State<CameraPage> {
       }
     }).catchError((err) {
       print('Error :${err.code}Error message : ${err.message}');
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SnackBarComponent.cameraPageIntro(Get.context);
     });
 
     super.initState();
