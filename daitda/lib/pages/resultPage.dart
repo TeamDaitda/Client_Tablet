@@ -97,6 +97,11 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
@@ -262,6 +267,7 @@ class _ResultPageState extends State<ResultPage> {
                       } else {
                         paintController.setPaintState(true);
                         return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               '당신의 선을 확인해보세요.',
@@ -313,52 +319,83 @@ class _ResultPageState extends State<ResultPage> {
                             SizedBox(
                               height: 43,
                             ),
-                            Container(
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  primary: Colors.white,
-                                  backgroundColor: Colors.white,
-                                  shadowColor: Colors.white,
-                                ),
-                                child: Text(
-                                  '포토카드 꾸미기',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      primary: Colors.white,
+                                      backgroundColor: Colors.white,
+                                      shadowColor: Colors.white,
+                                    ),
+                                    child: Text(
+                                      '포토카드 꾸미기',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      // 회원가입
+                                      _userApi
+                                          .save(
+                                        affiliation: argumentsData.affiliation,
+                                        category: argumentsData.category,
+                                        name: argumentsData.name,
+                                        phone: argumentsData.phone,
+                                      )
+                                          .then((value) {
+                                        argumentsData.id = value;
+                                      });
+
+                                      final Uint8List data =
+                                          await _capturePng();
+                                      argumentsData.data = data;
+                                      _fileUploadApi
+                                          .upload(data: data)
+                                          .then((value) {
+                                        _imageApi
+                                            .save(
+                                                path: value,
+                                                id: argumentsData.id)
+                                            .then((_) {
+                                          _resultApi
+                                              .save(id: argumentsData.id)
+                                              .then((_) {
+                                            Get.offAllNamed('/photoCardPage',
+                                                arguments: argumentsData);
+                                          });
+                                        });
+                                      });
+                                    },
                                   ),
                                 ),
-                                onPressed: () async {
-                                  // 회원가입
-                                  _userApi
-                                      .save(
-                                    affiliation: argumentsData.affiliation,
-                                    category: argumentsData.category,
-                                    name: argumentsData.name,
-                                    phone: argumentsData.phone,
-                                  )
-                                      .then((value) {
-                                    argumentsData.id = value;
-                                  });
-
-                                  final Uint8List data = await _capturePng();
-                                  argumentsData.data = data;
-                                  _fileUploadApi
-                                      .upload(data: data)
-                                      .then((value) {
-                                    _imageApi
-                                        .save(path: value, id: argumentsData.id)
-                                        .then((_) {
-                                      _resultApi
-                                          .save(id: argumentsData.id)
-                                          .then((_) {
-                                        Get.offAllNamed('/photoCardPage',
-                                            arguments: argumentsData);
-                                      });
-                                    });
-                                  });
-                                },
-                              ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    primary: Colors.white,
+                                    backgroundColor: Colors.black,
+                                    shadowColor: Colors.white,
+                                  ),
+                                  child: Text(
+                                    '다시 촬영하기',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    paintController.setPaintState(false);
+                                    Get.back();
+                                  },
+                                ),
+                              ],
                             ),
                           ],
                         );
