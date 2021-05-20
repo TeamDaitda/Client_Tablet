@@ -262,14 +262,10 @@ class _CameraPageState extends State<CameraPage> {
                       '하나'
                     ],
                     textStyle: TextStyle(
-                      color: Colors.black,
+                      color: Colors.limeAccent,
                       fontSize: 60,
                       fontWeight: FontWeight.bold,
-                      background: Paint()
-                        ..strokeWidth = 30.0
-                        ..color = Colors.white.withOpacity(0.7)
-                        //..style = PaintingStyle.stroke
-                        ..strokeJoin = StrokeJoin.round
+                    
                     ),
                   ),
                 )
