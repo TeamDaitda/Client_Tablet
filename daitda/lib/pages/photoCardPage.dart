@@ -1,7 +1,6 @@
-import 'dart:ffi';
+
 import 'dart:typed_data';
 import 'dart:convert';
-
 import 'package:daitda/controller/user.dart';
 import 'package:daitda/design/designs.dart';
 import 'package:daitda/model/ArgumentsDataModel.dart';
@@ -13,6 +12,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
+import 'package:intl/intl.dart';
 
 class PhotoCardPage extends StatefulWidget {
   @override
@@ -21,6 +21,7 @@ class PhotoCardPage extends StatefulWidget {
 
 class _PhotoCardPageState extends State<PhotoCardPage> {
   final userController = Get.put(UserController());
+  var _today = DateTime.now();
 
   ArgumentsData argumentData;
   GlobalKey _globalKey = new GlobalKey();
@@ -54,6 +55,7 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
   @override
   Widget build(BuildContext context) {
     var p = Provider.of<DrawingProvider>(context);
+    
 
     return Scaffold(
       backgroundColor: Color(0xff2b2b2b),
@@ -89,20 +91,40 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                         ),
                         Positioned(
                           bottom: 80,
-                          left: 210,
+                          right: 30,
+                          
                           child: Container(
-                            width: 80,
-                            height: 80,
+                            width: 105,
+                            height: 105,
                             child: Image.network(
                                 "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://15.164.195.117:8080/backend-0.0.1-SNAPSHOT/result/view/${argumentData.id}"),
                           ),
                         ),
                         Positioned(
-                          width: 80,
-                          left: 210,
-                          bottom: 30,
+                          width: 143,
+                          left: 26,
+                          bottom: 137,
                           child: Image.asset('images/photoCardLogo.png'),
                         ),
+                        Positioned(
+                          left: 26,
+                          bottom: 85,
+                          child: Text('당신의 아름다운 善을 보여주셔서 감사합니다.\n오늘도 선한 하루 되세요:)',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),),
+                          ),
+
+                         
+                                //  Text(
+                                //     data[reverseIndex].id.toString() + "번째 기부자",
+                                //     style: TextStyle(
+                                //       fontSize: 20,
+                                //       color: Colors.white,
+                                //     ),
+                                //   ),
+
                       ],
                     ),
                   ),
@@ -241,9 +263,6 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                                     ),
                                   ]
                                 )
-
-
-
                               ],
                             ),
                           ),

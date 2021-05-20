@@ -250,18 +250,21 @@ class _CameraPageState extends State<CameraPage> {
                         pressed = false;
                       });
                       _onCapturePressed(context);
-                    },
+                    },  
                     text: [
-                      '5',
-                      '4',
-                      '3',
-                      '2',
-                      '1',
+                      '셋',
+                      '둘',
+                      '하나'
                     ],
                     textStyle: TextStyle(
-                      color: Colors.red,
-                      fontSize: 80,
+                      color: Colors.black,
+                      fontSize: 60,
                       fontWeight: FontWeight.bold,
+                      background: Paint()
+                        ..strokeWidth = 30.0
+                        ..color = Colors.white.withOpacity(0.7)
+                        //..style = PaintingStyle.stroke
+                        ..strokeJoin = StrokeJoin.round
                     ),
                   ),
                 )
