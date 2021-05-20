@@ -34,6 +34,7 @@ class _InputPageState extends State<InputPage> with TickerProviderStateMixin {
   static String nameText;
   static String phoneText;
   static String affiliationText;
+  String dropdownValue = 'one';
 
   /*
    * 사용자가 선택한 카테고리.
