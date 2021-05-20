@@ -1,12 +1,13 @@
-
 import 'dart:typed_data';
 import 'dart:convert';
+import 'package:daitda/UIComponent/snackBar.dart';
 import 'package:daitda/controller/user.dart';
 import 'package:daitda/design/designs.dart';
 import 'package:daitda/model/ArgumentsDataModel.dart';
 import 'package:daitda/service/DrawingService/DotInfo.dart';
 import 'package:daitda/service/DrawingService/DrawingProvider.dart';
 import 'package:daitda/service/fileUploadApi.dart';
+import 'package:daitda/service/printService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,7 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
   ArgumentsData argumentData;
   GlobalKey _globalKey = new GlobalKey();
   FileUploadApi _fileUploadApi = new FileUploadApi();
+  PrintApi _printApi = new PrintApi();
 
   Future<Uint8List> _capturePng() async {
     try {
@@ -55,7 +57,6 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
   @override
   Widget build(BuildContext context) {
     var p = Provider.of<DrawingProvider>(context);
-    
 
     return Scaffold(
       backgroundColor: Color(0xff2b2b2b),
@@ -92,7 +93,6 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                         Positioned(
                           bottom: 80,
                           right: 30,
-                          
                           child: Container(
                             width: 105,
                             height: 105,
@@ -109,30 +109,30 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                         Positioned(
                           left: 26,
                           bottom: 85,
-                          child: Text('당신의 아름다운 善을 보여주셔서 감사합니다.\n오늘도 선한 하루 되세요:)',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),),
+                          child: Text(
+                            '당신의 아름다운 善을 보여주셔서 감사합니다.\n오늘도 선한 하루 되세요:)',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                        ),
 
-                         
-                                //  Text(
-                                //     data[reverseIndex].id.toString() + "번째 기부자",
-                                //     style: TextStyle(
-                                //       fontSize: 20,
-                                //       color: Colors.white,
-                                //     ),
-                                //   ),
-
+                        //  Text(
+                        //     data[reverseIndex].id.toString() + "번째 기부자",
+                        //     style: TextStyle(
+                        //       fontSize: 20,
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
                       ],
                     ),
                   ),
 
                   //색상 팔레트
                   Positioned(
-                    top: 8,
-                    left: 530,
+                    left: Get.size.width * 0.5,
+                    top: Get.size.height * 0.1,
                     child: Column(
                       children: [
                         Container(
@@ -144,19 +144,20 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 50,
-                              vertical: 170,
+                              vertical: 10,
                             ),
-
                             child: Column(
-                                children: [
-                                  Text('거의 다 왔어요. \n마지막으로 색을 채워볼까요?',
+                              children: [
+                                Text(
+                                  '거의 다 왔어요. \n\n마지막으로 색을 채워볼까요?',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                  fontSize: 32, 
-                                  color: Colors.white,
-                                  //fontWeight: FontWeight.bold,
-                                  ),),
-                                  SizedBox(height: 40),
+                                    fontSize: 22,
+                                    color: Colors.white,
+                                    //fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 40),
                                 Row(
                                   children: [
                                     colorWidget(Colors.black),
@@ -168,79 +169,65 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                                     colorWidget(Color(0xffEBCDA0)),
                                     colorWidget(Color(0xffF7D8A8)),
                                     colorWidget(Color(0xffD1CD9B)),
-
-                                  
-
                                   ],
                                 ),
-                                  SizedBox(height: 30),
-                                Row(
-                                    children: [
-                                      colorWidget(Color(0xff686BA1)),
-                                      colorWidget(Color(0xff523B61)),
-                                      colorWidget(Color(0xff9A9EED)),
-                                      colorWidget(Color(0xff8184C7)),
-                                      colorWidget(Color(0xff537AA3)),
-                                      colorWidget(Color(0xff314861)),
-                                      colorWidget(Color(0xff72A8E0)),
-                                      colorWidget(Color(0xff91AEB5)),
-                                      colorWidget(Color(0xff6595C7)),
-                                    ],
-                                ),
-
                                 SizedBox(height: 30),
-
-                                      Row(
-                                    children: [
-                                      colorWidget(Color(0xff6FA199)),
-                                      colorWidget(Color(0xff43615C)),
-                                      colorWidget(Color(0xffA4EDE2)),
-                                      colorWidget(Color(0xff89C7BE)),
-                                      colorWidget(Color(0xff76A370)),
-                                      colorWidget(Color(0xff466143)),
-                                      colorWidget(Color(0xffA3E09B)),
-                                      colorWidget(Color(0xffD2DDBA)),
-                                      colorWidget(Color(0xff90C789)),
-                                    ],
-                                ),
-
-                                SizedBox(height: 30),
-                                      Row(
-                                    children: [
-                                      colorWidget(Color(0xffA3A15D)),
-                                      colorWidget(Color(0xff616037)),
-                                      colorWidget(Color(0xffEDEA87)),
-                                      colorWidget(Color(0xffC7C471)),
-                                      colorWidget(Color(0xffA3605C)),
-                                      colorWidget(Color(0xff613836)),
-                                      colorWidget(Color(0xffE0837E)),
-                                      colorWidget(Color(0xffDEA795)),
-                                      colorWidget(Color(0xffC7746F)),
-                                  
-                                    ],
-                                ),
-                                SizedBox(
-                                  height: 30
-                                ),
-
                                 Row(
-                                    children: [
-                                      colorWidget(Color(0xffAB637F)),
-                                      colorWidget(Color(0xffEB88AE)),
-                                      colorWidget(Color(0xff704153)),
-                                      colorWidget(Color(0xff362631)),
-                                      colorWidget(Color(0xff9AA6B8)),
-                                      colorWidget(Color(0xff636A75)),
-                                      colorWidget(Color(0xffCEDDF5)),
-                                      colorWidget(Color(0xffACB5AF)),
-                                      colorWidget(Color(0xff6D736F)),
-                                  
-                                    ],
+                                  children: [
+                                    colorWidget(Color(0xff686BA1)),
+                                    colorWidget(Color(0xff523B61)),
+                                    colorWidget(Color(0xff9A9EED)),
+                                    colorWidget(Color(0xff8184C7)),
+                                    colorWidget(Color(0xff537AA3)),
+                                    colorWidget(Color(0xff314861)),
+                                    colorWidget(Color(0xff72A8E0)),
+                                    colorWidget(Color(0xff91AEB5)),
+                                    colorWidget(Color(0xff6595C7)),
+                                  ],
                                 ),
-
-                                  SizedBox(
-                                  height: 16
+                                SizedBox(height: 30),
+                                Row(
+                                  children: [
+                                    colorWidget(Color(0xff6FA199)),
+                                    colorWidget(Color(0xff43615C)),
+                                    colorWidget(Color(0xffA4EDE2)),
+                                    colorWidget(Color(0xff89C7BE)),
+                                    colorWidget(Color(0xff76A370)),
+                                    colorWidget(Color(0xff466143)),
+                                    colorWidget(Color(0xffA3E09B)),
+                                    colorWidget(Color(0xffD2DDBA)),
+                                    colorWidget(Color(0xff90C789)),
+                                  ],
                                 ),
+                                SizedBox(height: 30),
+                                Row(
+                                  children: [
+                                    colorWidget(Color(0xffA3A15D)),
+                                    colorWidget(Color(0xff616037)),
+                                    colorWidget(Color(0xffEDEA87)),
+                                    colorWidget(Color(0xffC7C471)),
+                                    colorWidget(Color(0xffA3605C)),
+                                    colorWidget(Color(0xff613836)),
+                                    colorWidget(Color(0xffE0837E)),
+                                    colorWidget(Color(0xffDEA795)),
+                                    colorWidget(Color(0xffC7746F)),
+                                  ],
+                                ),
+                                SizedBox(height: 30),
+                                Row(
+                                  children: [
+                                    colorWidget(Color(0xffAB637F)),
+                                    colorWidget(Color(0xffEB88AE)),
+                                    colorWidget(Color(0xff704153)),
+                                    colorWidget(Color(0xff362631)),
+                                    colorWidget(Color(0xff9AA6B8)),
+                                    colorWidget(Color(0xff636A75)),
+                                    colorWidget(Color(0xffCEDDF5)),
+                                    colorWidget(Color(0xffACB5AF)),
+                                    colorWidget(Color(0xff6D736F)),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
                                 Row(
                                   children: [
                                     GestureDetector(
@@ -249,7 +236,8 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                                         p.changeEraseMode();
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 380),
+                                        padding:
+                                            const EdgeInsets.only(left: 380),
                                         child: Text(
                                           '지우개',
                                           style: TextStyle(
@@ -261,19 +249,14 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                                         ),
                                       ),
                                     ),
-                                  ]
-                                )
+                                  ],
+                                ),
                               ],
                             ),
                           ),
                         ),
-
-
                       ],
                     ),
-
-
-
                   ),
                   Positioned(
                     right: 40,
@@ -282,21 +265,26 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                       children: [
                         OutlinedButton(
                           onPressed: () async {
+                            SnackBarComponent.photoCardPageOuttro(context);
+
                             final Uint8List data = await _capturePng();
 
                             // 인쇄를 위한 사진 저장
-                            _fileUploadApi
-                                .upload(data: data)
-                                .then((value) => print(value));
+                            _fileUploadApi.upload(data: data).then((value) {
+                              _printApi.save(path: value, id: argumentData.id);
+                            });
 
                             Get.offAllNamed('/homePage');
                           },
-                          child: Text("포토카드 받기",
-                          style: TextStyle(fontWeight: FontWeight.w700,color: Colors.black),),
+                          child: Text(
+                            "포토카드 받기",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black),
+                          ),
                           style: OutlinedButton.styleFrom(
                             primary: Colors.white,
                             backgroundColor: Colors.white,
-                            
                             elevation: 8,
                           ),
                         ),
