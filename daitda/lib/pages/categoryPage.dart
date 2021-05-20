@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:daitda/UIComponent/snackBar.dart';
 import 'package:daitda/controller/Controllers.dart' as CONTROLLERS;
 import 'package:daitda/UIComponent/UIComponents.dart' as UICOMPONENTS;
 import 'package:daitda/design/designs.dart' as DESIGNS;
@@ -89,6 +90,10 @@ class _CategoryPageState extends State<CategoryPage>
       parent: _flipAnimationController,
       curve: new Interval(0.5, 1.0, curve: Curves.easeOut),
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SnackBarComponent.categoryPageIntro(context);
+    });
 
     super.initState();
   }
@@ -392,12 +397,11 @@ class _CategoryPageState extends State<CategoryPage>
                           width: 150,
                           height: 150,
                         ),
-                        SizedBox(height: 19),
                         Text(
                           categoryController.categoryMember[index].title
                               .toString(),
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
