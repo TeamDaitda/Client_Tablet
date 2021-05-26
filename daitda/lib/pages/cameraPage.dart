@@ -258,7 +258,7 @@ class _CameraPageState extends State<CameraPage> {
                     },
                     text: ['셋', '둘', '하나'],
                     textStyle: TextStyle(
-                      color: Colors.limeAccent,
+                      color: Colors.green,
                       fontSize: 60,
                       fontWeight: FontWeight.bold,
                     ),
