@@ -78,7 +78,7 @@ class DesignSet extends GetxController {
   }
 
   double getCameraAreaWidth() {
-  return _screenHeight != null ? _screenWidth * 0.85 : 0;
+    return _screenHeight != null ? _screenWidth * 0.85 : 0;
   }
 
   double getCameraAreaHeight() {
@@ -104,8 +104,8 @@ class DesignSet extends GetxController {
   TextStyle getStyleDialogButtonText({@required bool isPositive}) {
     return TextStyle(
       color: isPositive
-          ? colorSet.positivetextColor
-          : colorSet.notPositiveTextColor,
+          ? colorSet.notPositiveTextColor
+          : colorSet.positivetextColor,
       fontWeight: FontWeight.bold,
     );
   }

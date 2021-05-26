@@ -112,7 +112,7 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                           child: Text(
                             '당신의 아름다운 善을 보여주셔서 감사합니다.\n오늘도 선한 하루 되세요:)',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -165,7 +165,7 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                                     colorWidget(Color(0xff696A6E)),
                                     colorWidget(Color(0xff6F614C)),
                                     colorWidget(Color(0xff6F6761)),
-                                    colorWidget(Color(0xff6F614C)),
+                                    colorWidget(Color(0xff5E4939)),
                                     colorWidget(Color(0xffEBCDA0)),
                                     colorWidget(Color(0xffF7D8A8)),
                                     colorWidget(Color(0xffD1CD9B)),
@@ -188,14 +188,20 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
                                 SizedBox(height: 30),
                                 Row(
                                   children: [
-                                    colorWidget(Color(0xff6FA199)),
+                                    //colorWidget(Color(0xff6FA199)),
+                                    colorWidget(Color(0xff487552)),
+
                                     colorWidget(Color(0xff43615C)),
-                                    colorWidget(Color(0xffA4EDE2)),
-                                    colorWidget(Color(0xff89C7BE)),
+                                    //colorWidget(Color(0xffA4EDE2)),
+                                    //colorWidget(Color(0xff89C7BE)),
+                                    colorWidget(Color(0xff21362b)),
+                                    colorWidget(Color(0xff67782b)),
+
                                     colorWidget(Color(0xff76A370)),
                                     colorWidget(Color(0xff466143)),
                                     colorWidget(Color(0xffA3E09B)),
-                                    colorWidget(Color(0xffD2DDBA)),
+                                    //colorWidget(Color(0xffD2DDBA)),
+                                    colorWidget(Color(0xff22382b)),
                                     colorWidget(Color(0xff90C789)),
                                   ],
                                 ),
@@ -271,10 +277,11 @@ class _PhotoCardPageState extends State<PhotoCardPage> {
 
                             // 인쇄를 위한 사진 저장
                             _fileUploadApi.upload(data: data).then((value) {
+                              print(value);
                               _printApi.save(path: value, id: argumentData.id);
                             });
 
-                            Get.offAllNamed('/homePage');
+                            Get.offAllNamed('/');
                           },
                           child: Text(
                             "포토카드 받기",
