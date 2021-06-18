@@ -1,4 +1,8 @@
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FDAITDA%2Fhit-counter&count_bg=%234A55FF&title_bg=%23555555&icon=wolframmathematica.svg&icon_color=%23FFFFFF&title=hits&edge_flat=true)](https://hits.seeyoufarm.com)
+  
+> **다잇다 클라이언트 입니다.** [프로젝트 링크](https://github.com/TeamDaitda)
+
+
 # 숭실대학교 IT대학 글로벌미디어학부 2021 졸업작품 전시회
 <p align="center">
 <img width="500" alt="KakaoTalk_Photo_2021-05-12-13-37-18" src="https://user-images.githubusercontent.com/66074802/122589743-9dbf4b80-d09b-11eb-967a-b1906c38c2fa.png">
