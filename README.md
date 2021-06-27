@@ -70,7 +70,7 @@
 |Ad Page|
 |:-----:|
 |기부를 위한 광고시청 페이지|
-|![광고 (1)](https://user-images.githubusercontent.com/66074802/122594891-9d767e80-d0a2-11eb-9f70-cb01474322a6.gif)|
+|![광고2](https://user-images.githubusercontent.com/66074802/123534009-cc50bc80-d754-11eb-878c-aa7687f79961.gif)|
   
 |Camera, Result Page|
 |:-----:|
