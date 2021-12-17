@@ -14,7 +14,7 @@
 ## 작가 소개
 |16학번 이영범|15학번 박태준|18학번 송지수|
 |:-----:|:-----:|:-----:|
-|<img width="200" alt="이영범" src="https://user-images.githubusercontent.com/66074802/122590969-3aceb400-d09d-11eb-95b4-e3158e67bcf7.jpg">|<img width="200" alt="박태준" src="https://user-images.githubusercontent.com/66074802/122590772-f80cdc00-d09c-11eb-8813-c0d98d6cf11b.png">|<img width="200" alt="송지수" src="https://user-images.githubusercontent.com/66074802/122590767-f6dbaf00-d09c-11eb-9748-26a24a3a0aef.png">|
+|<img width="200" alt="이영범" src="https://avatars.githubusercontent.com/u/66074802">|<img width="200" alt="박태준" src="https://user-images.githubusercontent.com/66074802/122590772-f80cdc00-d09c-11eb-8813-c0d98d6cf11b.png">|<img width="200" alt="송지수" src="https://user-images.githubusercontent.com/66074802/122590767-f6dbaf00-d09c-11eb-9748-26a24a3a0aef.png">|
 |개발자|디자이너|개발자|
 |클라이언트, 서버 개발|디자이너, 영상제작|클라이언트 개발|
 |[Dev-Beom](https://github.com/Dev-Beom)||[songjeesu](https://github.com/songjeesu)|  
